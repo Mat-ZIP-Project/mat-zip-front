@@ -3,6 +3,8 @@ import axiosInstance from "../api/axiosinstance";
 
 import { useNavigate } from "react-router-dom";
 import CourseCard from '../components/customCourse/CourseCard';
+import '../assets/styles/pages/myCourseListPage.css';
+
 
 const MyCourseListPage = () => {
   const [courses, setCourses] = useState([]);

@@ -1,3 +1,5 @@
+import '../../assets/styles/customCourse/courseMap.css';
+
 const CourseMap = ({ spots, editable }) => {
     return (
       <div className="course-map">

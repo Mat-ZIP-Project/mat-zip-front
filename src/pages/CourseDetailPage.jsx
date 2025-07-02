@@ -5,6 +5,8 @@ import CourseHeader from '../components/customCourse/CourseHeader';
 import CourseMap from '../components/customCourse/CourseMap';
 import CourseSpotList from '../components/customCourse/CourseSpotList';
 import ActionButtons from '../components/common/ActionButtons';
+import '../assets/styles/pages/courseDetailPage.css';
+
 
 
 const CourseDetailPage = () => {

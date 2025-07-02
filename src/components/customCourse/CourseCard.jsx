@@ -1,3 +1,5 @@
+import '../../assets/styles/customCourse/courseCard.css';
+
 const CourseCard = ({ course, onClick }) => {
     return (
       <div className="course-card" onClick={onClick}>

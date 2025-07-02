@@ -1,3 +1,5 @@
+import '../../assets/styles/customCourse/courseHeader.css';
+
 const CourseHeader = ({ title, setTitle, editable }) => {
     return (
       <div className="course-header">
