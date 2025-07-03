@@ -1,26 +1,30 @@
 import { useState, useEffect } from "react";
-import axiosInstance from "../api/axiosinstance";
+import axiosInstance from "../../api/axiosinstance";
 
 import { useNavigate } from "react-router-dom";
-import CourseMap from '../components/customCourse/CourseMap';
-import CourseSpotList from '../components/customCourse/CourseSpotList';
-import ActionButtons from '../components/common/ActionButtons';
-import '../assets/styles/pages/tempCoursePage.css';
+import CourseMap from '../../components/customCourse/CourseMap';
+import CourseSpotList from '../../components/customCourse/CourseSpotList';
+import ActionButtons from '../../components/common/ActionButtons';
+import '../../assets/styles/pages/tempCoursePage.css';
+import CourseHeader from "../../components/customCourse/CourseHeader";
 
 
 
 const TempCoursePage = () => {
+  const navigate = useNavigate();
+  
   const [spots, setSpots] = useState([]);
   const [title, setTitle] = useState("");
-  const navigate = useNavigate();
+  
 
   useEffect(() => {
+    
     axiosInstance({
       method: "get",
       url: "/course/temp",
-      headers: {
-        Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTE0NDcwMTQsImV4cCI6MTc1MTQ0ODgxNH0.JUrYvnFGhF8qTvQfio6pR767oZvNXGvNBxkqdZ5CmLw"
-      }
+      // headers: {
+      //   Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTE1MjIzNTksImV4cCI6MTc1MTUyNDE1OX0.gdJhzXrJ8guxQXkPtnolZRVUMAzdhLzlJv9KXL9zdJ0"
+      // }
     })
       .then(res => {
         console.log(res.data);
@@ -31,23 +35,34 @@ const TempCoursePage = () => {
   }, []);
 
   const saveCourse = () => {
+    if(title==="") {
+     alert("코스명을 입력해주세요");
+     return; 
+    }
+    if(spots.length===0){
+      alert("코스를 1개 이상 담아주세요");
+      return;
+    }
     const titleWithCourse =  spots.map(spot => ({...spot,title}));
     axiosInstance({
       method: "post",
       url: "/course/custom",
-      headers: {
-        Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTE0NDcwMTQsImV4cCI6MTc1MTQ0ODgxNH0.JUrYvnFGhF8qTvQfio6pR767oZvNXGvNBxkqdZ5CmLw"
-      },
+      // headers: {
+      //   Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTE1MjIzNTksImV4cCI6MTc1MTUyNDE1OX0.gdJhzXrJ8guxQXkPtnolZRVUMAzdhLzlJv9KXL9zdJ0"
+      // },
       data: titleWithCourse
       
     }).then(res => {
       console.log(res.data)
+      alert(res.data);
+      setSpots([]);
+      setTitle("");
     })
   }
 
   return (
     <div>
-      <input value={title} onChange={(e)=>{setTitle(e.target.value)}} placeholder="코스 제목을 입력하세요" />
+      <CourseHeader title={title} setTitle={setTitle} editable={true}/>
       <CourseMap spots={spots} editable={true} />
       <CourseSpotList spots={spots} setSpots={setSpots} editable={true} />
       <ActionButtons

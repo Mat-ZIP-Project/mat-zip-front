@@ -1,9 +1,10 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import TempCoursePage from './pages/TempCoursePage';
-import MyCourseListPage from './pages/MyCourseListPage';
-import CourseDetailPage from './pages/CourseDetailPage';
+
 
 import './AppCourse.css';
+import TempCoursePage from './pages/course/TempCoursePage';
+import MyCourseListPage from './pages/course/MyCourseListPage';
+import CourseDetailPage from './pages/course/CourseDetailPage';
 
 
 

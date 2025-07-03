@@ -7,6 +7,7 @@ import axiosInstance from '../../api/axiosinstance';
 const CourseSpotList = ({ spots, setSpots, editable }) => {
 
   const handleDelete = (index) => {
+    console.log(editable)
     if (!editable) return;
     const newSpots = spots.filter((_, i) => i !== index);
     const newOrderedSpots = newSpots.map((spot, idx) => ({ 
@@ -20,11 +21,12 @@ const CourseSpotList = ({ spots, setSpots, editable }) => {
   };
 
   const handleDragEnd = (event) => {
+     if (!editable) return;  // 수정 불가 상태면 바로 리턴
     const { active, over } = event;
 
-    if (!over) return;  // Drop 위치 없을 경우 예외 처리
+    if (!over||active.id === over.id) return;  // Drop 위치 없을 경우 예외 처리
 
-    if (active.id !== over.id) {
+    
       const oldIndex = spots.findIndex((spot) => spot.restaurantId === active.id);
       const newIndex = spots.findIndex((spot) => spot.restaurantId === over.id);
 
@@ -39,7 +41,7 @@ const CourseSpotList = ({ spots, setSpots, editable }) => {
       setSpots(updatedSpots);
       
       changeTempCourse(updatedSpots); //DB 적용하기
-    }
+    
 
   };
 
@@ -48,9 +50,9 @@ const CourseSpotList = ({ spots, setSpots, editable }) => {
     axiosInstance({
       method : "put",
       url: "/course/temp",
-      headers: {
-        Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTE0NDcwMTQsImV4cCI6MTc1MTQ0ODgxNH0.JUrYvnFGhF8qTvQfio6pR767oZvNXGvNBxkqdZ5CmLw"
-      },
+      // headers: {
+      //   Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTE1MjIzNTksImV4cCI6MTc1MTUyNDE1OX0.gdJhzXrJ8guxQXkPtnolZRVUMAzdhLzlJv9KXL9zdJ0"
+      // },
       data : spots
     })
       .then((res) => {

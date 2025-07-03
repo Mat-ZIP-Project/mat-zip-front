@@ -1,8 +1,29 @@
-.course-map {
-    height: 10vh;
-    background-color: #E0E0E0;
-    border-radius: 12px;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
+.custom-overlay {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #888;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 13px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.order-badge {
+  background: #ff4d4f;
+  color: white;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.restaurant-name {
+  font-weight: 500;
+}
