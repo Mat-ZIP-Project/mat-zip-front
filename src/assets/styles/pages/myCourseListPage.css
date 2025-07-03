@@ -1,0 +1,13 @@
+.my-course-list-page {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  .my-course-list-page h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
