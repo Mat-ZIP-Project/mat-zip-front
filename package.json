@@ -15,6 +15,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.10.0",
+    "haversine-distance": "^1.2.4",
     "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

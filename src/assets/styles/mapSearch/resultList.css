@@ -1,0 +1,14 @@
+.result-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border-top: 1px solid #ccc;
+  padding-top: 0.5rem;
+}
+.result-item {
+  padding: 0.5rem;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+.result-item:hover {
+  background: #f5f5f5;
+}

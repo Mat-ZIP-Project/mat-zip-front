@@ -1,0 +1,17 @@
+.radius-selector {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+.radius-selector button {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.radius-selector button.active {
+  background: #000;
+  color: #fff;
+}
