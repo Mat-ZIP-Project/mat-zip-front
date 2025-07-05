@@ -19,15 +19,14 @@ const Login = () => {
 
     // 아이디 저장
     useEffect(() => {
-        const savedUserId = localStorage.getItem('rememberedUserId');
+        const savedUserId = localStorage.getItem('rememberedUserId');   
         if (savedUserId) {
             setForm(prev => ({
                 ...prev,
                 userId: savedUserId
             }));
             setIsRememberMe(true);
-        }
-    }, []);
+        }}, []);
 
     // input 에 값이 입력될 때 상태 값 수정
     const changeValue = useCallback((e) => {
@@ -37,29 +36,28 @@ const Login = () => {
             [name]: value
         }));
 
-        // 입력 시 해당 필드 에러 제거
-        setErrors(prev => {
-            if (prev[name] || prev.general) {
+        // 사용자가 값입력시 에러 제거
+        if (value.trim().length > 0 && errors.general) {
+            setErrors(prev => {
                 const newErrors = { ...prev };
                 delete newErrors[name];
                 delete newErrors.general;
                 return newErrors;
-            }
-            return prev;
-        });
-    }, []);
+            });
+        }
+    }, [errors.general]);
 
     // 아이디 저장 체크박스 변경 핸들러
     const handleRememberMeChange = useCallback((e) => {
         const checked = e.target.checked;
         setIsRememberMe(checked);
         
-        // 체크 해제 시 저장된 아이디 삭제
         if (!checked) {
             localStorage.removeItem('rememberedUserId');
         }
     }, []);
-
+    
+    // 폼 검증 함수
     const validateForm = useCallback(() => {
         const newErrors = {};
         
@@ -75,11 +73,12 @@ const Login = () => {
         return Object.keys(newErrors).length === 0;
     }, [formData]);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
-        console.log("로그인 정보: ", formData);
-
+        e.stopPropagation();
+        
         if (!validateForm()) return;
+        
         setIsLoading(true);
         setErrors({});
 
@@ -97,7 +96,6 @@ const Login = () => {
                 localStorage.removeItem('rememberedUserId');
             }
 
-            // accessToken과 user 정보 Redux에 저장
             dispatch(setCredentials({
                 accessToken: data.accessToken,
                 user: data.user
@@ -106,9 +104,9 @@ const Login = () => {
             navigate('/');    
         } catch (error) {
             console.error('로그인 에러:', error);
-            const errorMessage = error.response?.data?.errMsg || '아이디 또는 비밀번호가 올바르지 않습니다.';
-            
-            // 에러 발생 시 비밀번호 초기화
+            const errorMessage = error.response?.data?.errMsg || '정보를 다시확인해주세요.';
+
+            // 비밀번호만 초기화
             setForm(prev => ({
                 ...prev,
                 password: ''
@@ -120,17 +118,19 @@ const Login = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [formData, isRememberMe, validateForm, dispatch, navigate]);
 
     const helpLinks = [
         { text: '아이디 찾기', path: '/find-id' },
         { text: '비밀번호 찾기', path: '/find-password' }
     ];
 
+    const isFormValid = formData.userId.trim() && formData.password.trim();
+
     return (
         <div className={styles.page}>
             <div className={styles.container}>
-                <form onSubmit={handleSubmit} className={styles.form}>
+                <form onSubmit={handleSubmit} className={styles.form} noValidate>
                     <h1 className={styles.title}>로그인</h1>
 
                     <FormInput
@@ -152,7 +152,7 @@ const Login = () => {
                     />
 
                     {errors.general && (
-                        <div className={styles.errorAlert}>
+                        <div className={styles.errorAlert} key="login-error">
                             {errors.general}
                         </div>
                     )}
@@ -167,7 +167,7 @@ const Login = () => {
                     <FormButton
                         type="submit" variant="primary"
                         loading={isLoading}
-                        disabled={!formData.userId && !formData.password}
+                        disabled={!isFormValid}
                     >
                         로그인
                     </FormButton>

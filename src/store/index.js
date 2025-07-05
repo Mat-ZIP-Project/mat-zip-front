@@ -11,12 +11,12 @@ import {
   PURGE,
   REGISTER
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // localStorage
+import storage from 'redux-persist/lib/storage'; 
 
 const persistConfig = {
   key: 'auth',
   storage,
-  whitelist: ['isAuthenticated', 'accessToken', 'userInfo'],  // 슬라이스 영속화
+  whitelist: ['isAuthenticated', 'accessToken', 'userInfo'],
 };
 
 const persistedReducer = persistReducer(persistConfig, authReducer);
@@ -30,6 +30,7 @@ export const store = configureStore({
       serializableCheck: {
         // redux-persist action 제외
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        warnAfter: 128,
       },
     }),
 });

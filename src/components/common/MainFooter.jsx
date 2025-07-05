@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../assets/styles/common/MainFooter.module.css';
 import { logout } from '../../store/authSlice';
+import axiosInstance from '../../api/axiosinstance';
 
 const MainFooter = () => {
     const { isAuthenticated } = useSelector(state => state.auth);
@@ -21,15 +22,22 @@ const MainFooter = () => {
         navigate('/login');
     };
 
-    const handleLogout = () => {
-        const rememberedUserId = localStorage.getItem('rememberedUserId');
-        if (!rememberedUserId) {
-            dispatch(logout({ forceComplete: true }));
-        } else {
-            // 아이디 저장한 경우 - 선택적 삭제
-            dispatch(logout());
+    const handleLogout = async () => {
+        try {
+            await axiosInstance.post('/auth/logout', {}, {
+                withCredentials: true
+            });
+        } catch (error) {
+            console.error('로그아웃 API 호출 실패:', error);
+        } finally {
+            const rememberedUserId = localStorage.getItem('rememberedUserId');
+            if (!rememberedUserId) {
+                dispatch(logout({ forceComplete: true }));
+            } else {
+                dispatch(logout());
+            }
+            navigate('/');
         }
-        navigate('/');
     };
 
     const handleAuthButtonClick = () => {

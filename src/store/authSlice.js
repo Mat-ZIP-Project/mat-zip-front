@@ -11,27 +11,24 @@ const initialState = {
   }
 };
 
-// 웹스토리지 완전 초기화 함수
-const clearAllStorage = () => {
+// 웹스토리지 정리 함수
+const clearStorage = (preserveRememberedId = false) => {
+  const rememberedUserId = preserveRememberedId ? localStorage.getItem('rememberedUserId') : null;
+  
+  // 모든 스토리지 정리
   localStorage.clear();
   sessionStorage.clear();
-  // IndexedDB 관련 데이터 있다면 정리
-  if ('caches' in window) {
-    caches.keys().then(names => {
-      names.forEach(name => {
-        caches.delete(name);
-      });
-    });
+  
+  // IndexedDB 정리
+  if ('indexedDB' in window) {
+    const deleteReq = indexedDB.deleteDatabase('keyval-store');
+    deleteReq.onsuccess = () => console.log('IndexedDB cleared');
   }
-};
-
-// 선택적 스토리지 정리 유틸리티 함수
-const clearStorageExceptRememberedId = (rememberedUserId) => {
-  // persist 데이터만 삭제
-  localStorage.removeItem('persist:auth');
-  sessionStorage.clear();
-  // 저장된 아이디 다시 설정
-  localStorage.setItem('rememberedUserId', rememberedUserId);
+  
+  // 아이디 저장이 필요한 경우 복원
+  if (rememberedUserId) {
+    localStorage.setItem('rememberedUserId', rememberedUserId);
+  }
 };
 
 
@@ -57,25 +54,21 @@ const authSlice = createSlice({
       state.accessToken = accessToken;
     },
 
+    // 로그아웃
     logout: (state, action) => {
       const forceCompleteLogout = action.payload?.forceComplete || false;
       const rememberedUserId = localStorage.getItem('rememberedUserId');
       
-      // Redux 상태 초기화
       Object.assign(state, initialState);
       
-      // 아이디 저장여부에 따라 스토리지 정리
-      if (forceCompleteLogout || !rememberedUserId) {
-        clearAllStorage();
-      } else {
-        clearStorageExceptRememberedId(rememberedUserId);
-      }
+      // 스토리지 정리
+      clearStorage(!forceCompleteLogout && !!rememberedUserId);
     },
 
-    // Redux Persist 완전 초기화용 액션
+    // Redux Persist 액션
     resetAuth: (state) => {
       Object.assign(state, initialState);
-      clearAllStorage();
+      clearStorage(false);
     },
   },
 });
