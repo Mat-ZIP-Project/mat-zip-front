@@ -4,18 +4,22 @@ import './index.css'
 import App from './App.jsx'
 import AppCourse from './AppCourse';
 import { BrowserRouter } from 'react-router-dom';
+import AppMapSearch from './AppMapSearch';
 
 import { Provider } from 'react-redux';
 import { store, persistor } from './store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 createRoot(document.getElementById('root')).render(
-  <Provider store={store}>                                    {/* ✨ Redux Provider */}
-    <PersistGate loading={null} persistor={persistor}>        {/* ✨ PersistGate */}
-      <BrowserRouter>                                        {/* ✨ Router */}
+
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
         <App />
-        {/* <AppCourse/> */}
+        {/* <AppCourse/> 
+        <AppMapSearch/> */}
       </BrowserRouter>
     </PersistGate>
   </Provider>
 );
+

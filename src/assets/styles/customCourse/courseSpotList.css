@@ -1,0 +1,45 @@
+.course-spot-list {
+    flex: 1;
+    overflow-y: auto;
+    background: #FFFFFF;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .spot-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .drag-handle {
+    cursor: grab;
+    margin-right: 0.5rem;
+  }
+  
+  .spot-content {
+    flex: 1;
+  }
+  
+  
+  .spot-item:last-child {
+    border-bottom: none;
+  }
+  
+  .spot-item button {
+    background-color: #FF7B54;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  

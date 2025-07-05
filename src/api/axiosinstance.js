@@ -3,6 +3,7 @@ import { store } from "../store";
 import { updateAccessToken, logout } from "../store/authSlice";
 
 const serverIp = import.meta.env.VITE_API_SERVER_IP; 
+//const authToken = import.meta.env.VITE_AUTH_TOKEN;
 
 const axiosInstance = axios.create({ 
     baseURL: serverIp, 
@@ -66,5 +67,4 @@ axiosInstance.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
 export default axiosInstance;
