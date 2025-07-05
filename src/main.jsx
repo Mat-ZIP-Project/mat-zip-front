@@ -8,8 +8,8 @@ import AppMapSearch from './AppMapSearch';
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    {/* <App />
-    <AppCourse/> */}
-    <AppMapSearch/>
+     <App />
+    {/* <AppCourse/> 
+    <AppMapSearch/> */}
   </BrowserRouter>
 )

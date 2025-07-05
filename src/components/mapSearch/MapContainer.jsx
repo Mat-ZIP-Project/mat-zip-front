@@ -5,18 +5,21 @@ import axiosInstance from '../../api/axiosinstance';
 import haversine from 'haversine-distance';
 
 
-const MapContainer = ({ category,  mapMoved, setMapMoved, markers ,setMarkers}) => {
+const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurants,setCenterPosition }) => {
   
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const [currentPosition, setCurrentPosition] = useState(null);
-
+  const markerObjects = useRef([]);  // 지도에 실제 표시된 마커 객체들
+  const openInfowindow = useRef(null);  
  
   
  useEffect(() => {
     if (!window.kakao || !mapRef.current) return;
 
-    console.log(window.kakao.maps.geometry);
+   
+
+  
      navigator.geolocation.getCurrentPosition(
       (position) => {
         const lat = position.coords.latitude;
@@ -30,9 +33,24 @@ const MapContainer = ({ category,  mapMoved, setMapMoved, markers ,setMarkers}) 
     };
     mapInstance.current = new window.kakao.maps.Map(mapRef.current, mapOption);
 
+     // 지도 클릭 시 정보창 닫기
+  window.kakao.maps.event.addListener(mapInstance.current, 'click', () => {
+    if (openInfowindow.current) {
+      openInfowindow.current.close();
+      openInfowindow.current = null;
+    }
+  });
+
     window.kakao.maps.event.addListener(mapInstance.current, 'dragend', () => {
       setMapMoved(true);
     });
+
+    setCenterPosition(() => (lat, lng) => {
+      if (mapInstance.current) {
+        mapInstance.current.setCenter(new window.kakao.maps.LatLng(lat, lng));
+      }
+    });
+
      
     searchByMapBounds();
   },
@@ -40,20 +58,51 @@ const MapContainer = ({ category,  mapMoved, setMapMoved, markers ,setMarkers}) 
         console.error(error);
       }
     );
+
 }, []);
+
 
 
   useEffect(() => {
     if (!mapInstance.current) return;
+     // 기존 마커 제거
+  markerObjects.current.forEach(marker => marker.setMap(null));
+  markerObjects.current = [];
 
-    markers.forEach(({ latitude, longitude, name }) => {
-      const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
-      const marker = new window.kakao.maps.Marker({
-        position: markerPosition,
-      });
-      marker.setMap(mapInstance.current);
+
+    // 새 마커 생성
+  const newMarkerObjects = markers.map(({ latitude, longitude, restaurantName }) => {
+    const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
+    const marker = new window.kakao.maps.Marker({
+      position: markerPosition,
+      map: mapInstance.current,
     });
+
+ // 정보창 생성
+    const infowindow = new window.kakao.maps.InfoWindow({
+      content: `<div style="padding:5px;font-size:14px;">${restaurantName}</div>`
+    });
+
+    // 마커 클릭 시 정보창 열기
+    window.kakao.maps.event.addListener(marker, 'click', () => {
+      // 기존 열려있는 정보창 닫기
+      if (openInfowindow.current) {
+        openInfowindow.current.close();
+      }
+      infowindow.open(mapInstance.current, marker);
+      openInfowindow.current = infowindow;
+    });
+
+    return marker;
+  });
+
+  markerObjects.current = newMarkerObjects;
+
   }, [markers]);
+
+ 
+ 
+  
 
   const moveToCurrentLocation = () => {
     if (mapInstance.current && currentPosition) {
@@ -91,8 +140,9 @@ const MapContainer = ({ category,  mapMoved, setMapMoved, markers ,setMarkers}) 
       }
     })
     .then(res => {
-      console.log(res);
+      setRestaurants(res.data);
       setMarkers(res.data);
+      setMapMoved(false);
     })
     .catch(err => {
       console.error(err);

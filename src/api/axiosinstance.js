@@ -8,6 +8,6 @@ const axiosInstance = axios.create({
     timeout: 5000, 
     /*headers: {
     Authorization: authToken
-  },*/
+  },*/  //비회원은 headers 지우고 보내야함
     }); 
 export default axiosInstance;
