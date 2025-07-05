@@ -4,8 +4,9 @@ import axiosInstance from "../../api/axiosinstance";
 import CourseHeader from '../../components/customCourse/CourseHeader';
 import CourseMap from '../../components/customCourse/CourseMap';
 import ActionButtons from '../../components/common/ActionButtons';
-import '../../assets/styles/pages/courseDetailPage.css';
+
 import CustomCourseSpotList from "../../components/customCourse/CustomCourseSpotList";
+import '../../assets/styles/pages/customCourse/courseDetailPage.css';
 
 const CourseDetailPage = () => {
   const { courseId } = useParams();
