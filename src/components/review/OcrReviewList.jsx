@@ -18,7 +18,7 @@ const OcrReviewList = ({ search }) => {
   if (!reviews || reviews.length === 0)
     return (
       <div style={{ marginTop: 40, color: "#999" }}>
-        OCR(현장) 리뷰가 없습니다.
+        영수증 리뷰가 없습니다.
       </div>
     );
 

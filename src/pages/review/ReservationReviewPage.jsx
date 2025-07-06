@@ -12,8 +12,8 @@ const ReservationReviewPage = () => {
   };
 
   return (
-    <div className="app-wrapper">
-      <div className="app-container">
+    <div className="full-screen-form">
+      <div className="review-content-wrapper">
         <header className="review-list-header">
           <input
             className="review-list-search"

@@ -5,6 +5,7 @@
   min-height: 100vh;
   background: #f9f9f9;
 }
+
 .app-container {
   width: 460px;
   max-width: 100%;
@@ -18,19 +19,22 @@
   box-sizing: border-box;
   position: relative;
 }
+
+/* 1. 검색창 영역(header) */
 .review-list-header {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  height: 50px;
+  height: 38px; /* 기존 50px → 38px로 줄임 */
   background: #fff;
   border-bottom: 1.5px solid #f2f2f2;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.3rem; /* 기존 0.5rem → 0.3rem로 줄임 */
 }
+
 .review-list-search {
-  width: 250px;
-  font-size: 1.08rem;
-  padding: 9px 14px;
+  width: 180px; /* 기존 250px → 180px */
+  font-size: 1rem; /* 기존 1.08rem → 1rem */
+  padding: 7px 10px; /* 기존 9px 14px → 7px 10px */
   border: 1.5px solid #e1e1e1;
   border-radius: 8px;
   background: #f8f8f8;
@@ -40,13 +44,69 @@
   border: 1.5px solid #6a5cff;
   outline: none;
 }
+
+/* 2. "예약자 리뷰" 제목 */
 .app-container h2 {
-  font-size: 1.25rem;
+  font-size: 1.09rem; /* 기존 1.25rem → 1.09rem */
   font-weight: 600;
-  margin: 28px 0 20px 6px;
+  margin: 16px 0 10px 5px; /* 기존 28px 0 20px 6px → 16px 0 10px 5px */
   color: #222;
   letter-spacing: -1px;
 }
+
+/* 3. 리뷰 작성 폼 전체 */
+.review-form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px 14px 24px 14px;
+  border: 1.2px solid #f0f1f6;
+  height: 290px;
+  min-height: 210px;
+  max-height: 340px;
+}
+.review-form input,
+.review-form textarea {
+  margin-bottom: 7px;
+  font-size: 1rem;
+  border-radius: 7px;
+  border: 1.2px solid #e2e2e2;
+  padding: 9px 11px;
+  outline: none;
+}
+.review-form textarea {
+  min-height: 110px;
+  resize: none;
+}
+.form-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.review-form select {
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1.1px solid #e2e2e2;
+  padding: 5px 7px;
+}
+.review-form button {
+  background: #6a5cff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 7px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.13s;
+}
+.review-form button:hover {
+  background: #443fd7;
+}
+
+/* 나머지 리뷰 목록/카드 부분(그대로!) */
 .review-list-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -122,54 +182,6 @@
   color: #fff;
 }
 
-/* 리뷰 작성 폼 */
-.review-form {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 22px;
-  background: #f8f9fa;
-  border-radius: 12px;
-  padding: 17px 15px;
-  border: 1.2px solid #f0f1f6;
-}
-.review-form input,
-.review-form textarea {
-  margin-bottom: 7px;
-  font-size: 1rem;
-  border-radius: 7px;
-  border: 1.2px solid #e2e2e2;
-  padding: 9px 11px;
-  outline: none;
-}
-.review-form textarea {
-  min-height: 70px;
-  resize: none;
-}
-.form-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.review-form select {
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1.1px solid #e2e2e2;
-  padding: 5px 7px;
-}
-.review-form button {
-  background: #6a5cff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 7px 20px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.13s;
-}
-.review-form button:hover {
-  background: #443fd7;
-}
 /* 별점 */
 .star-rating {
   display: flex;

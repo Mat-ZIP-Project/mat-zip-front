@@ -13,7 +13,7 @@ import NotFound from "./pages/NotFound";
 import MyPageTest from "./pages/MyPageTest";
 import Signup from "./pages/signup/SignupMain";
 
-// 리뷰 전용 페이지 컴포넌트 import (신규)
+// 리뷰 전용 페이지 컴포넌트 import
 import ReservationReviewPage from "./pages/review/ReservationReviewPage";
 import OcrReviewPage from "./pages/review/OcrReviewPage";
 
