@@ -1,0 +1,13 @@
+.local-auth-page {
+  padding: 1rem;
+}
+
+.local-auth-page .section {
+  margin-bottom: 1rem;
+}
+
+.local-auth-page .section-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
