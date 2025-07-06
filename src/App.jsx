@@ -11,6 +11,11 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import Owner from "./pages/Owner";
 import NotFound from "./pages/NotFound";
 import MyPageTest from "./pages/MyPageTest";
+import SearchMapPage from "./pages/searchMap/SearchMapPage";
+import TempCoursePage from "./pages/customCourse/TempCoursePage";
+import MyCourseListPage from "./pages/customCourse/MyCourseListPage";
+import CourseDetailPage from "./pages/customCourse/CourseDetailPage";
+import LocalAuthPage from './pages/localAuth/LocalAuthPage';
 
 function App() {
 
@@ -29,6 +34,7 @@ function App() {
                 {/* <Route path="/signup" element={<SignUp />} />
                 <Route path="/find-id" element={<FindId />} />
                 <Route path="/auth/find-password" element={<FindPassword />} /> */}
+                <Route path="/nearby" element={<SearchMapPage/>}/>
             </Route>
 
 
@@ -36,7 +42,12 @@ function App() {
             <Route element={<ProtectedRoute />}>
                 <Route element={<MainLayout />}>
                     <Route path="/mypage" element={<MyPageTest />} />
-                </Route>
+                    <Route path="/courses" element={<TempCoursePage />}/>
+                    <Route path="/my-courses" element={<MyCourseListPage />} />
+                    <Route path="/course/custom/details/:courseId" element={<CourseDetailPage />} />
+                    <Route path="/local-auth" element={<LocalAuthPage/>}/>
+                </Route>  
+                
             </Route>
 
 
@@ -51,7 +62,7 @@ function App() {
             <Route element={<ProtectedRoute requiredRole="ROLE_ADMIN" />}>
 
             </Route>
-
+            
 
             {/* 404 페이지 */}
             <Route path="/*" element={<NotFound />} />
