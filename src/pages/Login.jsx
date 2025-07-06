@@ -7,6 +7,7 @@ import styles from '../assets/styles/pages/Login.module.css';
 import FormInput from '../components/login/FormInput';
 import FormButton from '../components/login/FormButton'; 
 import CheckboxWithLinks from '../components/login/CheckboxWithLinks.jsx';
+import inputStyles from '../assets/styles/login/FormInput.module.css';
 
 const Login = () => {
     const [formData, setForm] = useState({ userId: '', password: '' });
@@ -140,6 +141,7 @@ const Login = () => {
                         onChange={changeValue}
                         error={errors.userId}
                         autoComplete="username"
+                        className={inputStyles.loginInput}
                     />
 
                     <FormInput
@@ -149,6 +151,7 @@ const Login = () => {
                         onChange={changeValue}
                         error={errors.password}
                         autoComplete="current-password"
+                        className={inputStyles.loginInput}
                     />
 
                     {errors.general && (

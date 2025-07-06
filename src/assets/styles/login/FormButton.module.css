@@ -59,6 +59,10 @@
   transition: all 0.3s ease;
   margin-bottom: 12px;
   box-sizing: border-box;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .primary {
@@ -83,12 +87,14 @@
 .large {
   padding: 14px 20px;
   font-size: 16px;
+  min-height: 50px;
 }
 
 .small {
   padding: 10px 16px;
   font-size: 14px;
   margin-bottom: 0;
+  min-height: 50px;
 }
 
 .disabled {
@@ -105,10 +111,12 @@
   .button {
     padding: 12px 16px;
     font-size: 14px;
+    min-height: 50px; 
   }
   
   .small {
     padding: 8px 12px;
     font-size: 13px;
+    min-height: 50px; 
   }
 }

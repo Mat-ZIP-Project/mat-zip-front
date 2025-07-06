@@ -2,31 +2,21 @@ import React from 'react';
 import styles from '../../assets/styles/signup/ProgressBar.module.css';
 
 const ProgressBar = ({ currentStep, totalSteps, stepTitles }) => {
+    const progressPercentage = (currentStep / totalSteps) * 100;
+
     return (
         <div className={styles.container}>
-            <div className={styles.stepsContainer}>
-                {Array.from({ length: totalSteps }, (_, index) => {
-                    const stepNumber = index + 1;
-                    const isActive = stepNumber <= currentStep;
-                    const isConnected = stepNumber < totalSteps;
-                    
-                    return (
-                        <React.Fragment key={stepNumber}>
-                            <div className={`${styles.stepCircle} ${isActive ? styles.active : ''}`}>
-                                <span className={styles.stepNumber}>{stepNumber}</span>
-                            </div>
-                            {isConnected && (
-                                <div className={`${styles.connector} ${stepNumber < currentStep ? styles.completed : ''}`} />
-                            )}
-                        </React.Fragment>
-                    );
-                })}
+            <div className={styles.progressBar}>
+                <div 
+                    className={styles.progressFill}
+                    style={{ width: `${progressPercentage}%` }}
+                />
             </div>
-            <div className={styles.stepInfo}>
+            {/* <div className={styles.stepInfo}>
                 <span className={styles.stepText}>
                     {stepTitles[currentStep - 1]} ({currentStep}/{totalSteps})
                 </span>
-            </div>
+            </div> */}
         </div>
     );
 };

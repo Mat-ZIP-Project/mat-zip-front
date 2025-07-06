@@ -42,7 +42,7 @@
 .inputGroup {
   display: flex;
   gap: 8px;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .inputGroup > div:first-child {
@@ -52,17 +52,26 @@
 .checkButton {
   flex-shrink: 0;
   margin-top: 0;
-  min-width: 80px;
+  width: 100px;
+  min-width: 100px;
   max-width: 100px;
 }
 
-.successMessage {
+.idMessage {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: 13px;
+  min-height: 16px;
+  padding: 0; 
+}
+
+.idMessage.success {
   color: #4caf50;
-  margin-top: 4px;
+}
+
+.idMessage.error {
+  color: #d32f2f;
 }
 
 .checkIcon {
@@ -72,8 +81,7 @@
 
 .passwordMatchMessage {
   font-size: 13px;
-  margin-top: 4px;
-  padding: 4px 0;
+  padding: 0;
 }
 
 .passwordMatchMessage.valid {
@@ -82,57 +90,6 @@
 
 .passwordMatchMessage.invalid {
   color: #d32f2f;
-}
-
-.categorySection {
-  margin: 20px 0;
-}
-
-.categoryLabel {
-  display: block;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 12px;
-}
-
-.optional {
-  font-size: 12px;
-  color: #999;
-  font-weight: normal;
-}
-
-.categoryGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
-  gap: 8px;
-}
-
-.categoryButton {
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  background: white;
-  color: #666;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.categoryButton:hover {
-  border-color: #ff6b35;
-  color: #ff6b35;
-}
-
-.categoryButton.selected {
-  background-color: #ff6b35;
-  border-color: #ff6b35;
-  color: white;
-}
-
-.categoryButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
 }
 
 .errorAlert {
@@ -162,23 +119,34 @@
   }
   
   .inputGroup {
-    flex-direction: column;
+    display: flex;
+    align-items: stretch;
     gap: 8px;
   }
   
   .checkButton {
-    min-width: auto;
-    width: 100%;
-    max-width: 100%;
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    font-size: 12px; 
   }
-  
-  .categoryGrid {
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-    gap: 6px;
-  }
-  
-  .categoryButton {
-    padding: 8px 6px;
+
+  .idMessage {
     font-size: 12px;
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 360px) {
+  .checkButton {
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+  
+  .inputGroup {
+    gap: 6px;
   }
 }

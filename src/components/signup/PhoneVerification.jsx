@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, forwardRef } from 'react'; // 수정: forwardRef 추가
 import styles from '../../assets/styles/signup/PhoneVerification.module.css';
 import axiosInstance from '../../api/axiosinstance';
 import FormInput from '../../components/login/FormInput';
 import FormButton from '../../components/login/FormButton';
 
-
-const PhoneVerification = ({ phone, onChange, onVerified, error }) => {
+// 수정: forwardRef로 래핑
+const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onErrorClear }, ref) => {
     const [verificationCode, setVerificationCode] = useState('');
     const [isCodeSent, setIsCodeSent] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
@@ -44,15 +44,18 @@ const PhoneVerification = ({ phone, onChange, onVerified, error }) => {
             });
             
             setIsCodeSent(true);
-            setTimeLeft(300); // 5분
+            setTimeLeft(300);
             setErrors({});
+            if (onErrorClear) {
+                onErrorClear('phone');
+            }
         } catch (error) {
             const errorMessage = error.response?.data?.errMsg || '인증코드 발송에 실패했습니다';
             setErrors({ sms: errorMessage });
         } finally {
             setIsLoading(false);
         }
-    }, [phone]);
+    }, [phone, onErrorClear]);
 
     const handleVerifyCode = useCallback(async () => {
         if (!verificationCode.trim()) {
@@ -73,6 +76,11 @@ const PhoneVerification = ({ phone, onChange, onVerified, error }) => {
             setTimeLeft(0);
             setErrors({});
             onVerified(true);
+
+            // 수정: 인증 완료 시 상위 컴포넌트의 에러 메시지도 확실히 제거
+            if (onErrorClear) {
+                onErrorClear('phone');
+            }
         } catch (error) {
             const errorMessage = error.response?.data?.errMsg || '인증코드가 일치하지 않습니다';
             setErrors({ code: errorMessage });
@@ -80,7 +88,7 @@ const PhoneVerification = ({ phone, onChange, onVerified, error }) => {
         } finally {
             setIsLoading(false);
         }
-    }, [verificationCode, phone, onVerified]);
+    }, [verificationCode, phone, onVerified, onErrorClear]);
 
     const handlePhoneChange = useCallback((e) => {
         const { value } = e.target;
@@ -105,12 +113,13 @@ const PhoneVerification = ({ phone, onChange, onVerified, error }) => {
         <div className={styles.container}>
             <div className={styles.inputGroup}>
                 <FormInput
+                    ref={ref} // 추가: ref 전달
                     name="phone"
                     type="tel"
                     placeholder="휴대폰번호를 입력해주세요"
                     value={phone}
                     onChange={handlePhoneChange}
-                    error={error || errors.phone}
+                    error={(!isVerified && error) || errors.phone} // 수정: 인증 완료 시 에러 숨김
                     disabled={isVerified}
                 />
                 <FormButton
@@ -169,6 +178,8 @@ const PhoneVerification = ({ phone, onChange, onVerified, error }) => {
             )}
         </div>
     );
-};
+});
+
+PhoneVerification.displayName = 'PhoneVerification'; // 추가: displayName 설정
 
 export default PhoneVerification;

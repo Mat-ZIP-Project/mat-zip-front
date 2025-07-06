@@ -1,58 +1,24 @@
 .container {
   margin-bottom: 30px;
+}
+
+.progressBar {
   width: 100%;
-}
-
-.stepsContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 16px;
-  padding: 0 20px;
-}
-
-.stepCircle {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  height: 8px;
   background-color: #e0e0e0;
-  border: 2px solid #e0e0e0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 2;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
 }
 
-.stepCircle.active {
-  background-color: #ff6b35;
-  border-color: #ff6b35;
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff6b35 0%, #ff8f65 100%);
+  transition: width 0.3s ease;
+  border-radius: 4px;
 }
 
-.stepNumber {
-  font-size: 14px;
-  font-weight: 600;
-  color: #999;
-}
-
-.stepCircle.active .stepNumber {
-  color: white;
-}
-
-.connector {
-  flex: 1;
-  height: 2px;
-  background-color: #e0e0e0;
-  margin: 0 8px;
-  transition: background-color 0.3s ease;
-}
-
-.connector.completed {
-  background-color: #ff6b35;
-}
-
-.stepInfo {
+/* .stepInfo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,27 +29,10 @@
   font-weight: 500;
   color: #333;
   text-align: center;
-}
+} */
 
 @media (max-width: 480px) {
-  .stepCircle {
-    width: 28px;
-    height: 28px;
-  }
-  
-  .stepNumber {
-    font-size: 12px;
-  }
-  
   .stepText {
     font-size: 12px;
-  }
-  
-  .stepsContainer {
-    padding: 0 10px;
-  }
-  
-  .connector {
-    margin: 0 4px;
   }
 }

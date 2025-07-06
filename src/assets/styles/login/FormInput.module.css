@@ -1,6 +1,5 @@
 .inputGroup {
   position: relative;
-  margin-bottom: 20px;
 }
 
 .input {
@@ -35,4 +34,9 @@
   font-size: 12px;
   margin-top: 4px;
   margin-left: 4px;
+}
+
+/* 로그인용 디자인 수정 */
+.loginInput {
+  margin-bottom: 20px;
 }
