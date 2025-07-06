@@ -1,0 +1,145 @@
+/* 전체 컨테이너 스타일 */
+.App {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: #ffffff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* 메인 콘텐츠 영역 */
+.AppMain {
+  width: 100%;
+  min-height: calc(100vh - 122px); /* 56px(헤더) + 66px(푸터) = 122px */
+  padding-top: 56px;
+  padding-bottom: 66px;
+  box-sizing: border-box;
+  overflow-y: auto; /* 컨텐츠가 많을 경우 스크롤 */
+}
+
+
+/* 모바일 (600px 이하) */
+@media (max-width: 600px) {
+  .App {
+    max-width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  
+  .AppMain {
+    min-height: calc(100vh - 122px);
+    padding-top: 56px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-bottom: 66px;
+  }
+  .AppMain.auth-page {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+}
+
+/* 작은 모바일 (480px 이하) */
+@media (max-width: 480px) {
+  .AppMain {
+    min-height: calc(100vh - 129px);
+    padding-top: 64px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 65px;
+  }
+  .AppMain.auth-page {
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+}
+
+/* 태블릿 (601px ~ 768px) */
+@media (min-width: 601px) and (max-width: 768px) {
+  body {
+    background-color: #f5f5f5;
+  }
+  
+  .App {
+    margin: 20px auto;
+    border-radius: 12px;
+    max-width: 600px;
+  }
+  
+  .AppMain {
+    min-height: calc(100vh - 122px);
+    padding-top: 56px;
+    padding-bottom: 66px;
+  }
+
+  .AppMain.auth-page {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+}
+
+/* 데스크톱 (769px 이상) */
+@media (min-width: 769px) {
+  body {
+    background-color: #f5f5f5;
+  }
+  
+  .App {
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    max-width: 600px;
+  }
+  
+  .AppMain {
+    min-height: calc(100vh - 122px);
+    padding-top: 56px;
+    padding-bottom: 66px;
+  }
+
+
+}
+
+/* 초대형 화면 (1200px 이상) */
+@media (min-width: 1200px) {
+  .App {
+    max-width: 600px;
+  }
+}
+
+/* 헤더,푸터없을경우 */
+.AppMain.no-footer {
+  padding-bottom: 20px;
+}
+
+.AppMain.no-header {
+  padding-top: 0;
+}
+
+/* iOS Safari 하단 바 대응 */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .AppMain {
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+  }
+  
+  @media (max-width: 600px) {
+    .AppMain {
+      padding-bottom: calc(70px + env(safe-area-inset-bottom));
+    }
+  }
+}
