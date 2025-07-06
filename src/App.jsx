@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import Owner from "./pages/Owner";
 import NotFound from "./pages/NotFound";
 import MyPageTest from "./pages/MyPageTest";
+import Signup from "./pages/signup/SignupMain";
 
 function App() {
 
@@ -26,8 +27,8 @@ function App() {
             {/* 로그인관련 레이아웃 그룹 - 로그인 불필요 */}
             <Route element={<AuthLayout />}>
                 <Route path="/login" element={<Login />} />
-                {/* <Route path="/signup" element={<SignUp />} />
-                <Route path="/find-id" element={<FindId />} />
+                <Route path="/signup" element={<Signup />} />
+                {/* <Route path="/find-id" element={<FindId />} />
                 <Route path="/auth/find-password" element={<FindPassword />} /> */}
             </Route>
 
