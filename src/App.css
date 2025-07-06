@@ -143,3 +143,64 @@
     }
   }
 }
+
+
+/* SweetAlert2 커스텀 */
+.swal2-popup {
+    border-radius: 8px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.swal2-title {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #333 !important;
+    margin-bottom: 10px !important;
+}
+
+.swal2-html-container {
+    font-size: 14px !important;
+    color: #666 !important;
+    line-height: 1.5 !important;
+}
+
+.swal2-icon.swal2-info {
+    border-color: #2196f3 !important;
+    color: #2196f3 !important;
+}
+
+.swal2-icon.swal2-success {
+    border-color: #4caf50 !important;
+    color: #4caf50 !important;
+}
+
+.swal2-icon.swal2-error {
+    border-color: #f44336 !important;
+    color: #f44336 !important;
+}
+
+.swal2-timer-progress-bar {
+    background: #ff6b35 !important;
+    height: 4px !important;
+}
+
+/* 로딩 스피너 커스텀 */
+.swal2-loader {
+    border-color: #ff6b35 transparent #ff6b35 transparent !important;
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+    .swal2-popup {
+        width: 90% !important;
+        padding: 1.5em !important;
+    }
+    
+    .swal2-title {
+        font-size: 16px !important;
+    }
+    
+    .swal2-html-container {
+        font-size: 13px !important;
+    }
+}

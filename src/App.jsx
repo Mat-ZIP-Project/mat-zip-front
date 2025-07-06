@@ -11,6 +11,7 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import Owner from "./pages/Owner";
 import NotFound from "./pages/NotFound";
 import MyPageTest from "./pages/MyPageTest";
+import Signup from "./pages/signup/SignupMain";
 
 // 리뷰 전용 페이지 컴포넌트 import (신규)
 import ReservationReviewPage from "./pages/review/ReservationReviewPage";
@@ -28,9 +29,9 @@ function App() {
         {/* 로그인관련 레이아웃 그룹 - 로그인 불필요 */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/signup" element={<SignUp />} />
-          <Route path="/find-id" element={<FindId />} />
-          <Route path="/auth/find-password" element={<FindPassword />} /> */}
+          <Route path="/signup" element={<Signup />} />
+          {/* <Route path="/find-id" element={<FindId />} />
+                <Route path="/auth/find-password" element={<FindPassword />} /> */}
         </Route>
 
         {/* ⭐️ 예약자 리뷰 Route (로그인 불필요, 테스트용) */}
