@@ -13,7 +13,7 @@ import NotFound from "./pages/NotFound";
 import MyPageTest from "./pages/MyPageTest";
 import Signup from "./pages/signup/SignupMain";
 
-// 리뷰 전용 페이지 컴포넌트 import
+// 리뷰 전용 페이지 컴포넌트
 import ReservationReviewPage from "./pages/review/ReservationReviewPage";
 import OcrReviewPage from "./pages/review/OcrReviewPage";
 
@@ -26,21 +26,23 @@ function App() {
           <Route index element={<Home />} />
         </Route>
 
-        {/* 로그인관련 레이아웃 그룹 - 로그인 불필요 */}
+        {/* 로그인 관련 레이아웃 그룹 - 로그인 불필요 */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           {/* <Route path="/find-id" element={<FindId />} />
-                <Route path="/auth/find-password" element={<FindPassword />} /> */}
+              <Route path="/auth/find-password" element={<FindPassword />} /> */}
         </Route>
 
-        {/* ⭐️ 예약자 리뷰 Route (로그인 불필요, 테스트용) */}
-        <Route element={<MainLayout />}>
-          <Route
-            path="/reservation-reviews"
-            element={<ReservationReviewPage />}
-          />
-          <Route path="/ocr-reviews" element={<OcrReviewPage />} />
+        {/* ⭐ 예약자 리뷰 Route - 로그인 필요하도록 ProtectedRoute 추가 */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<MainLayout />}>
+            <Route
+              path="/reservation-reviews"
+              element={<ReservationReviewPage />}
+            />
+            <Route path="/ocr-reviews" element={<OcrReviewPage />} />
+          </Route>
         </Route>
 
         {/* 🛡️ 일반 사용자 라우트 - 로그인 필요 */}

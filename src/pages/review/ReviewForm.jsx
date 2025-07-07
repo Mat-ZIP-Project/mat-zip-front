@@ -1,13 +1,37 @@
-// src/components/review/ReviewForm.jsx
 import React, { useState } from "react";
 import { createReview } from "../../api/reviewApi";
+
+// ★ 별점 클릭 UI 컴포넌트(내부에 바로 선언)
+function StarRating({ rating, setRating }) {
+  return (
+    <div className="star-rating" style={{ margin: "12px 0 10px 0" }}>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span
+          key={star}
+          onClick={() => setRating(star)}
+          className={star <= rating ? "selected" : ""}
+          style={{
+            cursor: "pointer",
+            fontSize: "2rem",
+            color: star <= rating ? "#ffbc06" : "#ddd",
+            marginRight: "5px",
+            textShadow: star <= rating ? "0 1px 0 #f8e2b2" : undefined,
+            userSelect: "none",
+            transition: "color 0.18s",
+          }}
+          aria-label={`${star}점`}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  );
+}
 
 const ReviewForm = ({ onReviewSubmit, mode }) => {
   const [restaurantId, setRestaurantId] = useState("");
   const [content, setContent] = useState("");
   const [rating, setRating] = useState(5);
-
-  // OCR 이미지 파일 상태
   const [ocrFile, setOcrFile] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -20,14 +44,12 @@ const ReviewForm = ({ onReviewSubmit, mode }) => {
       alert("리뷰는 15자 이상 작성해야 합니다.");
       return;
     }
-
     try {
       if (mode === "ocr") {
         if (!ocrFile) {
           alert("OCR 리뷰는 영수증 이미지를 첨부해야 합니다.");
           return;
         }
-        // FormData로 OCR 이미지 전송 (구현 필요)
         const formData = new FormData();
         formData.append("restaurantId", restaurantId);
         formData.append("content", content);
@@ -54,6 +76,8 @@ const ReviewForm = ({ onReviewSubmit, mode }) => {
         onChange={(e) => setRestaurantId(e.target.value)}
         style={{ marginBottom: "7px", width: 120 }}
       />
+      {/* ⭐⭐⭐⭐⭐ 별점 UI */}
+      <StarRating rating={rating} setRating={setRating} />
       <textarea
         placeholder="리뷰를 남겨보세요."
         value={content}
@@ -62,16 +86,6 @@ const ReviewForm = ({ onReviewSubmit, mode }) => {
         maxLength={200}
       />
       <div className="form-bottom">
-        <select
-          value={rating}
-          onChange={(e) => setRating(Number(e.target.value))}
-        >
-          {[5, 4, 3, 2, 1].map((star) => (
-            <option key={star} value={star}>
-              {star}점
-            </option>
-          ))}
-        </select>
         {mode === "ocr" && (
           <input
             type="file"

@@ -25,16 +25,16 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  height: 38px; /* 기존 50px → 38px로 줄임 */
+  height: 38px;
   background: #fff;
   border-bottom: 1.5px solid #f2f2f2;
-  margin-bottom: 0.3rem; /* 기존 0.5rem → 0.3rem로 줄임 */
+  margin-bottom: 0.3rem;
 }
 
 .review-list-search {
-  width: 180px; /* 기존 250px → 180px */
-  font-size: 1rem; /* 기존 1.08rem → 1rem */
-  padding: 7px 10px; /* 기존 9px 14px → 7px 10px */
+  width: 180px;
+  font-size: 1rem;
+  padding: 7px 10px;
   border: 1.5px solid #e1e1e1;
   border-radius: 8px;
   background: #f8f8f8;
@@ -45,16 +45,15 @@
   outline: none;
 }
 
-/* 2. "예약자 리뷰" 제목 */
-.app-container h2 {
-  font-size: 1.09rem; /* 기존 1.25rem → 1.09rem */
+/* 2. "예약자 리뷰" 제목  */
+.review-content-wrapper h2 {
+  font-size: 1.35rem;
   font-weight: 600;
-  margin: 16px 0 10px 5px; /* 기존 28px 0 20px 6px → 16px 0 10px 5px */
+  margin: 16px 0 10px 5px;
   color: #222;
   letter-spacing: -1px;
 }
 
-/* 3. 리뷰 작성 폼 전체 */
 .review-form {
   display: flex;
   flex-direction: column;
@@ -82,15 +81,11 @@
 }
 .form-bottom {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
+  gap: 8px;
 }
-.review-form select {
-  font-size: 1rem;
-  border-radius: 5px;
-  border: 1.1px solid #e2e2e2;
-  padding: 5px 7px;
-}
+
 .review-form button {
   background: #6a5cff;
   color: #fff;
@@ -106,7 +101,6 @@
   background: #443fd7;
 }
 
-/* 나머지 리뷰 목록/카드 부분(그대로!) */
 .review-list-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -182,17 +176,19 @@
   color: #fff;
 }
 
-/* 별점 */
+/* 별점 클릭 UI (입력 폼용) */
 .star-rating {
   display: flex;
   gap: 7px;
-  margin: 10px 0 12px 0;
-  font-size: 1.35rem;
+  margin: 13px 0 10px 0;
+  font-size: 2rem;
+  justify-content: flex-start;
 }
 .star-rating span {
   cursor: pointer;
   color: #ddd;
   transition: color 0.18s;
+  user-select: none;
 }
 .star-rating span.selected {
   color: #ffbc06;
