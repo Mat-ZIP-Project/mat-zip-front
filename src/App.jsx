@@ -8,9 +8,9 @@ import AuthLayout from "./components/layout/AuthLayout";
 import Home from "./pages/Home";
 import Login from "./pages/login/Login";
 import ProtectedRoute from "./components/common/ProtectedRoute";
-import Owner from "./pages/Owner";
+import Owner from "./pages/owner/Owner";
 import NotFound from "./pages/NotFound";
-import MyPageTest from "./pages/login/MyPageTest";
+import MyPageTest from "./pages/MyPageTest";
 import SearchMapPage from "./pages/searchMap/SearchMapPage";
 import TempCoursePage from "./pages/customCourse/TempCoursePage";
 import MyCourseListPage from "./pages/customCourse/MyCourseListPage";
@@ -34,12 +34,12 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        {/* 메인 레이아웃 그룹 - 로그인 불필요 */}
+        {/* 메인 레이아웃 그룹(메인푸터/헤더 사용) - 로그인 불필요 */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
         </Route>
 
-        {/* 로그인관련 레이아웃 그룹 - 로그인 불필요 */}
+        {/* 로그인관련 레이아웃 그룹(로그인용 푸터/헤더 사용) - 로그인 불필요 */}
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           {/* <Route path="/signup" element={<SignUp />} />
