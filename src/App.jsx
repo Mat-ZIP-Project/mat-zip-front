@@ -1,42 +1,79 @@
-import { Link, Route, Routes } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
+
+import MainLayout from "./components/layout/MainLayout";
+import AuthLayout from "./components/layout/AuthLayout";
+
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import Owner from "./pages/Owner";
+import NotFound from "./pages/NotFound";
+import MyPageTest from "./pages/MyPageTest";
+import SearchMapPage from "./pages/searchMap/SearchMapPage";
+import TempCoursePage from "./pages/customCourse/TempCoursePage";
+import MyCourseListPage from "./pages/customCourse/MyCourseListPage";
+import CourseDetailPage from "./pages/customCourse/CourseDetailPage";
+import LocalAuthPage from "./pages/localAuth/LocalAuthPage";
 import ReservationPopup from "./components/reservation/ReservationPopup";
 
 function App() {
+  // <Link
+  //         to="/reservation"
+  //         style={{
+  //           textDecoration: "none",
+  //           color: "blue",
+  //           border: "1px solid black",
+  //         }}
+  //       >
+  //         예약하기
+  //       </Link>
+
   return (
     <div className="App">
-      {" "}
-      {/* 최상위 div로 감싸는 것이 좋습니다. */}
-      <h1>mat-zip!!</h1> {/* 제목 */}
-      <nav
-        style={{
-          padding: "10px",
-          borderBottom: "1px solid #ccc",
-          marginBottom: "20px",
-        }}
-      >
-        <Link
-          to="/"
-          style={{ marginRight: "15px", textDecoration: "none", color: "blue" }}
-        >
-          홈
-        </Link>
-        <Link
-          to="/reservation"
-          style={{
-            textDecoration: "none",
-            color: "blue",
-            border: "1px solid black",
-          }}
-        >
-          예약하기
-        </Link>
-      </nav>
       <Routes>
-        <Route path="/" element={<h2>환영합니다!</h2>} /> {/* 기본 경로 */}
-        <Route path="/reservation" element={<ReservationPopup />} />{" "}
-        {/* 예약 팝업 경로 */}
-        {/* 필요에 따라 다른 경로들을 여기에 추가할 수 있습니다. */}
+        {/* 메인 레이아웃 그룹 - 로그인 불필요 */}
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<Home />} />
+        </Route>
+
+        {/* 로그인관련 레이아웃 그룹 - 로그인 불필요 */}
+        <Route element={<AuthLayout />}>
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/signup" element={<SignUp />} />
+                <Route path="/find-id" element={<FindId />} />
+                <Route path="/auth/find-password" element={<FindPassword />} /> */}
+          <Route path="/nearby" element={<SearchMapPage />} />
+        </Route>
+
+        {/* 🛡️ 일반 사용자 라우트 - 로그인 필요 */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<MainLayout />}>
+            <Route path="/mypage" element={<MyPageTest />} />
+            <Route path="/courses" element={<TempCoursePage />} />
+            <Route path="/my-courses" element={<MyCourseListPage />} />
+            <Route
+              path="/course/custom/details/:courseId"
+              element={<CourseDetailPage />}
+            />
+            <Route path="/local-auth" element={<LocalAuthPage />} />
+            <Route path="/reservation" element={<ReservationPopup />} />
+          </Route>
+        </Route>
+
+        {/* 🏪 식당 업주 전용 라우트 - ROLE_OWNER */}
+        <Route element={<ProtectedRoute requiredRole="ROLE_OWNER" />}>
+          <Route path="/owner" element={<MainLayout />}>
+            <Route index element={<Owner />} />
+          </Route>
+        </Route>
+
+        {/* 👑 관리자 전용 라우트 - ROLE_ADMIN */}
+        <Route element={<ProtectedRoute requiredRole="ROLE_ADMIN" />}></Route>
+
+        {/* 404 페이지 */}
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </div>
   );

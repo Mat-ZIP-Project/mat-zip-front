@@ -1,6 +1,6 @@
 import { getToken } from "firebase/messaging";
 import { messaging } from "./FcmSetting";
-import { axiosInstance, adminAxiosInstance } from "./axiosinstance";
+import axiosInstance from "../api/axiosinstance";
 
 /**
  *  FCM 토큰 발급, 알림 권한 요청, 서비스 워커 등

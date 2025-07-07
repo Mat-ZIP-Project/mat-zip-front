@@ -1,7 +1,7 @@
 // src/components/reservation/ReservationPopup.jsx
 import React from "react";
 import { useReservationLogic } from "./hooks/useReservationLogic";
-import "./reservation.css";
+import "../../assets/styles/reservation/reservation.css";
 
 function ReservationPopup() {
   const {
