@@ -2,7 +2,7 @@ import axios from "axios";
 import { store } from "../store";
 import { logout, updateAccessToken } from "../store/authSlice";
 
-const serverIp = import.meta.env.VITE_API_SERVER_IP; 
+const serverIp = import.meta.env.VITE_API_SERVER_IP;
 
 const axiosInstance = axios.create({ 
     baseURL: serverIp, 
