@@ -55,7 +55,6 @@ const SearchMapPage = () => {
 
   return (
     <div className="search-map-page">
-      <h2 className="page-title">맛집 검색</h2>
       <SearchHeader />
       <div className="search-mode-tab">
         <button className={searchMode === 'map' ? 'active' : ''} onClick={() => setSearchMode('map')}>지도 기반 검색</button>

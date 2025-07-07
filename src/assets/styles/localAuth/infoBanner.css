@@ -1,0 +1,10 @@
+.info-banner {
+  background: #fff8e1;
+  border: 1px solid #ffd54f;
+  color: #ff6f00;
+  font-size: 0.9rem;
+  text-align: center;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
