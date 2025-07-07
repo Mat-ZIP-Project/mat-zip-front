@@ -1,4 +1,4 @@
-import axiosInstance from "../../../api/axiosinstance";
+import { axiosInstance, adminAxiosInstance } from "../../../api/axiosinstance";
 
 /**
  *  예약 신청 api
@@ -24,7 +24,7 @@ export const createReservation = async (reservationData) => {
  */
 export const approveReservation = async (adminApprovalData) => {
   try {
-    const response = await axiosInstance.post(
+    const response = await adminAxiosInstance.post(
       "/reservation/approve",
       adminApprovalData
     );

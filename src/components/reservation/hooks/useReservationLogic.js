@@ -326,7 +326,7 @@ export const useReservationLogic = () => {
 
       const response = await approveReservation(requestBody);
 
-      if (response.success) {
+      if (response) {
         setFeedbackMessage(
           `예약 ID ${adminReservationId} ${status} 성공: ${response.message}`
         );

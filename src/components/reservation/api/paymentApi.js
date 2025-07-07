@@ -1,4 +1,4 @@
-import axiosInstance from "../../../api/axiosinstance";
+import { axiosInstance, adminAxiosInstance } from "../../../api/axiosinstance";
 
 /**
  *  사전 검증 api

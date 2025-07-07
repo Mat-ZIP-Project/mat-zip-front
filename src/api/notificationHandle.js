@@ -1,6 +1,6 @@
 import { getToken } from "firebase/messaging";
 import { messaging } from "./FcmSetting";
-import axios from "axios";
+import { axiosInstance, adminAxiosInstance } from "./axiosinstance";
 
 /**
  *  FCM 토큰 발급, 알림 권한 요청, 서비스 워커 등
@@ -33,11 +33,9 @@ async function registerServiceWorker() {
 
 // Fcm 토큰을 백엔드 서버로 전송
 async function sendTokenToServer(token) {
-  const BASE_SERVER_URL = "http://localhost:8080";
-
-  const serverApiEndpoint = `${BASE_SERVER_URL}/api/v1/fcm/registerToken`;
+  const serverApiEndpoint = "/api/v1/fcm/registerToken";
   try {
-    const response = await axios.post(serverApiEndpoint, {
+    const response = await axiosInstance.post(serverApiEndpoint, {
       deviceToken: token,
     });
     console.log("토큰 서버 전송 성공:", response.data);
@@ -52,13 +50,11 @@ async function sendTokenToServer(token) {
 
 async function getDeviceToken() {
   try {
-    const vapidKey =
-      "BMFx6DTV5L0Q09sJFw2CirduI_Hekq8KKp0B1Wi7PzPd-KN5k13CykPQNAml20-Ef6u8-qMSFnFGwKVi4e0SNig";
+    const vapidKey = import.meta.env.VITE_VAPIDKEY;
 
     const currentToken = await getToken(messaging, { vapidKey });
     if (currentToken) {
       console.log("Fcm 토큰 가져오기 성공:", currentToken);
-      alert("Fcm 토큰 가져오기 성공: " + currentToken);
 
       await sendTokenToServer(currentToken);
 
@@ -85,11 +81,9 @@ export async function handleNotification() {
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
       console.error("알림 권한이 거부되었습니다.");
-      alert("알림 권한이 거부되었습니다.");
       return;
     }
     console.log("알림 권한이 허용되었습니다.");
-    alert("알림 권한이 허용되었습니다.");
 
     // 서비스 워커 등록 및 활성화 대기
     await registerServiceWorker();
@@ -98,6 +92,5 @@ export async function handleNotification() {
     await getDeviceToken();
   } catch (error) {
     console.error("알림 처리 중 오류 발생:", error);
-    alert("알림 처리 중 오류 발생: " + error.message);
   }
 }
