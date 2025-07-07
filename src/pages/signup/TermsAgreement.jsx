@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import styles from '../../assets/styles/pages/signup/TermsAgreement.module.css';
-import FormButton from '../../components/login/FormButton';
+import FormButton from '../../components/common/FormButton';
 
 
 const TermsAgreement = ({ onNext, onBack }) => {

@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import styles from "../../assets/styles/pages/signup/UserSignupForm.module.css";
-import FormInput from "../../components/login/FormInput";
-import FormButton from "../../components/login/FormButton";
+import FormInput from "../../components/common/FormInput";
+import FormButton from "../../components/common/FormButton";
 import PhoneVerification from "../../components/signup/PhoneVerification";
 import axiosInstance from "../../api/axiosinstance";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +25,7 @@ const UserSignupForm = ({ onNext, onBack }) => {
     handleInputChange,
     focusFirstErrorField,
   } = useSignupForm({
-    preferenceCategory: "", // 카테고리 선호도 필드
+    preferenceCategory: "",
   });
 
   // 검증 Hook
@@ -64,6 +64,14 @@ const UserSignupForm = ({ onNext, onBack }) => {
     [setFormData]
   );
 
+  // 엔터키 제출 방지 함수
+  const handleKeyPress = useCallback((e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }, []);
+
   const handleSubmit = useCallback(
     async (e) => {
       e.preventDefault();
@@ -74,7 +82,7 @@ const UserSignupForm = ({ onNext, onBack }) => {
       try {
         const signupData = {
           ...formData,
-          phone: formData.phone.replace(/-/g, ""),
+          phone: formData.phone.replace(/-/g, ''),
           termsAgreed: true,
           privacyAgreed: true,
           role: "ROLE_USER",
@@ -90,8 +98,8 @@ const UserSignupForm = ({ onNext, onBack }) => {
           confirmButtonColor: "#ff6b35",
         });
 
-        // 회원가입 성공 후 메인 페이지로 이동
         navigate("/");
+
       } catch (error) {
         const errorMessage =
           error.response?.data?.errMsg || "회원가입에 실패했습니다";
@@ -108,7 +116,7 @@ const UserSignupForm = ({ onNext, onBack }) => {
       <h1 className={styles.title}>회원 정보 입력</h1>
       <p className={styles.subtitle}>서비스 이용을 위한 기본 정보를 입력해주세요</p>
 
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} onKeyPress={handleKeyPress}>
         <div className={styles.formGroup}>
           <label className={styles.label}>아이디 *</label>
           <div className={styles.inputGroup}>

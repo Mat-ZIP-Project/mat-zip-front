@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import styles from '../../assets/styles/pages/signup/UserSignupForm.module.css'; // 수정: 기존 스타일 재사용
-import FormInput from '../../components/login/FormInput';
-import FormButton from '../../components/login/FormButton';
+import FormInput from '../../components/common/FormInput';
+import FormButton from '../../components/common/FormButton';
 import PhoneVerification from '../../components/signup/PhoneVerification';
-// 수정: 공통 Hook 사용 (PreferenceCategorySelector 제외)
 import { useSignupForm } from '../../hooks/useSignupForm';
 import { useSignupValidation } from '../../hooks/useSignupValidation';
 
@@ -32,7 +31,13 @@ const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
         focusFirstErrorField
     );
 
-    // 다음 단계로
+    const handleKeyPress = useCallback((e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+    }, []);
+
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
         
@@ -53,7 +58,7 @@ const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
             <h1 className={styles.title}>기본 정보 입력</h1>
             <p className={styles.subtitle}>사업자 인증을 위한 기본 정보를 입력해주세요</p>
 
-            <form onSubmit={handleSubmit} className={styles.form}>
+            <form onSubmit={handleSubmit} className={styles.form} onKeyPress={handleKeyPress}>
                 <div className={styles.formGroup}>
                     <label className={styles.label}>아이디 *</label>
                     <div className={styles.inputGroup}>

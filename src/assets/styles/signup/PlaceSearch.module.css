@@ -1,0 +1,110 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.searchGroup {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.searchGroup > div:first-child {
+  flex: 1;
+}
+
+.searchButton {
+  flex-shrink: 0;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  height: 50px;
+  min-height: 50px;
+}
+
+.resultsContainer {
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  background-color: #f8f9fa;
+  padding: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.resultsTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 8px 0;
+}
+
+.resultsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resultItem {
+  padding: 12px;
+  background-color: white;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.resultItem:hover {
+  background-color: #e3f2fd;
+  border-color: #2196f3;
+  transform: translateY(-1px);
+}
+
+.placeName {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.placeAddress {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 2px;
+}
+
+.placeCategory {
+  font-size: 12px;
+  color: #999;
+}
+
+.selectedPlace {
+  padding: 8px 12px;
+  background-color: #f1f8e9;
+  border: 1px solid #c8e6c9;
+  border-radius: 4px;
+  color: #4caf50;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+@media (max-width: 480px) {
+  .searchButton {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    font-size: 12px;
+  }
+  
+  .resultsContainer {
+    max-height: 350px;
+  }
+  
+  .selectedPlace {
+    font-size: 12px;
+  }
+}

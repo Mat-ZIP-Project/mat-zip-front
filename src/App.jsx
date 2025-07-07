@@ -6,9 +6,8 @@ import MainLayout from "./components/layout/MainLayout";
 import AuthLayout from "./components/layout/AuthLayout";
 
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import ProtectedRoute from "./components/common/ProtectedRoute";
-import Owner from "./pages/Owner";
 import NotFound from "./pages/NotFound";
 import MyPageTest from "./pages/MyPageTest";
 import Signup from "./pages/signup/SignupMain";
@@ -43,9 +42,9 @@ function App() {
 
             {/* 🏪 식당 업주 전용 라우트 - ROLE_OWNER */}
             <Route element={<ProtectedRoute requiredRole="ROLE_OWNER" />}>
-                <Route path="/owner" element={<MainLayout />}>
+                {/* <Route path="/owner" element={<MainLayout />}>
                     <Route index element={<Owner />} />
-                </Route>
+                </Route> */}
             </Route>
 
             {/* 👑 관리자 전용 라우트 - ROLE_ADMIN */}

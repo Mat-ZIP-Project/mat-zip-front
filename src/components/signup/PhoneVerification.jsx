@@ -1,10 +1,9 @@
 import React, { useState, useCallback, useEffect, forwardRef } from 'react'; // 수정: forwardRef 추가
 import styles from '../../assets/styles/signup/PhoneVerification.module.css';
 import axiosInstance from '../../api/axiosinstance';
-import FormInput from '../../components/login/FormInput';
-import FormButton from '../../components/login/FormButton';
+import FormInput from '../common/FormInput';
+import FormButton from '../common/FormButton';
 
-// 수정: forwardRef로 래핑
 const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onErrorClear }, ref) => {
     const [verificationCode, setVerificationCode] = useState('');
     const [isCodeSent, setIsCodeSent] = useState(false);
@@ -12,6 +11,8 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
     const [timeLeft, setTimeLeft] = useState(0);
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [isPhoneChecked, setIsPhoneChecked] = useState(false);
+    const [isPhoneAvailable, setIsPhoneAvailable] = useState(false);
 
     useEffect(() => {
         let timer;
@@ -30,9 +31,43 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
         return `${mins}:${secs.toString().padStart(2, '0')}`;
     };
 
+    const handlePhoneCheck = useCallback(async () => {
+        if (!phone || !/^01[0-9]{8,9}$/.test(phone.replace(/-/g, ''))) {
+            setErrors({ phone: '올바른 휴대폰번호를 입력해주세요' });
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            await axiosInstance.post('/signup/check/phone', {
+                phone: phone.replace(/-/g, '')
+            });
+            
+            setIsPhoneChecked(true);
+            setIsPhoneAvailable(true);
+            setErrors({ phone: '사용 가능한 휴대폰번호입니다' });
+            
+            if (onErrorClear) {
+                onErrorClear('phone');
+            }
+        } catch (error) {
+            const errorMessage = error.response?.data?.errMsg || '이미 사용 중인 휴대폰번호입니다';
+            setErrors({ phone: errorMessage });
+            setIsPhoneChecked(false);
+            setIsPhoneAvailable(false);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [phone, onErrorClear]);
+
     const handleSendCode = useCallback(async () => {
         if (!phone || !/^01[0-9]{8,9}$/.test(phone.replace(/-/g, ''))) {
             setErrors({ phone: '올바른 휴대폰번호를 입력해주세요' });
+            return;
+        }
+
+        if (!isPhoneChecked || !isPhoneAvailable) {
+            setErrors({ phone: '휴대폰 중복확인을 먼저 완료해주세요' });
             return;
         }
 
@@ -55,9 +90,10 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
         } finally {
             setIsLoading(false);
         }
-    }, [phone, onErrorClear]);
+    }, [phone, onErrorClear, isPhoneChecked, isPhoneAvailable]);
 
-    const handleVerifyCode = useCallback(async () => {
+
+   const handleVerifyCode = useCallback(async () => {
         if (!verificationCode.trim()) {
             setErrors({ code: '인증코드를 입력해주세요' });
             return;
@@ -77,7 +113,6 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
             setErrors({});
             onVerified(true);
 
-            // 수정: 인증 완료 시 상위 컴포넌트의 에러 메시지도 확실히 제거
             if (onErrorClear) {
                 onErrorClear('phone');
             }
@@ -101,33 +136,48 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
             }
         });
 
-        if (isVerified) {
+        if (isVerified || isPhoneChecked) {
             setIsVerified(false);
+            setIsPhoneChecked(false);
+            setIsPhoneAvailable(false);
             onVerified(false);
         }
         
         setErrors({});
-    }, [onChange, onVerified, isVerified]);
+    }, [onChange, onVerified, isVerified, isPhoneChecked]);
 
     return (
         <div className={styles.container}>
             <div className={styles.inputGroup}>
                 <FormInput
-                    ref={ref} // 추가: ref 전달
+                    ref={ref}
                     name="phone"
                     type="tel"
                     placeholder="휴대폰번호를 입력해주세요"
                     value={phone}
                     onChange={handlePhoneChange}
-                    error={(!isVerified && error) || errors.phone} // 수정: 인증 완료 시 에러 숨김
+                    error={(!isVerified && error) || errors.phone}
                     disabled={isVerified}
                 />
+
+                <FormButton
+                    type="button"
+                    variant="secondary"
+                    size="small"
+                    onClick={handlePhoneCheck}
+                    disabled={isVerified || isLoading || (isPhoneChecked && isPhoneAvailable)}
+                    loading={isLoading}
+                    className={styles.checkButton}
+                >
+                    {isPhoneChecked && isPhoneAvailable ? '확인완료' : '중복확인'}
+                </FormButton>
+
                 <FormButton
                     type="button"
                     variant="secondary"
                     size="small"
                     onClick={handleSendCode}
-                    disabled={isVerified || isLoading}
+                    disabled={isVerified || isLoading || !isPhoneChecked || !isPhoneAvailable}
                     loading={isLoading}
                     className={styles.sendButton}
                 >
@@ -180,6 +230,6 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
     );
 });
 
-PhoneVerification.displayName = 'PhoneVerification'; // 추가: displayName 설정
+PhoneVerification.displayName = 'PhoneVerification';
 
 export default PhoneVerification;

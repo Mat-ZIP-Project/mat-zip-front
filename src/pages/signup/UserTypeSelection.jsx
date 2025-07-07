@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../../assets/styles/pages/signup/UserTypeSelection.module.css';
-import FormButton from '../../components/login/FormButton';
+import FormButton from '../../components/common/FormButton';
 
 const UserTypeSelection = ({ onSelect }) => {
     return (

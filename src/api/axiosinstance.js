@@ -10,6 +10,7 @@ const axiosInstance = axios.create({
     headers: {
         'Content-Type': 'application/json',
     }
+    withCredentials: true 
 });
 
 // SPA 방식 로그인 페이지 이동 이벤트 핸들러
@@ -29,6 +30,7 @@ axiosInstance.interceptors.request.use(
         
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
+            console.log('Authorization 헤더 설정됨:', config.headers.Authorization);
         }
         return config;
     },

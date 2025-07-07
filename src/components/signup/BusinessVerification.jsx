@@ -1,8 +1,8 @@
 import React, { useState, useCallback, forwardRef } from 'react';
 import Swal from 'sweetalert2';
 import styles from '../../assets/styles/signup/BusinessVerification.module.css';
-import FormInput from '../login/FormInput';
-import FormButton from '../login/FormButton';
+import FormInput from '../common/FormInput';
+import FormButton from '../common/FormButton';
 import axiosInstance from '../../api/axiosinstance';
 
 const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified, error, onErrorClear }, ref) => {
@@ -80,7 +80,7 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
             allowOutsideClick: false,
             allowEscapeKey: false,
             width: 400,
-            padding: '2em',
+            padding: '1em',
             didOpen: () => {
                 Swal.showLoading();
             }
@@ -115,7 +115,7 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
                 icon: 'success',
                 position: 'center',
                 showConfirmButton: false,
-                timer: 2000,
+                timer: 1000,
                 timerProgressBar: true,
                 width: 400,
                 padding: '2em'
@@ -135,7 +135,7 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
                 icon: 'error',
                 position: 'center',
                 showConfirmButton: false,
-                timer: 2000,
+                timer: 1500,
                 timerProgressBar: true,
                 width: 400, 
                 padding: '2em'

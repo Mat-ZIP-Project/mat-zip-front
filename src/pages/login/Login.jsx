@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../api/axiosinstance';
+import axiosInstance from '../../api/axiosinstance.js';
 import { useDispatch } from 'react-redux';
-import { setCredentials } from '../store/authSlice';
-import styles from '../assets/styles/pages/Login.module.css';
-import FormInput from '../components/login/FormInput';
-import FormButton from '../components/login/FormButton'; 
-import CheckboxWithLinks from '../components/login/CheckboxWithLinks.jsx';
-import inputStyles from '../assets/styles/login/FormInput.module.css';
+import { setCredentials } from '../../store/authSlice.js';
+import styles from '../../assets/styles/pages/Login.module.css';
+import FormInput from '../../components/common/FormInput.jsx';
+import FormButton from '../../components/common/FormButton.jsx'; 
+import CheckboxWithLinks from '../../components/login/CheckboxWithLinks.jsx';
+import inputStyles from '../../assets/styles/login/FormInput.module.css';
 
 const Login = () => {
     const [formData, setForm] = useState({ userId: '', password: '' });
