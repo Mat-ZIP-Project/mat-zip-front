@@ -6,17 +6,18 @@ import MainLayout from "./components/layout/MainLayout";
 import AuthLayout from "./components/layout/AuthLayout";
 
 import Home from "./pages/Home";
-import Login from "./pages/Login";
+import Login from "./pages/login/Login";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import Owner from "./pages/Owner";
 import NotFound from "./pages/NotFound";
-import MyPageTest from "./pages/MyPageTest";
+import MyPageTest from "./pages/login/MyPageTest";
 import SearchMapPage from "./pages/searchMap/SearchMapPage";
 import TempCoursePage from "./pages/customCourse/TempCoursePage";
 import MyCourseListPage from "./pages/customCourse/MyCourseListPage";
 import CourseDetailPage from "./pages/customCourse/CourseDetailPage";
 import LocalAuthPage from "./pages/localAuth/LocalAuthPage";
 import ReservationPopup from "./components/reservation/ReservationPopup";
+
 
 function App() {
   // <Link

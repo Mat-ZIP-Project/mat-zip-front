@@ -9,7 +9,8 @@ const axiosInstance = axios.create({
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
-    }
+    },
+    withCredentials: true 
 });
 
 // SPA 방식 로그인 페이지 이동 이벤트 핸들러
@@ -39,9 +40,7 @@ axiosInstance.interceptors.request.use(
 
 // 응답 인터셉터 - 토큰 만료 시 갱신 또는 로그아웃
 axiosInstance.interceptors.response.use(
-    (response) => {
-        return response;
-    },
+    (response) => response,
     async (error) => {
         const originalRequest = error.config;
         
@@ -74,7 +73,6 @@ axiosInstance.interceptors.response.use(
                 if (!accessToken) { throw new Error('새로운 액세스 토큰을 받지 못했습니다.');}
                 
                 store.dispatch(updateAccessToken({ accessToken }));
-
                 originalRequest.headers.Authorization = `Bearer ${accessToken}`;
                 return axiosInstance(originalRequest);
                 
