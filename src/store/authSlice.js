@@ -46,12 +46,22 @@ const authSlice = createSlice({
         name: user.name,
         role: user.role
       };
+
+      // 쿠키 확인용 디버깅
+      console.log('=== 로그인 성공 후 쿠키 확인 ===');
+      console.log('document.cookie:', document.cookie);
+      console.log('refreshToken이 보이지 않으면 HttpOnly가 정상 작동 중');
     },
 
     // 토큰 갱신
     updateAccessToken: (state, action) => {
       const { accessToken } = action.payload;
       state.accessToken = accessToken;
+
+      // 토큰 갱신 후 쿠키 확인
+      console.log('=== 토큰 갱신 후 쿠키 확인 ===');
+      console.log('새로운 accessToken 설정됨');
+      console.log('document.cookie:', document.cookie);
     },
 
     // 로그아웃
@@ -59,6 +69,9 @@ const authSlice = createSlice({
       const forceCompleteLogout = action.payload?.forceComplete || false;
       const rememberedUserId = localStorage.getItem('rememberedUserId');
       
+console.log('=== 로그아웃 전 쿠키 확인 ===');
+      console.log('document.cookie:', document.cookie);
+
       Object.assign(state, initialState);
       
       // 스토리지 정리

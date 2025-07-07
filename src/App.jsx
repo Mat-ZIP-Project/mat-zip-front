@@ -12,6 +12,7 @@ import Owner from "./pages/Owner";
 import NotFound from "./pages/NotFound";
 import MyPageTest from "./pages/MyPageTest";
 
+
 function App() {
 
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
                 <Route element={<MainLayout />}>
                     <Route path="/mypage" element={<MyPageTest />} />
+                    
                 </Route>
             </Route>
 
