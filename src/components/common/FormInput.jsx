@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import styles from '../../assets/styles/login/FormInput.module.css'; 
+import styles from '../../assets/styles/common/FormInput.module.css'; 
 
 const FormInput = forwardRef(({ 
   type = 'text', 

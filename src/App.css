@@ -132,7 +132,7 @@
 }
 
 /* iOS Safari 하단 바 대응 */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
+/* @supports (padding-bottom: env(safe-area-inset-bottom)) {
   .AppMain {
     padding-bottom: calc(80px + env(safe-area-inset-bottom));
   }
@@ -142,7 +142,7 @@
       padding-bottom: calc(70px + env(safe-area-inset-bottom));
     }
   }
-}
+} */
 
 
 /* SweetAlert2 커스텀 */

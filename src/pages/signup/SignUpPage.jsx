@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from '../../assets/styles/pages/signup/Signup.module.css';
+import styles from '../../assets/styles/pages/signup/SignupPage.module.css';
 import ProgressBar from "../../components/signup/ProgressBar";
 import UserTypeSelection from "./UserTypeSelection";
 import TermsAgreement from "./TermsAgreement";
@@ -10,7 +10,7 @@ import RestaurantInfo from "./RestaurantInfo";
 
 
 
-const SignupMain = () => {
+const SignUpPage = () => {
     const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1);
     const [userType, setUserType] = useState('');
@@ -148,4 +148,4 @@ const SignupMain = () => {
     );
 };
 
-export default SignupMain;
+export default SignUpPage;

@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../api/axiosinstance.js';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../../store/authSlice.js';
-import styles from '../../assets/styles/pages/Login.module.css';
+import styles from '../../assets/styles/pages/login/LoginPage.module.css';
 import FormInput from '../../components/common/FormInput.jsx';
 import FormButton from '../../components/common/FormButton.jsx'; 
 import CheckboxWithLinks from '../../components/login/CheckboxWithLinks.jsx';
-import inputStyles from '../../assets/styles/login/FormInput.module.css';
+import inputStyles from '../../assets/styles/common/FormInput.module.css';
 
 
 const Login = () => {

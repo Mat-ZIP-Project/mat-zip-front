@@ -52,29 +52,47 @@ const PlaceSearch = ({ onPlaceSelect, error, onErrorClear }) => {
             return;
         }
 
-        setIsSearching(true);
-        const places = new window.kakao.maps.services.Places();
 
-        places.keywordSearch(searchKeyword + ' 식당', (data, status) => {
-            setIsSearching(false);
-            
+    setIsSearching(true);
+        const places = new window.kakao.maps.services.Places();
+        let allResults = [];
+
+        // 첫 번째 페이지 검색
+        places.keywordSearch(searchKeyword + ' 식당', (data, status, pagination) => {
             if (status === window.kakao.maps.services.Status.OK) {
                 // 식당/카페 관련 결과만 필터링
-                const filteredResults = data.filter(place => 
+                const filteredData = data.filter(place => 
                     place.category_name.includes('음식점') || 
                     place.category_name.includes('카페') ||
                     place.category_name.includes('식당')
-                ).slice(0, 30); // 가져올 결과 수 제한
-
-                setSearchResults(filteredResults);
+                );
                 
-                if (filteredResults.length === 0) {
-                    alert('검색된 식당이 없습니다. 다른 키워드로 검색해보세요.');
+                allResults = [...allResults, ...filteredData];
+
+                // 다음 페이지가 있고, 결과가 60개 미만이면 추가 검색
+                if (pagination.hasNextPage && allResults.length < 60) {
+                    pagination.nextPage();
+                } else {
+                    const finalResults = allResults.slice(0, 60); //가져올 개수
+                    setSearchResults(finalResults);
+                    setIsSearching(false);
+                    
+                    if (finalResults.length === 0) {
+                        alert('검색된 식당이 없습니다. 다른 키워드로 검색해보세요.');
+                    }
                 }
+            } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+                setIsSearching(false);
+                alert('검색된 식당이 없습니다. 다른 키워드로 검색해보세요.');
+                setSearchResults([]);
             } else {
+                setIsSearching(false);
                 alert('검색에 실패했습니다. 다시 시도해주세요.');
                 setSearchResults([]);
             }
+        }, {
+            page: 1,
+            size: 15 // 한 페이지당 15개씩
         });
     }, [searchKeyword]);
 

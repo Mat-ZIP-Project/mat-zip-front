@@ -5,10 +5,10 @@ import FormButton from "../../components/common/FormButton";
 import PhoneVerification from "../../components/signup/PhoneVerification";
 import axiosInstance from "../../api/axiosinstance";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import PreferenceCategorySelector from "../../components/signup/PreferenceCategorySelector";
 import { useSignupForm } from "../../hooks/useSignupForm";
 import { useSignupValidation } from "../../hooks/useSignupValidation";
+import { showSuccessAlert } from "../../utils/sweetAlert";
 
 const UserSignupForm = ({ onNext, onBack }) => {
   const navigate = useNavigate();
@@ -90,13 +90,10 @@ const UserSignupForm = ({ onNext, onBack }) => {
 
         await axiosInstance.post("/signup/user", signupData);
 
-        await Swal.fire({
-          icon: "success",
-          title: "회원가입 완료!",
-          text: "회원가입이 성공적으로 완료되었습니다.",
-          confirmButtonText: "확인",
-          confirmButtonColor: "#ff6b35",
-        });
+        await showSuccessAlert(
+          '회원가입 완료!',
+          '회원가입이 성공적으로 완료되었습니다.'
+        );
 
         navigate("/");
 

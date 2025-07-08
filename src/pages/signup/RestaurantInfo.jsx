@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 import styles from '../../assets/styles/pages/signup/RestaurantInfo.module.css';
 import FormInput from '../../components/common/FormInput';
 import FormButton from '../../components/common/FormButton';
@@ -8,6 +7,7 @@ import BusinessVerification from '../../components/signup/BusinessVerification';
 import PlaceSearch from '../../components/signup/PlaceSearch';
 import { useRestaurantForm } from '../../hooks/useRestaurantForm';
 import axiosInstance from '../../api/axiosinstance';
+import { showErrorAlert, showSuccessAlert } from '../../utils/sweetAlert';
 
 const RestaurantInfo = ({ onNext, onBack, signupData }) => {
     const navigate = useNavigate();
@@ -122,13 +122,10 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
 
             await axiosInstance.post('/signup/owner', completeSignupData);
 
-            await Swal.fire({
-                icon: 'success',
-                title: '회원가입 완료!',
-                text: '식당 업주 회원가입이 성공적으로 완료되었습니다.',
-                confirmButtonText: '확인',
-                confirmButtonColor: '#ff6b35',
-            });
+            await showSuccessAlert(
+                '회원가입 완료!',
+                '식당 업주 회원가입이 성공적으로 완료되었습니다.'
+            );
             
             navigate('/');
         } catch (error) {
@@ -146,13 +143,11 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
             
             setErrors({ general: errorMessage });
             
-            await Swal.fire({
-                icon: 'error',
-                title: '회원가입 실패',
-                text: errorMessage,
-                confirmButtonText: '확인',
-                confirmButtonColor: '#d33',
-            });
+            // 수정: 공통 유틸리티 사용
+            await showErrorAlert(
+                '회원가입 실패',
+                errorMessage
+            );
         } finally {
             setIsLoading(false);
         }

@@ -1,9 +1,9 @@
 import React, { useState, useCallback, forwardRef } from 'react';
-import Swal from 'sweetalert2';
 import styles from '../../assets/styles/signup/BusinessVerification.module.css';
 import FormInput from '../common/FormInput';
 import FormButton from '../common/FormButton';
 import axiosInstance from '../../api/axiosinstance';
+import { showErrorAlert, showLoadingAlert, showSuccessAlert } from '../../utils/sweetAlert';
 
 const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified, error, onErrorClear }, ref) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -52,7 +52,7 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
         }
     }, [onChange, error, onErrorClear, isVerified, onVerified]);
 
-    // 사업자 인증 처리 (백엔드 API 호출)
+    /** 사업자 인증 처리 */ 
     const handleBusinessVerification = useCallback(async () => {
         const cleanBusinessNumber = businessNumber.replace(/-/g, '');
         
@@ -69,57 +69,35 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
         setIsLoading(true);
 
         // 사업자 인증 진행 표시
-        const loadingToast = Swal.fire({
-            title: '사업자 인증 중...',
-            text: '국세청 사업자등록정보를 확인하고 있습니다.',
-            icon: 'info',
-            position: 'center',
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            width: 400,
-            padding: '1em',
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        });
+        const loadingToast = showLoadingAlert(
+            '사업자 인증 중...',
+            '국세청 사업자등록정보를 확인하고 있습니다.'
+        );
 
         try {
-            // 3초 대기 시간 (Promise.all 이용)
             const [apiResponse] = await Promise.all([
                 axiosInstance.post('/signup/verify/business', {
                     businessNumber: cleanBusinessNumber
                 }),
-                new Promise(resolve => setTimeout(resolve, 3000)) // 최소 3초 대기
+                new Promise(resolve => setTimeout(resolve, 3000))
             ]);
 
-            // Toast 닫기
             await loadingToast;
 
-            // 인증 성공 처리
             setIsVerified(true);
             setVerificationMessage({ type: 'success', text: '사업자 인증이 완료되었습니다' });
             onVerified(true);
             
-            // 에러 제거
             if (onErrorClear) {
                 onErrorClear('businessNumber');
             }
 
-            // 추가: 성공 Toast 표시
-            await Swal.fire({
-                title: '인증 완료!',
-                text: '사업자등록번호 인증이 성공적으로 완료되었습니다.',
-                icon: 'success',
-                position: 'center',
-                showConfirmButton: false,
-                timer: 1000,
-                timerProgressBar: true,
-                width: 400,
-                padding: '2em'
-            });
+            // 수정: 공통 유틸리티 사용
+            await showSuccessAlert(
+                '인증 완료!',
+                '사업자등록번호 인증이 성공적으로 완료되었습니다.',
+                1000
+            );
 
         } catch (error) {
             await loadingToast;
@@ -129,17 +107,12 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
             setIsVerified(false);
             onVerified(false);
 
-            await Swal.fire({
-                title: '인증 실패',
-                text: errorMessage,
-                icon: 'error',
-                position: 'center',
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                width: 400, 
-                padding: '2em'
-            });
+            // 수정: 공통 유틸리티 사용
+            await showErrorAlert(
+                '인증 실패',
+                errorMessage,
+                1500
+            );
 
         } finally {
             setIsLoading(false);

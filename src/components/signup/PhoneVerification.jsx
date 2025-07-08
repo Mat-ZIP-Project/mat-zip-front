@@ -45,7 +45,7 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
             
             setIsPhoneChecked(true);
             setIsPhoneAvailable(true);
-            setErrors({ phone: '사용 가능한 휴대폰번호입니다' });
+            setErrors({ phone: '✓ 사용 가능한 휴대폰번호입니다' });
             
             if (onErrorClear) {
                 onErrorClear('phone');
