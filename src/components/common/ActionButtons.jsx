@@ -1,4 +1,3 @@
-
 import '../../assets/styles/customCourse/actionButtons.css';
 
 const ActionButtons = ({ buttons }) => {

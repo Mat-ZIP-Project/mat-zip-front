@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isAuthenticated: false,
-  accessToken: null,
+  accessToken: null, // localStorage에 저장
   userInfo: {
     id: null,
     userId: null,
@@ -11,19 +11,12 @@ const initialState = {
   }
 };
 
-// 웹스토리지 정리 함수
+// 웹스토리지 정리
 const clearStorage = (preserveRememberedId = false) => {
   const rememberedUserId = preserveRememberedId ? localStorage.getItem('rememberedUserId') : null;
   
-  // 모든 스토리지 정리
   localStorage.clear();
   sessionStorage.clear();
-  
-  // IndexedDB 정리
-  if ('indexedDB' in window) {
-    const deleteReq = indexedDB.deleteDatabase('keyval-store');
-    deleteReq.onsuccess = () => console.log('IndexedDB cleared');
-  }
   
   // 아이디 저장이 필요한 경우 복원
   if (rememberedUserId) {
@@ -36,6 +29,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    // 로그인 성공 시 AccessToken 저장
     setCredentials: (state, action) => {
       const { accessToken, user } = action.payload;
       state.isAuthenticated = true;
@@ -48,24 +42,22 @@ const authSlice = createSlice({
       };
     },
 
-    // 토큰 갱신
+    // 토큰 갱신 시 새 AccessToken으로 교체
     updateAccessToken: (state, action) => {
       const { accessToken } = action.payload;
       state.accessToken = accessToken;
     },
 
-    // 로그아웃
+    // 로그아웃 (RefreshToken은 서버에서 쿠키 삭제)
     logout: (state, action) => {
       const forceCompleteLogout = action.payload?.forceComplete || false;
       const rememberedUserId = localStorage.getItem('rememberedUserId');
       
       Object.assign(state, initialState);
-      
-      // 스토리지 정리
       clearStorage(!forceCompleteLogout && !!rememberedUserId);
     },
 
-    // Redux Persist 액션
+    // 완전 초기화
     resetAuth: (state) => {
       Object.assign(state, initialState);
       clearStorage(false);

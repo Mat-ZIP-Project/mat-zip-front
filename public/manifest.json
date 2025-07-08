@@ -1,0 +1,10 @@
+{
+  "name": "내 React PWA 앱",
+  "short_name": "내 앱",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "description": "이것은 내가 만든 멋진 React 앱입니다.",
+  "icons": []
+}

@@ -9,6 +9,7 @@ import FormButton from '../../components/common/FormButton.jsx';
 import CheckboxWithLinks from '../../components/login/CheckboxWithLinks.jsx';
 import inputStyles from '../../assets/styles/login/FormInput.module.css';
 
+
 const Login = () => {
     const [formData, setForm] = useState({ userId: '', password: '' });
     const dispatch = useDispatch();
