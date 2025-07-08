@@ -1,0 +1,108 @@
+/* src/components/myPage/MyPageTest.css */
+
+.my-page-container {
+  padding: 2rem;
+}
+
+.my-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.my-page-header h1 {
+  margin: 0;
+}
+
+.header-icons span {
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.header-icons span:last-child {
+  margin-right: 0;
+}
+
+.user-info-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 2rem;
+  border: 1px solid #ddd;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.user-id-display {
+  padding: 10px 30px;
+  border: 2px solid #8a2be2; /* 이미지의 보라색 테두리 */
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-edit-button {
+  padding: 0.5rem 1.5rem;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-tabs {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.tab-item {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #555;
+  white-space: nowrap; /* 탭 이름이 줄바꿈되지 않도록 */
+}
+
+.tab-item.active {
+  border-bottom: 2px solid #8a2be2;
+  color: #8a2be2;
+}
+
+.tab-content {
+  margin-top: 10px;
+}
+
+/* 모임 탭 내의 하위 탭 */
+.sub-tabs {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 0.9rem; /* 하위 탭 글씨 크기 조절 */
+}
+
+.sub-tab-item {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #555;
+  white-space: nowrap; /* 탭 이름이 줄바꿈되지 않도록 */
+}
+
+.sub-tab-item.active {
+  border-bottom: 2px solid #8a2be2;
+  color: #8a2be2;
+}

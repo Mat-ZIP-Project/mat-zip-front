@@ -32,6 +32,13 @@ function ReservationPopup() {
     restaurantName,
   } = useReservationLogic();
 
+  const handleNumPeopleChange = (e) => {
+    const value = e.target.value;
+    if (value === "" || /^[0-9]+$/.test(value)) {
+      setNumPeople(value);
+    }
+  };
+
   return (
     <div className="reservation-popup-container">
       <h2 className="section-title">식당 예약 및 관리</h2>
@@ -68,7 +75,10 @@ function ReservationPopup() {
               id="numPeople"
               min="1"
               value={numPeople}
-              onChange={(e) => setNumPeople(Number(e.target.value))}
+              // onChange={(e) => setNumPeople(Number(e.target.value))}
+              onChange={handleNumPeopleChange}
+              inputMode="numeric"
+              pattern="[0-9]*"
             />
           </div>
           <button type="submit" disabled={isLoading} className="submit-button">
@@ -85,20 +95,20 @@ function ReservationPopup() {
           <div className="payment-summary">
             <p>
               초기 결제 금액:{" "}
-              <span className="amount-value">₩{originalAmount}</span>
+              <span className="amount-value">{originalAmount}원</span>
             </p>
             {/* discountAmount가 0이 아닐 때만 할인 금액 표시 */}
             {discountAmount !== 0 && (
               <p>
                 할인 금액:{" "}
                 <span className="amount-value discount">
-                  -₩{discountAmount}
+                  {discountAmount}원
                 </span>
               </p>
             )}
             <p>
               최종 결제 금액:{" "}
-              <span className="amount-value final">₩{finalPaymentAmount}</span>
+              <span className="amount-value final">{finalPaymentAmount}원</span>
             </p>
           </div>
           <button
