@@ -23,9 +23,6 @@ const TempCoursePage = () => {
     axiosInstance({
       method: "get",
       url: "/course/temp",
-      // headers: {
-      //   Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTE1MjIzNTksImV4cCI6MTc1MTUyNDE1OX0.gdJhzXrJ8guxQXkPtnolZRVUMAzdhLzlJv9KXL9zdJ0"
-      // }
     })
       .then(res => {
         console.log(res.data);
@@ -48,9 +45,6 @@ const TempCoursePage = () => {
     axiosInstance({
       method: "post",
       url: "/course/custom",
-      // headers: {
-      //   Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTE1MjIzNTksImV4cCI6MTc1MTUyNDE1OX0.gdJhzXrJ8guxQXkPtnolZRVUMAzdhLzlJv9KXL9zdJ0"
-      // },
       data: titleWithCourse
       
     }).then(res => {
@@ -65,10 +59,16 @@ const TempCoursePage = () => {
     <div>
       <CourseHeader title={title} setTitle={setTitle} editable={true}/>
       <CourseMap spots={spots} editable={true} />
-      <CourseSpotList spots={spots} setSpots={setSpots} editable={true} />
+      {spots.length!==0 ? <CourseSpotList spots={spots} setSpots={setSpots} editable={true} />
+        : (
+        <div className="empty-message">
+          <p>저장된 식당이 없습니다.</p>
+          <p>식당을 추가해 나만의 코스를 만들어보세요!</p>
+        </div>
+        )}
       <ActionButtons
         buttons={[
-          { text: "코스 저장", onClick: saveCourse },
+          { text: "코스 저장", onClick: saveCourse , spots },
           { text: "코스 보관함", onClick: () => navigate("/my-courses") },
         ]}
       />

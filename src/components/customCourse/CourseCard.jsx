@@ -1,16 +1,20 @@
 import '../../assets/styles/customCourse/courseCard.css';
+import { X } from "lucide-react"; // 아이콘 라이브러리 사용 (선택)
 
 const CourseCard = ({ course, onClick, onDelete }) => {
   return (
     <div className="course-card" onClick={onClick}>
-      <div className="course-content" >
-        <div className="course-title">{course.title}</div>
-        <div className="course-info">{course.resTempDTOList?.length || 0}곳</div>
-      </div>
-      <button className="delete-btn" onClick={(e) => {
-          e.stopPropagation();  // 부모 onClick 전파 방지
+      <button
+        className="course-delete-button"
+        onClick={(e) => {
+          e.stopPropagation(); // 부모 클릭 방지
           onDelete();
-        }}>삭제</button>
+        }}
+      >
+        <X size={16} />
+      </button>
+      <div className="course-title">{course.title}</div>
+      <div className="course-info">{course.resTempDTOList?.length || 0}곳</div>
     </div>
   );
 };

@@ -2,20 +2,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin: 0.2rem 1rem 0.5rem 1rem;
   }
   
   .course-header input {
+
     flex: 1;
     font-size: 1.2rem;
     padding: 0.5rem;
     border: 1px solid #ddd;
     border-radius: 8px;
-    margin-right: 1rem;
+    margin: 1rem;
   }
   
   .course-header h2 {
     flex: 1;
     font-size: 1.4rem;
     font-weight: bold;
+    margin: 1rem;
   }
