@@ -50,9 +50,6 @@ const CourseSpotList = ({ spots, setSpots, editable }) => {
     axiosInstance({
       method : "put",
       url: "/course/temp",
-      // headers: {
-      //   Authorization : "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsInJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3NTE1MjIzNTksImV4cCI6MTc1MTUyNDE1OX0.gdJhzXrJ8guxQXkPtnolZRVUMAzdhLzlJv9KXL9zdJ0"
-      // },
       data : spots
     })
       .then((res) => {
