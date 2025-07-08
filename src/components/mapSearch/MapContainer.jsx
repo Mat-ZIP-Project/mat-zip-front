@@ -5,7 +5,7 @@ import axiosInstance from '../../api/axiosinstance';
 import haversine from 'haversine-distance';
 
 
-const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurants,setCenterPosition }) => {
+const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurants,setCenterPosition,setCategory ,setFitToMarkers}) => {
   
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
@@ -50,7 +50,19 @@ const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurant
         mapInstance.current.setCenter(new window.kakao.maps.LatLng(lat, lng));
       }
     });
+  if (!mapInstance.current) return;
 
+  // fitToMarkers 함수 외부에서 접근 가능하도록 설정
+  setFitToMarkers(() => (markerData) => {
+    if (!mapInstance.current || markerData.length === 0) return;
+
+    const bounds = new window.kakao.maps.LatLngBounds();
+    markerData.forEach(({ latitude, longitude }) => {
+      bounds.extend(new window.kakao.maps.LatLng(latitude, longitude));
+    });
+
+    mapInstance.current.setBounds(bounds);
+  });
      
     searchByMapBounds();
   },
@@ -60,6 +72,8 @@ const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurant
     );
 
 }, []);
+
+
 
 
 
@@ -125,7 +139,7 @@ const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurant
   
     return haversine(point1,point2);
 };
-
+    //현 위치에서 검색
    const searchByMapBounds = () => {
     if (!mapInstance.current) return;
 
@@ -143,11 +157,14 @@ const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurant
       setRestaurants(res.data);
       setMarkers(res.data);
       setMapMoved(false);
+      setCategory('전체');
     })
     .catch(err => {
       console.error(err);
     });
   };
+
+  
   return (
     <div className="map-container">
       <div ref={mapRef} className="map-placeholder"></div>

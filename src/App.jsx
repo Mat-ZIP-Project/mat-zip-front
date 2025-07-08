@@ -11,13 +11,14 @@ import ProtectedRoute from "./components/common/ProtectedRoute";
 import OwnerPage from "./pages/owner/OwnerPage";
 import NotFound from "./pages/NotFound";
 import MyPageTest from "./pages/MyPageTest";
-import SearchMapPage from "./pages/searchMap/SearchMapPage";
+import SearchMapPage from "./pages/mapSearch/SearchMapPage";
 import TempCoursePage from "./pages/customCourse/TempCoursePage";
 import MyCourseListPage from "./pages/customCourse/MyCourseListPage";
 import CourseDetailPage from "./pages/customCourse/CourseDetailPage";
 import LocalAuthPage from "./pages/localAuth/LocalAuthPage";
 import ReservationPopup from "./components/reservation/ReservationPopup";
 import SignUpPage from "./pages/signup/SignupPage";
+
 
 
 function App() {
