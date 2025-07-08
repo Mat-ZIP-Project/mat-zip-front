@@ -3,6 +3,10 @@ import styles from '../../assets/styles/signup/PlaceSearch.module.css';
 import FormInput from '../common/FormInput';
 import FormButton from '../common/FormButton';
 
+/** 식당명 주소 검색 컴포넌트 
+ *  - 카카오맵 API를 사용하여 식당명으로 주소 검색
+ *  - 식당 선택시 주소와 지역 정보를 파싱하여 상위 컴포넌트로 전달 (위도, 경도 정보 포함)
+ */
 const PlaceSearch = ({ onPlaceSelect, error, onErrorClear }) => {
     const [searchKeyword, setSearchKeyword] = useState('');
     const [searchResults, setSearchResults] = useState([]);
@@ -121,13 +125,18 @@ const PlaceSearch = ({ onPlaceSelect, error, onErrorClear }) => {
         }
     }, [onPlaceSelect, onErrorClear, parseRegionInfo]);
 
-    const handleKeyPress = useCallback((e) => {
+    // 엔터키 검색 처리
+    const handleKeyDown = useCallback((e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             e.stopPropagation();
-            handlePlaceSearch();
+            
+            // 검색 중이 아니고 키워드가 있을 때만 검색 실행
+            if (!isSearching && searchKeyword.trim()) {
+                handlePlaceSearch();
+            }
         }
-    }, [handlePlaceSearch]);
+    }, [handlePlaceSearch, isSearching, searchKeyword]);
 
     return (
         <div className={styles.container}>
@@ -138,7 +147,7 @@ const PlaceSearch = ({ onPlaceSelect, error, onErrorClear }) => {
                     placeholder="식당명을 입력하여 검색하세요"
                     value={searchKeyword}
                     onChange={(e) => setSearchKeyword(e.target.value)}
-                    onKeyPress={handleKeyPress}
+                    onKeyPress={handleKeyDown}
                     error={error}
                 />
                 <FormButton

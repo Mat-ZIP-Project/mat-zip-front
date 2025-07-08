@@ -2,9 +2,15 @@ import React, { useState, useCallback, forwardRef } from 'react';
 import styles from '../../assets/styles/signup/BusinessVerification.module.css';
 import FormInput from '../common/FormInput';
 import FormButton from '../common/FormButton';
-import axiosInstance from '../../api/axiosinstance';
+import { signupApi } from '../../api/signupApi';
+import { formatters } from '../../utils/formatters';
 import { showErrorAlert, showLoadingAlert, showSuccessAlert } from '../../utils/sweetAlert';
 
+/**
+ * 사업자등록번호 인증 컴포넌트
+ * - 사업자등록번호 포맷팅 및 국세청 API 연동 인증
+ * - 로딩 상태 및 인증 결과 관리
+ */
 const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified, error, onErrorClear }, ref) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
@@ -13,24 +19,12 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
         text: ''
     });
 
-    // 사업자등록번호 포맷팅
+    /** 사업자등록번호 입력 변경 처리 */
     const handleInputChange = useCallback((e) => {
         const { value } = e.target;
         
-        // 숫자만 추출
-        const numericValue = value.replace(/[^0-9]/g, '');
-        
-        // 10자리까지만 입력 허용
-        const limitedValue = numericValue.slice(0, 10);
-        
-        // 하이픈 포맷팅 (000-00-00000)
-        let formattedValue = limitedValue;
-        if (limitedValue.length > 3) {
-            formattedValue = limitedValue.slice(0, 3) + '-' + limitedValue.slice(3);
-        }
-        if (limitedValue.length > 5) {
-            formattedValue = limitedValue.slice(0, 3) + '-' + limitedValue.slice(3, 5) + '-' + limitedValue.slice(5);
-        }
+        // 자동 포맷팅 (000-00-00000)
+        const formattedValue = formatters.businessNumber(value);
         
         const syntheticEvent = {
             target: {
@@ -41,10 +35,11 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
         
         onChange(syntheticEvent);
         
-        // 에러 제거
-        if (error && onErrorClear) { onErrorClear('businessNumber');}
+        if (error && onErrorClear) { 
+            onErrorClear('businessNumber');
+        }
         
-        // 값 변경 시 검증 상태 초기화
+        // 번호 변경 시 기존 인증 상태 초기화
         if (isVerified) {
             setIsVerified(false);
             setVerificationMessage({ type: '', text: '' });
@@ -52,10 +47,11 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
         }
     }, [onChange, error, onErrorClear, isVerified, onVerified]);
 
-    /** 사업자 인증 처리 */ 
+    /** 사업자등록번호 인증 처리 */
     const handleBusinessVerification = useCallback(async () => {
         const cleanBusinessNumber = businessNumber.replace(/-/g, '');
         
+        // 입력값 검증
         if (!cleanBusinessNumber.trim()) {
             setVerificationMessage({ type: 'error', text: '사업자등록번호를 입력해주세요' });
             return;
@@ -68,36 +64,25 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
 
         setIsLoading(true);
 
-        // 사업자 인증 진행 표시
-        const loadingToast = showLoadingAlert(
-            '사업자 인증 중...',
-            '국세청 사업자등록정보를 확인하고 있습니다.'
-        );
+        const loadingToast = showLoadingAlert( '사업자 인증 중...', '국세청 사업자등록정보를 확인하고 있습니다.' );
 
         try {
-            const [apiResponse] = await Promise.all([
-                axiosInstance.post('/signup/verify/business', {
-                    businessNumber: cleanBusinessNumber
-                }),
-                new Promise(resolve => setTimeout(resolve, 3000))
+            // API 호출과 최소 대기시간 병렬 처리
+            await Promise.all([
+                signupApi.verifyBusiness(businessNumber),
+                new Promise(resolve => setTimeout(resolve, 2000)) // 2초
             ]);
 
             await loadingToast;
 
+            // 인증 성공
             setIsVerified(true);
             setVerificationMessage({ type: 'success', text: '사업자 인증이 완료되었습니다' });
             onVerified(true);
             
-            if (onErrorClear) {
-                onErrorClear('businessNumber');
-            }
+            if (onErrorClear) { onErrorClear('businessNumber'); }
 
-            // 수정: 공통 유틸리티 사용
-            await showSuccessAlert(
-                '인증 완료!',
-                '사업자등록번호 인증이 성공적으로 완료되었습니다.',
-                1000
-            );
+            await showSuccessAlert( '인증 완료!', '사업자등록번호 인증이 성공적으로 완료되었습니다.', 1000);
 
         } catch (error) {
             await loadingToast;
@@ -107,12 +92,7 @@ const BusinessVerification = forwardRef(({ businessNumber, onChange, onVerified,
             setIsVerified(false);
             onVerified(false);
 
-            // 수정: 공통 유틸리티 사용
-            await showErrorAlert(
-                '인증 실패',
-                errorMessage,
-                1500
-            );
+            await showErrorAlert( '인증 실패', errorMessage, 1500 );
 
         } finally {
             setIsLoading(false);

@@ -3,11 +3,11 @@ import React, { createContext, useContext, useReducer, useCallback } from 'react
 /**
  * 회원가입 전역 상태 관리 Context
  * - 폼 데이터, 에러, 검증 상태, 로딩 상태를 중앙에서 관리
- * - props drilling 방지 및 상태 일관성 보장
+ * - props drilling 방지 및 상태 일관성
  */
 const SignupContext = createContext();
 
-// 액션 타입 정의 - 상태 변경을 위한 액션들
+// 상태 변경을 위한 액션
 const ACTIONS = {
   SET_FIELD: 'SET_FIELD',           // 개별 필드 값 설정
   SET_ERRORS: 'SET_ERRORS',         // 에러 객체 전체 설정
@@ -61,15 +61,12 @@ const initialState = {
 };
 
 /**
- * 상태 변경을 처리하는 리듀서 함수
- * @param {Object} state - 현재 상태
- * @param {Object} action - 실행할 액션 (type, payload 포함)
- * @returns {Object} 새로운 상태
+ * 상태 변경을 처리하는 Reducer
  */
 function signupReducer(state, action) {
   switch (action.type) {
     case ACTIONS.SET_FIELD:
-      // 개별 필드 값 업데이트 (예: 아이디 입력, 비밀번호 입력)
+      // 개별 필드 값 업데이트
       return {
         ...state,
         formData: {

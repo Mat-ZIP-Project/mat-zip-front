@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
-import styles from '../../assets/styles/pages/signup/TermsAgreement.module.css';
+import styles from '../../assets/styles/pages/signup/TermsAgreementPage.module.css';
 import FormButton from '../../components/common/FormButton';
 
 
-const TermsAgreement = ({ onNext, onBack }) => {
+const TermsAgreementPage = ({ onNext, onBack }) => {
     const [agreements, setAgreements] = useState({
         termsAgreed: false,
         privacyAgreed: false,
@@ -131,4 +131,4 @@ const TermsAgreement = ({ onNext, onBack }) => {
     );
 };
 
-export default TermsAgreement;
+export default TermsAgreementPage;

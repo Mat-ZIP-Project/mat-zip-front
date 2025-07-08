@@ -1,0 +1,35 @@
+.typeCard {
+    background: white;
+    border-radius: 12px;
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex: 1;
+    max-width: 300px;
+}
+
+.typeCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.cardIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.cardTitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.cardDescription {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    white-space: pre-line;
+}

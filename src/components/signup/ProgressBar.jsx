@@ -1,6 +1,9 @@
 import React from 'react';
 import styles from '../../assets/styles/signup/ProgressBar.module.css';
 
+/**
+ * 회원가입 진행 상태를 표시하는 프로그레스 바 컴포넌트
+ */
 const ProgressBar = ({ currentStep, totalSteps, stepTitles }) => {
     const progressPercentage = (currentStep / totalSteps) * 100;
 
@@ -12,7 +15,8 @@ const ProgressBar = ({ currentStep, totalSteps, stepTitles }) => {
                     style={{ width: `${progressPercentage}%` }}
                 />
             </div>
-            {/* <div className={styles.stepInfo}>
+            {/* 순서 단계 표시 텍스트
+            <div className={styles.stepInfo}>
                 <span className={styles.stepText}>
                     {stepTitles[currentStep - 1]} ({currentStep}/{totalSteps})
                 </span>

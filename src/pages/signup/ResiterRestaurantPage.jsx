@@ -1,38 +1,45 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../../assets/styles/pages/signup/RestaurantInfo.module.css';
+import styles from '../../assets/styles/pages/signup/ResiterRestaurantPage.module.css';
 import FormInput from '../../components/common/FormInput';
 import FormButton from '../../components/common/FormButton';
 import BusinessVerification from '../../components/signup/BusinessVerification';
 import PlaceSearch from '../../components/signup/PlaceSearch';
 import { useRestaurantForm } from '../../hooks/useRestaurantForm';
-import axiosInstance from '../../api/axiosinstance';
+import { signupApi } from '../../api/signupApi';
 import { showErrorAlert, showSuccessAlert } from '../../utils/sweetAlert';
 
+/**
+ * 식당 정보 입력 및 회원가입 완료 페이지
+ * - 사업자 인증 후 식당 상세 정보 입력
+ * - 최종 회원가입 처리
+ */
 const RestaurantInfo = ({ onNext, onBack, signupData }) => {
     const navigate = useNavigate();
     const [isApiLoaded, setIsApiLoaded] = useState(false);
     
+    // 식당 정보 폼 상태 관리 훅
     const {
-        restaurantData,
-        setRestaurantData,
+        restaurantData, setRestaurantData,
         errors, setErrors,
         isLoading, setIsLoading,
-        isBusinessVerified,
-        setIsBusinessVerified,
+        isBusinessVerified, setIsBusinessVerified,
         handleErrorClear,
         handleInputChange,
         validateForm
     } = useRestaurantForm();
 
+    /** 카카오맵 API 로드 */
     useEffect(() => {
         const loadKakaoAPI = async () => {
             try {
+                // 이미 로드된 경우 스킵
                 if (window.kakao && window.kakao.maps) {
                     setIsApiLoaded(true);
                     return;
                 }
 
+                // 스크립트 동적 로드
                 const script = document.createElement('script');
                 script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_MAP_API_KEY}&libraries=services`;
                 script.async = true;
@@ -59,6 +66,7 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
 
         loadKakaoAPI();
 
+        // 컴포넌트 언마운트 시 스크립트 정리
         return () => {
             const scripts = document.querySelectorAll('script[src*="kakao"]');
             scripts.forEach(script => {
@@ -66,9 +74,9 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                     script.parentNode.removeChild(script);
                 }
             });
-        };
-    }, []);
+        };}, []);
 
+    /** 장소 검색 결과 처리 */
     const handlePlaceSelect = useCallback((placeData) => {
         setRestaurantData(prev => ({
             ...prev,
@@ -76,6 +84,7 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
         }));
     }, [setRestaurantData]);
 
+    /** 사업자등록번호 변경 처리 */
     const handleBusinessNumberChange = useCallback((e) => {
         setRestaurantData(prev => ({
             ...prev,
@@ -83,6 +92,7 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
         }));
     }, [setRestaurantData]);
 
+    /** 엔터키 제출 방지 */
     const handleKeyPress = useCallback((e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -90,14 +100,18 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
         }
     }, []);
 
+    /** 최종 회원가입 처리 */
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
         
+        // 폼 검증 실행
         if (!validateForm()) return;
 
         setIsLoading(true);
         try {
+            // 최종 회원가입 데이터 구성
             const completeSignupData = {
+                // 기본 정보
                 userId: signupData.userInfo.userId,
                 password: signupData.userInfo.password,
                 name: signupData.userInfo.name,
@@ -105,7 +119,11 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                 termsAgreed: true,
                 privacyAgreed: true,
                 role: 'ROLE_OWNER',
+                
+                // 사업자 정보
                 businessNumber: restaurantData.businessNumber.replace(/-/g, ''),
+                
+                // 식당 정보
                 restaurantName: restaurantData.restaurantName,
                 address: restaurantData.address,
                 regionSido: restaurantData.regionSido,
@@ -120,17 +138,14 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                 maxWaitingLimit: parseInt(restaurantData.maxWaitingLimit)
             };
 
-            await axiosInstance.post('/signup/owner', completeSignupData);
+            // API 호출로 회원가입 실행
+            await signupApi.signupOwner(completeSignupData);
 
-            await showSuccessAlert(
-                '회원가입 완료!',
-                '식당 업주 회원가입이 성공적으로 완료되었습니다.'
-            );
+            await showSuccessAlert( '회원가입 완료!', '식당 업주 회원가입이 성공적으로 완료되었습니다.' );
             
             navigate('/');
-        } catch (error) {
-            console.error('회원가입 실패:', error);
             
+        } catch (error) {
             let errorMessage = '회원가입에 실패했습니다';
             
             if (error.response?.status === 500) {
@@ -140,14 +155,9 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
             } else if (error.message) {
                 errorMessage = error.message;
             }
-            
             setErrors({ general: errorMessage });
             
-            // 수정: 공통 유틸리티 사용
-            await showErrorAlert(
-                '회원가입 실패',
-                errorMessage
-            );
+            await showErrorAlert( '회원가입 실패', errorMessage );
         } finally {
             setIsLoading(false);
         }
@@ -161,6 +171,7 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
             <p className={styles.subtitle}>사업자 인증 후 식당 정보를 입력하여 회원가입을 완료해주세요</p>
 
             <form onSubmit={handleSubmit} className={styles.form} onKeyPress={handleKeyPress}>
+
                 <div className={styles.formGroup}>
                     <label className={styles.label}>사업자등록번호 *</label>
                     <BusinessVerification
@@ -172,8 +183,10 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                     />
                 </div>
 
+                {/* 사업자 인증 성공 후 식당 정보 입력란 표시 */}
                 {isBusinessVerified && (
                     <>
+                        {/* 식당 위치 검색 */}
                         <div className={styles.formGroup}>
                             <label className={styles.label}>식당 검색 *</label>
                             {isApiLoaded ? (
@@ -189,6 +202,7 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                             )}
                         </div>
 
+                        {/* 식당명 및 카테고리 */}
                         <div className={styles.rowGroup}>
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>식당명 *</label>
@@ -224,12 +238,13 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                             </div>
                         </div>
 
+                        {/* 식당 주소 */}
                         <div className={styles.formGroup}>
                             <label className={styles.label}>식당 주소 *</label>
                             <FormInput
                                 name="address" 
                                 type="text"
-                                placeholder="검색으로 자동 입력됩니다"
+                                placeholder="식당 검색 시 자동으로 입력됩니다"
                                 value={restaurantData.address}
                                 onChange={handleInputChange}
                                 error={errors.address}
@@ -237,13 +252,14 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                             />
                         </div>
 
+                        {/* 식당 전화번호 및 웨이팅 제한 */}
                         <div className={styles.rowGroup}>
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>식당 전화번호 *</label>
                                 <FormInput
                                     name="phone" 
                                     type="tel"
-
+                                    placeholder="식당 전화번호를 입력해주세요"
                                     value={restaurantData.phone}
                                     onChange={handleInputChange}
                                     error={errors.phone}
@@ -266,6 +282,7 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                             </div>
                         </div>
 
+                        {/* 영업 시간 */}
                         <div className={styles.timeGroup}>
                             <div className={styles.formGroup}>
                                 <label className={styles.label}>영업 시작 시간 *</label>
@@ -290,6 +307,7 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                             </div>
                         </div>
 
+                        {/* 식당 설명 */}
                         <div className={styles.formGroup}>
                             <label className={styles.label}>식당 설명 *</label>
                             <textarea
@@ -307,26 +325,19 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                     </>
                 )}
 
+                {/* 전체 에러 메시지 */}
                 {errors.general && (
                     <div className={styles.errorAlert}>
                         {errors.general}
                     </div>
                 )}
 
+                {/* 하단 버튼 */}
                 <div className={styles.buttonContainer}>
-                    <FormButton
-                        type="button"
-                        variant="secondary"
-                        onClick={onBack}
-                    >
+                    <FormButton type="button" variant="secondary" onClick={onBack}>
                         이전
                     </FormButton>
-                    <FormButton
-                        type="submit"
-                        variant="primary"
-                        loading={isLoading}
-                        disabled={!isBusinessVerified}
-                    >
+                    <FormButton type="submit" variant="primary" loading={isLoading} disabled={!isBusinessVerified}>
                         회원가입 완료
                     </FormButton>
                 </div>

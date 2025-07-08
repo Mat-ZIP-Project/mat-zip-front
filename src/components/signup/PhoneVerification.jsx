@@ -1,150 +1,197 @@
-import React, { useState, useCallback, useEffect, forwardRef } from 'react'; // 수정: forwardRef 추가
+import React, { useState, useCallback, useEffect, forwardRef } from 'react';
 import styles from '../../assets/styles/signup/PhoneVerification.module.css';
-import axiosInstance from '../../api/axiosinstance';
 import FormInput from '../common/FormInput';
 import FormButton from '../common/FormButton';
+import { formatters } from '../../utils/formatters';
+import { signupApi } from '../../api/signupApi';
 
-const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onErrorClear }, ref) => {
-    const [verificationCode, setVerificationCode] = useState('');
-    const [isCodeSent, setIsCodeSent] = useState(false);
-    const [isVerified, setIsVerified] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(0);
+/**
+ * 휴대폰 인증 컴포넌트
+ * - 휴대폰 중복 확인 및 SMS 인증 처리
+ * - 타이머 기능으로 인증코드 유효시간 관리
+ */
+const PhoneVerification = forwardRef(({ 
+    phone, 
+    onChange, 
+    onVerified, 
+    error, 
+    onErrorClear,
+    phoneMessage,
+    setPhoneMessage,
+    verificationStatus,
+    setVerificationStatus
+}, ref) => {
+    const [state, setState] = useState({
+        verificationCode: '',
+        isCodeSent: false,
+        timeLeft: 0
+    });
+    
     const [errors, setErrors] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
-    const [isPhoneChecked, setIsPhoneChecked] = useState(false);
-    const [isPhoneAvailable, setIsPhoneAvailable] = useState(false);
+    const [loading, setLoading] = useState({});
 
+    /** 인증코드 타이머 관리 */
     useEffect(() => {
         let timer;
-        if (timeLeft > 0) {
-            timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-        } else if (timeLeft === 0 && isCodeSent) {
-            setIsCodeSent(false);
-            setVerificationCode('');
+        if (state.timeLeft > 0) {
+            timer = setTimeout(() => {
+                setState(prev => ({ ...prev, timeLeft: prev.timeLeft - 1 }));
+            }, 1000);
+        } else if (state.timeLeft === 0 && state.isCodeSent) {
+            setState(prev => ({ 
+                ...prev, 
+                isCodeSent: false, 
+                verificationCode: '' 
+            }));
         }
         return () => clearTimeout(timer);
-    }, [timeLeft, isCodeSent]);
+    }, [state.timeLeft]);
 
-    const formatTime = (seconds) => {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-    };
+    const updateState = useCallback((updates) => {
+        setState(prev => ({ ...prev, ...updates }));
+    }, []);
 
+    /** 휴대폰 중복 확인 처리 */
     const handlePhoneCheck = useCallback(async () => {
-        if (!phone || !/^01[0-9]{8,9}$/.test(phone.replace(/-/g, ''))) {
-            setErrors({ phone: '올바른 휴대폰번호를 입력해주세요' });
+        const cleanPhone = phone.replace(/-/g, '');
+        
+        if (!/^01[0-9]{8,9}$/.test(cleanPhone)) {
+            setPhoneMessage({ type: 'error', text: '올바른 휴대폰번호를 입력해주세요' });
             return;
         }
 
-        setIsLoading(true);
+        setLoading({ phone: true });
+        setPhoneMessage({ type: '', text: '' });
+
         try {
-            await axiosInstance.post('/signup/check/phone', {
-                phone: phone.replace(/-/g, '')
-            });
+            await signupApi.checkPhone(phone);
             
-            setIsPhoneChecked(true);
-            setIsPhoneAvailable(true);
-            setErrors({ phone: '✓ 사용 가능한 휴대폰번호입니다' });
+            setVerificationStatus(prev => ({
+                ...prev,
+                phoneChecked: true,
+                phoneAvailable: true
+            }));
             
-            if (onErrorClear) {
-                onErrorClear('phone');
-            }
+            setPhoneMessage({ type: 'success', text: '사용 가능한 휴대폰번호입니다' });
+            onErrorClear?.('phone');
+            
         } catch (error) {
-            const errorMessage = error.response?.data?.errMsg || '이미 사용 중인 휴대폰번호입니다';
-            setErrors({ phone: errorMessage });
-            setIsPhoneChecked(false);
-            setIsPhoneAvailable(false);
+            let errorMessage = '이미 사용 중인 휴대폰번호입니다';
+            
+            if (error.response?.status === 409) {
+                errorMessage = error.response.data?.errMsg || '이미 사용 중인 휴대폰번호입니다';
+            } else if (error.response?.status === 400) {
+                errorMessage = error.response.data?.errMsg || '올바르지 않은 휴대폰번호입니다';
+            } else {
+                errorMessage = '휴대폰번호 확인 중 오류가 발생했습니다';
+            }
+            
+            setPhoneMessage({ type: 'error', text: errorMessage });
+            setVerificationStatus(prev => ({
+                ...prev,
+                phoneChecked: false,
+                phoneAvailable: false
+            }));
         } finally {
-            setIsLoading(false);
+            setLoading({});
         }
-    }, [phone, onErrorClear]);
+    }, [phone, setPhoneMessage, setVerificationStatus, onErrorClear]);
 
+    /** SMS 인증코드 발송 */
     const handleSendCode = useCallback(async () => {
-        if (!phone || !/^01[0-9]{8,9}$/.test(phone.replace(/-/g, ''))) {
-            setErrors({ phone: '올바른 휴대폰번호를 입력해주세요' });
+        if (!verificationStatus.phoneChecked || !verificationStatus.phoneAvailable) {
+            setErrors({ sms: '휴대폰 중복확인을 먼저 완료해주세요' });
             return;
         }
 
-        if (!isPhoneChecked || !isPhoneAvailable) {
-            setErrors({ phone: '휴대폰 중복확인을 먼저 완료해주세요' });
-            return;
-        }
-
-        setIsLoading(true);
+        setLoading({ sms: true });
         try {
-            await axiosInstance.post('/signup/sms/send', {
-                phone: phone.replace(/-/g, ''),
-                purpose: 'SIGNUP'
+            // SMS 발송은 하이픈 제거해서 전송 (coolsms api 규칙)
+            const cleanPhone = phone.replace(/-/g, '');
+            await signupApi.sendSMS(cleanPhone);
+            
+            updateState({
+                isCodeSent: true,
+                timeLeft: 300
             });
             
-            setIsCodeSent(true);
-            setTimeLeft(300);
             setErrors({});
-            if (onErrorClear) {
-                onErrorClear('phone');
-            }
+            onErrorClear?.('phone');
+            
         } catch (error) {
             const errorMessage = error.response?.data?.errMsg || '인증코드 발송에 실패했습니다';
             setErrors({ sms: errorMessage });
         } finally {
-            setIsLoading(false);
+            setLoading({});
         }
-    }, [phone, onErrorClear, isPhoneChecked, isPhoneAvailable]);
+    }, [phone, verificationStatus.phoneChecked, verificationStatus.phoneAvailable, onErrorClear, updateState]);
 
-
-   const handleVerifyCode = useCallback(async () => {
-        if (!verificationCode.trim()) {
+    /** SMS 인증코드 검증 */
+    const handleVerifyCode = useCallback(async () => {
+        if (!state.verificationCode.trim()) {
             setErrors({ code: '인증코드를 입력해주세요' });
             return;
         }
 
-        setIsLoading(true);
-        try {
-            await axiosInstance.post('/signup/sms/verify', {
-                phone: phone.replace(/-/g, ''),
-                code: verificationCode,
-                purpose: 'SIGNUP'
+        setLoading({ verify: true });
+        try { 
+            const cleanPhone = phone.replace(/-/g, ''); //하이픈 제거
+            await signupApi.verifySMS(cleanPhone, state.verificationCode);
+                        
+            updateState({
+                isCodeSent: false,
+                timeLeft: 0,
+                verificationCode: ''
             });
             
-            setIsVerified(true);
-            setIsCodeSent(false);
-            setTimeLeft(0);
+            setVerificationStatus(prev => ({
+                ...prev,
+                phoneVerified: true
+            }));
+            
             setErrors({});
+            setPhoneMessage({ type: 'success', text: '휴대폰 인증이 완료되었습니다' });
             onVerified(true);
-
-            if (onErrorClear) {
-                onErrorClear('phone');
-            }
+            onErrorClear?.('phone');
+            
         } catch (error) {
             const errorMessage = error.response?.data?.errMsg || '인증코드가 일치하지 않습니다';
             setErrors({ code: errorMessage });
             onVerified(false);
         } finally {
-            setIsLoading(false);
+            setLoading({});
         }
-    }, [verificationCode, phone, onVerified, onErrorClear]);
+    }, [phone, state.verificationCode, onVerified, onErrorClear, updateState, setVerificationStatus, setPhoneMessage]);
 
+    /** 휴대폰번호 입력 변경 처리 */
     const handlePhoneChange = useCallback((e) => {
-        const { value } = e.target;
-        const formattedValue = value.replace(/[^0-9]/g, '').replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+        const formattedValue = formatters.phone(e.target.value);
         
         onChange({
-            target: {
-                name: 'phone',
-                value: formattedValue
-            }
+            target: { name: 'phone', value: formattedValue }
         });
 
-        if (isVerified || isPhoneChecked) {
-            setIsVerified(false);
-            setIsPhoneChecked(false);
-            setIsPhoneAvailable(false);
+        if (verificationStatus.phoneVerified || verificationStatus.phoneChecked) {
+            setVerificationStatus(prev => ({
+                ...prev,
+                phoneVerified: false,
+                phoneChecked: false,
+                phoneAvailable: false
+            }));
             onVerified(false);
+            setPhoneMessage({ type: '', text: '' });
         }
         
         setErrors({});
-    }, [onChange, onVerified, isVerified, isPhoneChecked]);
+    }, [onChange, onVerified, verificationStatus.phoneVerified, verificationStatus.phoneChecked, setVerificationStatus, setPhoneMessage]);
+
+    /** 인증코드 입력 변경 처리 */
+    const handleCodeChange = useCallback((e) => {
+        updateState({ verificationCode: e.target.value });
+        setErrors({ code: '' });
+    }, [updateState]);
+
+    const isLoading = Object.values(loading).some(Boolean);
 
     return (
         <div className={styles.container}>
@@ -156,8 +203,8 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
                     placeholder="휴대폰번호를 입력해주세요"
                     value={phone}
                     onChange={handlePhoneChange}
-                    error={(!isVerified && error) || errors.phone}
-                    disabled={isVerified}
+                    error={!verificationStatus.phoneVerified && error}
+                    disabled={verificationStatus.phoneVerified}
                 />
 
                 <FormButton
@@ -165,11 +212,11 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
                     variant="secondary"
                     size="small"
                     onClick={handlePhoneCheck}
-                    disabled={isVerified || isLoading || (isPhoneChecked && isPhoneAvailable)}
-                    loading={isLoading}
+                    disabled={verificationStatus.phoneVerified || isLoading || (verificationStatus.phoneChecked && verificationStatus.phoneAvailable)}
+                    loading={loading.phone}
                     className={styles.checkButton}
                 >
-                    {isPhoneChecked && isPhoneAvailable ? '확인완료' : '중복확인'}
+                    {verificationStatus.phoneChecked && verificationStatus.phoneAvailable ? '확인완료' : '중복확인'}
                 </FormButton>
 
                 <FormButton
@@ -177,22 +224,23 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
                     variant="secondary"
                     size="small"
                     onClick={handleSendCode}
-                    disabled={isVerified || isLoading || !isPhoneChecked || !isPhoneAvailable}
-                    loading={isLoading}
+                    disabled={verificationStatus.phoneVerified || isLoading || !verificationStatus.phoneChecked || !verificationStatus.phoneAvailable}
+                    loading={loading.sms}
                     className={styles.sendButton}
                 >
-                    {isCodeSent ? '재발송' : '인증코드 발송'}
+                    {state.isCodeSent ? '재발송' : '인증코드 발송'}
                 </FormButton>
             </div>
 
-            {isCodeSent && (
+            {/* 인증코드 입력란 */}
+            {state.isCodeSent && (
                 <div className={styles.inputGroup}>
                     <FormInput
                         name="verificationCode"
                         type="text"
                         placeholder="인증코드를 입력해주세요"
-                        value={verificationCode}
-                        onChange={(e) => setVerificationCode(e.target.value)}
+                        value={state.verificationCode}
+                        onChange={handleCodeChange}
                         error={errors.code}
                     />
                     <FormButton
@@ -201,7 +249,7 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
                         size="small"
                         onClick={handleVerifyCode}
                         disabled={isLoading}
-                        loading={isLoading}
+                        loading={loading.verify}
                         className={styles.verifyButton}
                     >
                         인증확인
@@ -209,18 +257,14 @@ const PhoneVerification = forwardRef(({ phone, onChange, onVerified, error, onEr
                 </div>
             )}
 
-            {isCodeSent && timeLeft > 0 && (
+            {/* 타이머 표시 */}
+            {state.isCodeSent && state.timeLeft > 0 && (
                 <div className={styles.timerInfo}>
-                    인증코드 유효시간: {formatTime(timeLeft)}
+                    인증코드 유효시간: {formatters.time(state.timeLeft)}
                 </div>
             )}
 
-            {isVerified && (
-                <div className={styles.successMessage}>
-                    휴대폰 인증이 완료되었습니다.
-                </div>
-            )}
-
+            {/* SMS 발송 에러 메시지 */}
             {errors.sms && (
                 <div className={styles.errorMessage}>
                     {errors.sms}

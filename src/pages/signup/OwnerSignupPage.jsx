@@ -1,36 +1,70 @@
 import React, { useCallback } from 'react';
-import styles from '../../assets/styles/pages/signup/UserSignupForm.module.css'; // 수정: 기존 스타일 재사용
+import styles from '../../assets/styles/pages/signup/UserSignupPage.module.css';
 import FormInput from '../../components/common/FormInput';
 import FormButton from '../../components/common/FormButton';
 import PhoneVerification from '../../components/signup/PhoneVerification';
 import { useSignupForm } from '../../hooks/useSignupForm';
-import { useSignupValidation } from '../../hooks/useSignupValidation';
+import { signupApi } from '../../api/signupApi';
 
+/**
+ * 식당 업주 기본정보 입력 페이지
+ * - 사업자 회원가입을 위한 기본 정보 수집 (일반회원과 동일)
+ * - 식당 정보 입력페이지(다음 단계) 로 데이터 전달
+ */
 const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
     
-    // 초기값으로 Hook 초기화
+    // 업주 회원가입용 폼 상태 관리
     const {
         formData, errors, setErrors,
-        verificationStatus,
-        setVerificationStatus,
-        userIdMessage,
-        setUserIdMessage,
+        verificationStatus, setVerificationStatus,
+        userIdMessage, setUserIdMessage,
+        messages, setMessages,
         passwordMatch, inputRefs,
         handleErrorClear,
         handleInputChange,
-        focusFirstErrorField
-    } = useSignupForm(initialData);
+        validateForm
+    } = useSignupForm(initialData, {
+        userType: 'owner',
+        validationFields: ['userId', 'password', 'confirmPassword', 'name', 'phone'],
+        enableVerification: true
+    });
 
-    // 검증 Hook
-    const { validateForm, handleUserIdCheck } = useSignupValidation(
-        formData,
-        verificationStatus,
-        setErrors,
-        setUserIdMessage,
-        setVerificationStatus,
-        focusFirstErrorField
-    );
+    /** 아이디 중복 확인 처리 */
+    const handleUserIdCheck = useCallback(async () => {
+        if (!formData.userId.trim()) {
+            setUserIdMessage({ type: 'error', text: '아이디를 입력해주세요' });
+            return;
+        }
 
+        if (!/^[a-zA-Z0-9]{4,20}$/.test(formData.userId)) {
+            setUserIdMessage({ type: 'error', text: '아이디는 4-20자의 영문, 숫자만 사용 가능합니다' });
+            return;
+        }
+
+        try {
+            await signupApi.checkUserId(formData.userId);
+            
+            setVerificationStatus(prev => ({
+                ...prev,
+                userIdChecked: true,
+                userIdAvailable: true
+            }));
+            
+            setUserIdMessage({ type: 'success', text: '사용 가능한 아이디입니다' });
+            setErrors(prev => ({ ...prev, userId: '' }));
+            
+        } catch (error) {
+            const errorMessage = error.response?.data?.errMsg || '이미 사용 중인 아이디입니다';
+            setUserIdMessage({ type: 'error', text: errorMessage });
+            setVerificationStatus(prev => ({
+                ...prev,
+                userIdChecked: false,
+                userIdAvailable: false
+            }));
+        }
+    }, [formData.userId, setUserIdMessage, setVerificationStatus, setErrors]);
+
+    /** 엔터키 제출 방지 */
     const handleKeyPress = useCallback((e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -38,16 +72,18 @@ const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
         }
     }, []);
 
+    /** 다음 단계로 데이터 전달 */
     const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
         
+        // 폼 검증
         if (!validateForm()) return;
 
-        // 폼 데이터 다음 단계로 전달
+        // 검증 통과 시 다음 단계로 데이터 전달
         onNext({ 
             userInfo: {
                 ...formData,
-                phone: formData.phone.replace(/-/g, ''),
+                phone: formData.phone.replace(/-/g, ''), // 하이픈 제거
                 role: 'ROLE_OWNER'
             }
         });
@@ -82,6 +118,7 @@ const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
                         </FormButton>
                     </div>
 
+                    {/* 아이디 중복확인 결과 표시 */}
                     {userIdMessage.text && (
                         <div className={`${styles.idMessage} ${
                             userIdMessage.type === 'success' ? styles.success : styles.error
@@ -102,7 +139,7 @@ const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
                         value={formData.password}
                         onChange={handleInputChange}
                         error={errors.password}
-                         autoComplete="new-password" 
+                        autoComplete="new-password" 
                     />
                 </div>
 
@@ -116,8 +153,9 @@ const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
                         value={formData.confirmPassword}
                         onChange={handleInputChange}
                         error={errors.confirmPassword}
-                         autoComplete="new-password" 
+                        autoComplete="new-password" 
                     />
+                    {/* 비밀번호 일치 여부 실시간 표시 */}
                     {passwordMatch.message && !errors.confirmPassword && (
                         <div className={`${styles.passwordMatchMessage} ${
                             passwordMatch.isValid ? styles.valid : styles.invalid
@@ -149,11 +187,21 @@ const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
                         onVerified={(verified) => setVerificationStatus(prev => ({ ...prev, phoneVerified: verified }))}
                         error={errors.phone}
                         onErrorClear={handleErrorClear}
+                        setPhoneMessage={(message) => setMessages(prev => ({ ...prev, phone: message }))}
+                        verificationStatus={verificationStatus}
+                        setVerificationStatus={setVerificationStatus}
                     />
+                    
+                    {/* 휴대폰 중복확인/인증완료 메시지 */}
+                    {messages.phone.text && (
+                        <div className={`${styles.idMessage} ${
+                            messages.phone.type === 'success' ? styles.success : styles.error
+                        }`}>
+                            {messages.phone.type === 'success' && <span className={styles.checkIcon}>✓</span>}
+                            {messages.phone.text}
+                        </div>
+                    )}
                 </div>
-
-                {errors.general && (
-                          <div className={styles.errorAlert}>{errors.general}</div>)}
 
                 <div className={styles.buttonContainer}>
                     <FormButton

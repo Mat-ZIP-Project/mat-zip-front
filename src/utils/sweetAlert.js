@@ -12,7 +12,7 @@ export const showSuccessAlert = (title, text, timer = 1500) => {
   });
 };
 
-export const showErrorAlert = (title, text, timer = 2000) => {
+export const showErrorAlert = (title, text, timer = 1500) => {
   return Swal.fire({
     icon: 'error',
     title,
@@ -44,7 +44,7 @@ export const showConfirmAlert = (title, text) => {
   });
 };
 
-export const showLoadingAlert = (title, text, timer = 3000) => {
+export const showLoadingAlert = (title, text, timer = 2000) => {
   return Swal.fire({
     title,
     text,

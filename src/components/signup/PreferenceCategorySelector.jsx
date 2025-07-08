@@ -1,6 +1,9 @@
 import React, { useCallback } from 'react';
 import styles from '../../assets/styles/signup/PreferenceCategorySelector.module.css';
 
+/** 
+ * 선호 카테고리 컴포넌트 
+ * */
 const PreferenceCategorySelector = ({ 
     selectedCategories = '', 
     onCategoryChange, 
@@ -14,9 +17,6 @@ const PreferenceCategorySelector = ({
         }
     }, [onCategoryChange]);
 
-    // const selectedCategoryArray = typeof selectedCategories === 'string' 
-    //     ? selectedCategories.split(',').filter(Boolean) 
-    //     : selectedCategories;
     const selectedCategoryArray = selectedCategories ? selectedCategories.split(',') : [];
 
     return (

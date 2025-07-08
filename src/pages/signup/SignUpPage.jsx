@@ -2,11 +2,11 @@ import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from '../../assets/styles/pages/signup/SignupPage.module.css';
 import ProgressBar from "../../components/signup/ProgressBar";
-import UserTypeSelection from "./UserTypeSelection";
-import TermsAgreement from "./TermsAgreement";
-import UserSignupForm from "./UserSignupForm";
-import OwnerSignupForm from "./OwnerSignupForm";
-import RestaurantInfo from "./RestaurantInfo";
+import TypeSelectionPage from "./TypeSelectionPage";
+import TermsAgreementPage from "./TermsAgreementPage";
+import UserSignupPage from "./UserSignupPage";
+import OwnerSignupPage from "./OwnerSignupPage";
+import ResiterRestaurantPage from "./ResiterRestaurantPage";
 
 
 
@@ -49,7 +49,7 @@ const SignUpPage = () => {
                 }
             }));
             
-            // 민감 데이터 별도 저장 (임시)
+            // 비밀번호 데이터 별도 저장 (임시)
             if (password || confirmPassword) {
                 setSensitiveData({
                     password: password || '',
@@ -70,7 +70,7 @@ const SignUpPage = () => {
     }, []);
 
     const handleBack = useCallback(() => {
-        // 수정: 뒤로가기 시 민감정보 제거 (선택사항)
+        // 뒤로가기 시 입력한 비밀번호 제거
         if (currentStep === 4) { // 식당정보 -> 기본정보로 돌아갈 때
             setSensitiveData({ password: '', confirmPassword: '' });
         }
@@ -86,28 +86,27 @@ const SignUpPage = () => {
     const renderCurrentStep = () => {
         switch (currentStep) {
             case 1:
-                return <UserTypeSelection onSelect={handleUserTypeSelect} />;
+                return <TypeSelectionPage onSelect={handleUserTypeSelect} />;
             case 2:
-                return <TermsAgreement onNext={handleNext} onBack={handleBack} />;
+                return <TermsAgreementPage onNext={handleNext} onBack={handleBack} />;
             case 3:
                 if (userType === 'user') {
-                    return <UserSignupForm onNext={handleNext} onBack={handleBack} />;
+                    return <UserSignupPage onNext={handleNext} onBack={handleBack} />;
                 } else {
-                    // 수정: 안전한 데이터만 전달, 민감정보 병합
                     const combinedData = {
                         ...signupData.userInfo,
                         ...sensitiveData
                     };
                     return (
-                        <OwnerSignupForm 
+                        <OwnerSignupPage 
                             onNext={handleNext} 
                             onBack={handleBack}
-                            initialData={combinedData} // 추가: 초기값 전달
+                            initialData={combinedData}
                         />
                     );
                 }
             case 4:
-                // 수정: 최종 제출 시 모든 데이터 병합
+                // 최종 제출 시 모든 데이터 병합
                 const finalSignupData = {
                     ...signupData,
                     userInfo: {
@@ -116,18 +115,18 @@ const SignUpPage = () => {
                     }
                 };
                 return (
-                    <RestaurantInfo 
+                    <ResiterRestaurantPage
                         onNext={handleNext} 
                         onBack={handleBack} 
                         signupData={finalSignupData}
                     />
                 );
             default:
-                return <UserTypeSelection onSelect={handleUserTypeSelect} />;
+                return <TypeSelectionPage onSelect={handleUserTypeSelect} />;
         }
     };
 
-    // 추가: 컴포넌트 언마운트 시 민감정보 정리
+    // 컴포넌트 언마운트 시 민감정보 정리(비밀번호)
     useEffect(() => {
         return () => {
             setSensitiveData({ password: '', confirmPassword: '' });
