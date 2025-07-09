@@ -55,7 +55,7 @@ const SearchMapPage = () => {
 
   return (
     <div className="search-map-page">
-      <SearchHeader />
+      
       <div className="region-selector-wrapper">
         <RegionSelector
           selectedSigungu={selectedSigungu}
