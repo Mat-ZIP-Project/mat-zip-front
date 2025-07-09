@@ -25,7 +25,7 @@ export const createReservation = async (reservationData) => {
 export const approveReservation = async (adminApprovalData) => {
   try {
     const response = await axiosInstance.post(
-      "/reservation/approve",
+      "/reservation/owner/approve",
       adminApprovalData
     );
     return response.data;
