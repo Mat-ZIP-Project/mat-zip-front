@@ -26,8 +26,7 @@ const navigateToLogin = () => {
 axiosInstance.interceptors.request.use(
     (config) => {
         const state = store.getState();
-        const token = state.auth.accessToken;
-        
+        const token = state.auth.accessToken;        
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
             console.log('Authorization 헤더 설정됨:', config.headers.Authorization);
@@ -51,7 +50,6 @@ axiosInstance.interceptors.response.use(
             if (originalRequest.url?.includes('/auth/refresh')) {
                 store.dispatch(logout({ forceComplete: true }));
                 navigateToLogin();
-                return Promise.reject(error);
             }
 
             try {
@@ -71,9 +69,13 @@ axiosInstance.interceptors.response.use(
                 
                 // 원본 요청에 새 토큰 설정 후 재시도
                 delete originalRequest._retry;
+                originalRequest.headers = originalRequest.headers || {};
                 originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
-                return axiosInstance(originalRequest);
+                console.log('📦 Retrying original request with new token:', originalRequest);
+
+
+                return axios(originalRequest);
                 
             } catch (refreshError) {
                 // 갱신 실패 시 로그아웃
