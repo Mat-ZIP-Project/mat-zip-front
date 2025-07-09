@@ -1,0 +1,95 @@
+.container {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 40px;
+}
+
+.typeCards {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+}
+
+.typeCard {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 30px 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  flex: 1;
+  max-width: 280px;
+}
+
+.typeCard:hover {
+  border-color: #ff6b35;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);
+}
+
+.cardIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+.cardDescription {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .typeCards {
+    flex-direction: column;
+  }
+  
+  .typeCard {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 24px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+  
+  .typeCard {
+    padding: 24px 16px;
+  }
+  
+  .cardIcon {
+    font-size: 40px;
+  }
+  
+  .cardTitle {
+    font-size: 18px;
+  }
+  
+  .cardDescription {
+    font-size: 13px;
+  }
+}

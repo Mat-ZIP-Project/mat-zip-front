@@ -88,12 +88,20 @@ export const useReservationLogic = () => {
       setIsLoading(false);
       return;
     }
-    if (numPeople <= 0) {
-      setFeedbackMessage("인원 수는 1명 이상이어야 합니다.");
+
+    const NumPeople = Number(numPeople);
+    if (isNaN(NumPeople) || NumPeople <= 0) {
+      setFeedbackMessage("인원 수는 1명 이상은 하셔야됩니다.");
       setIsSuccess(false);
       setIsLoading(false);
       return;
     }
+    // if (numPeople <= 0) {
+    //   setFeedbackMessage("인원 수는 1명 이상이어야 합니다.");
+    //   setIsSuccess(false);
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     try {
       setFeedbackMessage("예약 신청 중...");

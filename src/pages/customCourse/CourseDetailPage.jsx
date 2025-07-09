@@ -29,6 +29,10 @@ const CourseDetailPage = () => {
   if (!course) return <div>로딩중...</div>;
 
   const handleSave = () => {
+    if(spots.length===0) {
+      alert("코스에 식당이 1개 이상이어야 저장 가능합니다.");
+      navigate("/my-courses");
+    }
     axiosInstance({
       method : "put",
       url : `/course/custom/${courseId}`,
