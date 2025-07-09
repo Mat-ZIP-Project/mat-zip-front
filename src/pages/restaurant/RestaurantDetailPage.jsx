@@ -1,23 +1,22 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../api/axiosinstance';
-// 예시: 로그인 상태 Context (없으면 구현 필요)
-//import { AuthContext } from '../context/AuthContext';
 import RestaurantMenuList from '../../components/restaurant/RestaurantMenuList';
 import RestaurantReviewList from '../../components/restaurant/RestaurantReviewList';
 import RestaurantMap from '../../components/restaurant/RestaurantMap';
 import RestaurantDetailInfo from '../../components/restaurant/RestaurantDetailInfo';
+import { useSelector } from 'react-redux';
 
 const RestaurantDetailPage = () => {
   const { id } = useParams();
-//  const { user } = useContext(AuthContext);  // 로그인 정보 가져오기
-
+  const user = useSelector((state) => state.auth.userInfo);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [restaurant, setRestaurant] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await axiosInstance.get('/restaurant/${id}');
+        const data = await axiosInstance.get(`/api/restaurants/${id}`);
         setRestaurant(data);
       } catch (error) {
         console.error('식당 상세 조회 실패:', error);
@@ -34,7 +33,10 @@ const RestaurantDetailPage = () => {
     }
 
     try {
-      await registerWaiting(id);
+      await axiosInstance.post(`/api/waiting/${restaurantId}`, {
+        restaurantId: id,
+        userId: user.id,
+      });
       alert('웨이팅 등록 완료!');
     } catch (err) {
       alert('웨이팅 등록 실패: ' + (err.response?.data?.message || '오류'));

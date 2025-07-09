@@ -26,7 +26,7 @@ const RestaurantListPage = () => {
   setLoading(true);
   setSearched(true);
   try {
-    const response = await axiosInstance.get('/restaurants', {
+    const response = await axiosInstance.get('/api/restaurants', {
       params: {
         ...(isCategoryValid && { category }),
         ...(isRegionValid && { regionSigungu: region }),
