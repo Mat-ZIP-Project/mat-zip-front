@@ -1,13 +1,22 @@
+/* 페이지 전체 스타일 */
 .my-course-list-page {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  .my-course-list-page h2 {
-    font-size: 1.4rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-  }
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.my-course-list-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+/* 카드들 그리드로 정렬 */
+.course-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}

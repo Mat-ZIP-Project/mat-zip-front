@@ -6,17 +6,18 @@ import MainLayout from "./components/layout/MainLayout";
 import AuthLayout from "./components/layout/AuthLayout";
 
 import Home from "./pages/Home";
-import Login from "./pages/login/Login";
+import LoginPage from "./pages/login/LoginPage";
 import ProtectedRoute from "./components/common/ProtectedRoute";
-import Owner from "./pages/owner/Owner";
+import OwnerPage from "./pages/owner/OwnerPage";
 import NotFound from "./pages/NotFound";
-import SearchMapPage from "./pages/searchMap/SearchMapPage";
+import SearchMapPage from "./pages/mapSearch/SearchMapPage";
 import TempCoursePage from "./pages/customCourse/TempCoursePage";
 import MyCourseListPage from "./pages/customCourse/MyCourseListPage";
 import CourseDetailPage from "./pages/customCourse/CourseDetailPage";
 import LocalAuthPage from "./pages/localAuth/LocalAuthPage";
 import ReservationPopup from "./components/reservation/ReservationPopup";
 import MyPage from "./pages/mypage/MyPage";
+import SignUpPage from "./pages/signup/SignupPage";
 
 function App() {
   // <Link
@@ -40,9 +41,9 @@ function App() {
 
         {/* 로그인관련 레이아웃 그룹(로그인용 푸터/헤더 사용) - 로그인 불필요 */}
         <Route element={<AuthLayout />}>
-          <Route path="/login" element={<Login />} />
-          {/* <Route path="/signup" element={<SignUp />} />
-                <Route path="/find-id" element={<FindId />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          {/*   <Route path="/find-id" element={<FindId />} />
                 <Route path="/auth/find-password" element={<FindPassword />} /> */}
           <Route path="/nearby" element={<SearchMapPage />} />
         </Route>
@@ -65,7 +66,7 @@ function App() {
         {/* 🏪 식당 업주 전용 라우트 - ROLE_OWNER */}
         <Route element={<ProtectedRoute requiredRole="ROLE_OWNER" />}>
           <Route path="/owner" element={<MainLayout />}>
-            <Route index element={<Owner />} />
+            <Route index element={<OwnerPage />} />
           </Route>
         </Route>
 
