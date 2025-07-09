@@ -16,10 +16,11 @@ import MyCourseListPage from "./pages/customCourse/MyCourseListPage";
 import CourseDetailPage from "./pages/customCourse/CourseDetailPage";
 import LocalAuthPage from "./pages/localAuth/LocalAuthPage";
 import ReservationPopup from "./components/reservation/ReservationPopup";
-import RestaurantListPage from './pages/restaurant/RestaurantListPage';
-import RestaurantDetailPage from './pages/restaurant/RestaurantDetailPage';
+import RestaurantListPage from "./pages/restaurant/RestaurantListPage";
+import RestaurantDetailPage from "./pages/restaurant/RestaurantDetailPage";
 import MyPage from "./pages/mypage/MyPage";
 import SignUpPage from "./pages/signup/SignupPage";
+import MyPageLayout from "./components/layout/MyPageLayout";
 
 function App() {
   // <Link
@@ -55,7 +56,6 @@ function App() {
         {/* 🛡️ 일반 사용자 라우트 - 로그인 필요 */}
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
-            <Route path="/mypage" element={<MyPage />} />
             <Route path="/courses" element={<TempCoursePage />} />
             <Route path="/my-courses" element={<MyCourseListPage />} />
             <Route
@@ -64,6 +64,10 @@ function App() {
             />
             <Route path="/local-auth" element={<LocalAuthPage />} />
             <Route path="/reservation" element={<ReservationPopup />} />
+          </Route>
+
+          <Route element={<MyPageLayout />}>
+            <Route path="/mypage" element={<MyPage />} />
           </Route>
         </Route>
 

@@ -3,12 +3,14 @@ import { preparePayment, completePayment } from "../api/paymentApi";
 import { handleNotification } from "../../../api/notificationHandle";
 import { useState, useEffect } from "react";
 import { RESTAURANT_NAME } from "../../../constants";
+import "../../../assets/styles/mapSearch/restaurantCard.css";
 
 const IMP_UID = import.meta.env.VITE_IMP_UID;
 
 export const useReservationLogic = () => {
   // 예약 정보 상태
   const [reservationId, setReservationId] = useState(null);
+  const [restaurantName, setRestaurantName] = useState("");
   const [reservationDate, setReservationDate] = useState("");
   const [reservationTime, setReservationTime] = useState("18:00");
   const [numPeople, setNumPeople] = useState(1);
@@ -26,7 +28,8 @@ export const useReservationLogic = () => {
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(null);
 
-  const restaurantName = RESTAURANT_NAME;
+  // const restaurantName = RESTAURANT_NAME;
+  const restaurantId = 1;
 
   // 관리자 기능용 상태
   const [adminReservationId, setAdminReservationId] = useState("");
@@ -96,12 +99,6 @@ export const useReservationLogic = () => {
       setIsLoading(false);
       return;
     }
-    // if (numPeople <= 0) {
-    //   setFeedbackMessage("인원 수는 1명 이상이어야 합니다.");
-    //   setIsSuccess(false);
-    //   setIsLoading(false);
-    //   return;
-    // }
 
     try {
       setFeedbackMessage("예약 신청 중...");
@@ -109,12 +106,15 @@ export const useReservationLogic = () => {
         date: reservationDate,
         time: reservationTime,
         numPeople: numPeople,
-        restaurantName: restaurantName,
+        restaurantId: restaurantId,
       });
 
       if (createReservationResponse.success) {
         const actualReservationId = createReservationResponse.reservationId;
+        const receivedRestaurantName = createReservationResponse.restaurantName;
         setReservationId(actualReservationId);
+        setRestaurantName(receivedRestaurantName);
+
         setFeedbackMessage(
           `예약 ID ${actualReservationId} 생성 성공. 이제 결제 준비를 시작합니다.`
         );
@@ -225,7 +225,7 @@ export const useReservationLogic = () => {
   /**
    * 3단계: PortOne 결제창을 띄우는 함수 (사용자 결제 진행 버튼 클릭 시 호출)
    */
-  const handleProceedToPayment = () => {
+  const handleProceedToPayment = (restaurantName) => {
     setIsLoading(true);
     setFeedbackMessage("");
     setIsSuccess(null);

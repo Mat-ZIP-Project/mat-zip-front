@@ -4,6 +4,10 @@
   padding: 2rem;
 }
 
+.mypage-container {
+  padding: 1rem;
+}
+
 .my-page-header {
   display: flex;
   justify-content: space-between;
