@@ -21,6 +21,7 @@ import RestaurantDetailPage from "./pages/restaurant/RestaurantDetailPage";
 import MyPage from "./pages/mypage/MyPage";
 import SignUpPage from "./pages/signup/SignupPage";
 import MyPageLayout from "./components/layout/MyPageLayout";
+import NotificationPage from "./components/myPage/NotificationPage";
 
 function App() {
   // <Link
@@ -68,6 +69,10 @@ function App() {
 
           <Route element={<MyPageLayout />}>
             <Route path="/mypage" element={<MyPage />} />
+            <Route
+              path="/mypage/notifications"
+              element={<NotificationPage />}
+            />
           </Route>
         </Route>
 

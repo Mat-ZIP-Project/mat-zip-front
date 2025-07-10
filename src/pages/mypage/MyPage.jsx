@@ -17,10 +17,10 @@ import defaultUserImage from "../../assets/images/새싹.png";
 
 // 등급별 이미지 맵 정의
 const gradeImages = {
-  '먹짱': mukzzangImage,
-  '실버': silverImage,
-  '브론즈': bronzeImage,
-  '새싹': sproutImage,
+  먹짱: mukzzangImage,
+  실버: silverImage,
+  브론즈: bronzeImage,
+  새싹: sproutImage,
 };
 
 const MyPage = () => {
@@ -33,7 +33,7 @@ const MyPage = () => {
   const [activeTab, setActiveTab] = useState("reservations");
   const [activeMeetingTab, setActiveMeetingTab] = useState("attended");
 
-  useEffect(()=> {
+  useEffect(() => {
     const userInfo = async () => {
       try {
         const response = await axiosInstance.get("/auth/user-info");
@@ -41,11 +41,10 @@ const MyPage = () => {
 
         const imageToSet = gradeImages[userForm.userGrade] || defaultUserImage;
         setUserImage(imageToSet);
-
       } catch (error) {
         console.error("사용자 정보를 가져오지 못했습니다: ", error);
       }
-    }
+    };
     userInfo();
   }, []);
 
@@ -111,7 +110,11 @@ const MyPage = () => {
   return (
     <div className="my-page-container">
       <div className="user-info-section">
-        <img src={userImage} alt="사용자 등급 이미지" style={{width: '100px', height: '100px', borderRadius: '50%'}}/>
+        <img
+          src={userImage}
+          alt="사용자 등급 이미지"
+          style={{ width: "100px", height: "100px", borderRadius: "50%" }}
+        />
         <div className="user-id-display">{userForm.userId}님</div>
         <div className="user-grade">등급 : {userForm.userGrade}</div>
         <div className="user-point">포인트 잔액 : {userForm.pointBalance}</div>
