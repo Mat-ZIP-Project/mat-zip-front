@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../../assets/styles/login/FormButton.module.css';
+import styles from '../../assets/styles/common/FormButton.module.css';
 
 const FormButton = ({ 
   type = 'button',

@@ -31,9 +31,10 @@ const MyCourseListPage = () => {
   }
 
   return (
-    <div>
-      <h2>코스 보관함</h2>
-      
+  <div className="my-course-list-page">
+    <h2 className="my-course-list-title">코스 보관함</h2>
+
+    <div className="course-card-grid">
       {courses.map(course => (
         <CourseCard
           key={course.courseId}
@@ -43,7 +44,8 @@ const MyCourseListPage = () => {
         />
       ))}
     </div>
-  );
+  </div>
+);
 };
 
 export default MyCourseListPage;
