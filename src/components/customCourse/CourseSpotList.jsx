@@ -45,6 +45,7 @@ const CourseSpotList = ({ spots, setSpots, editable }) => {
 
   };
 
+  
   const changeTempCourse = (spots) => {
     console.log(spots);
     axiosInstance({
@@ -53,6 +54,7 @@ const CourseSpotList = ({ spots, setSpots, editable }) => {
       data : spots
     })
       .then((res) => {
+        localStorage.setItem("myCourseSpots", JSON.stringify([...spots]));  //로컬스토리지 코스 업데이트
         console.log(res)
     }).catch((err)=>{console.log(err)})
   }
