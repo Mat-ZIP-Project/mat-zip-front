@@ -95,13 +95,13 @@ const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurant
 
  // 정보창 생성
  const infowindowContent = document.createElement("div");
- infowindowContent.innerHTML = `
-   <div style="padding:5px;font-size:14px;">
-     ${restaurantName}
-     <br/>
-     <button class="add-course-btn">코스에 추가</button>
-   </div>
- `;
+ infowindowContent.className = "info-window-wrapper";
+infowindowContent.innerHTML = `
+  <div class="info-window">
+    <div class="restaurant-name">${restaurantName}</div>
+    <button class="add-course-btn">➕ 코스에 추가</button>
+  </div>
+`;
  
  const infowindow = new window.kakao.maps.InfoWindow({
    content: infowindowContent,
@@ -117,9 +117,18 @@ const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurant
       // 기존 열려있는 정보창 닫기
       if (openInfowindow.current) {
         openInfowindow.current.close();
+        openInfowindow.current = null;
       }
       infowindow.open(mapInstance.current, marker);
       openInfowindow.current = infowindow;
+
+       // 2초 후 자동으로 닫기
+       setTimeout(() => {
+        if (openInfowindow.current === infowindow) {
+          infowindow.close();
+          openInfowindow.current = null;
+        }
+      }, 2000);
     });
 
     return marker;

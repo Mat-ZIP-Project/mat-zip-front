@@ -6,12 +6,14 @@ import axiosInstance from "../api/axiosinstance"
 export const addTempCourse = ({ restaurantId, restaurantName }) => {
     const saved = JSON.parse(localStorage.getItem("myCourseSpots")) || []; //localstorage 에 이미 저장된 리스트 가져오기
     
-    const isAlreadyExist = saved.some(s => {
-        s.restaurantId === restaurantId;
-        // console.log(typeof (restaurantId), typeof (s.restaurantId));
-    });
-    console.log(isAlreadyExist);
-    if (isAlreadyExist) {
+    if(saved.length===3) {
+        alert("코스에 추가 가능한 식당은 최대 3곳 입니다.");
+        return;
+    }
+    const isAlreadyExist = saved.filter(s=>s.restaurantId===restaurantId);
+
+
+    if (isAlreadyExist.length===1) {
         alert("이미 코스에 추가된 식당입니다.");
         return;
     }
