@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import '../../assets/styles/mapSearch/mapContainer.css';
-import gpsIcon from '../../assets/images/gps-icon.png';
 import axiosInstance from '../../api/axiosinstance';
 import haversine from 'haversine-distance';
 import { addTempCourse } from '../../hooks/addTempCourse';
+import gpsIcon from '../../assets/images/gps-icon.png';
 
 
 const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurants,setCenterPosition,setCategory ,setFitToMarkers}) => {

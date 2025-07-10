@@ -123,6 +123,16 @@ const MyPage = () => {
         >
           예약하기
         </Link>
+        <Link
+          to="/local-auth"
+          style={{
+            textDecoration: "none",
+            color: "blue",
+            border: "1px solid black",
+          }}
+        >
+          로컬인증하기
+        </Link>
         <div className="header-icons">
           <span
             className="notification-icon-wrapper"
