@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import '../../assets/styles/mapSearch/mapContainer.css';
-import gpsIcon from '../../assets/images/gps-icon.png';
 import axiosInstance from '../../api/axiosinstance';
 import haversine from 'haversine-distance';
+import { addTempCourse } from '../../hooks/addTempCourse';
+import gpsIcon from '../../assets/images/gps-icon.png';
 
 
 const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurants,setCenterPosition,setCategory ,setFitToMarkers}) => {
@@ -85,7 +86,7 @@ const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurant
 
 
     // 새 마커 생성
-  const newMarkerObjects = markers.map(({ latitude, longitude, restaurantName }) => {
+  const newMarkerObjects = markers.map(({ latitude, longitude, restaurantName,restaurantId }) => {
     const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
     const marker = new window.kakao.maps.Marker({
       position: markerPosition,
@@ -93,18 +94,41 @@ const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurant
     });
 
  // 정보창 생성
-    const infowindow = new window.kakao.maps.InfoWindow({
-      content: `<div style="padding:5px;font-size:14px;">${restaurantName}</div>`
-    });
+ const infowindowContent = document.createElement("div");
+ infowindowContent.className = "info-window-wrapper";
+infowindowContent.innerHTML = `
+  <div class="info-window">
+    <div class="restaurant-name">${restaurantName}</div>
+    <button class="add-course-btn">➕ 코스에 추가</button>
+  </div>
+`;
+ 
+ const infowindow = new window.kakao.maps.InfoWindow({
+   content: infowindowContent,
+ });
+ infowindowContent.querySelector(".add-course-btn").addEventListener("click", () => {
+ 
+  addTempCourse({ restaurantId, restaurantName });
+});
+ 
 
     // 마커 클릭 시 정보창 열기
     window.kakao.maps.event.addListener(marker, 'click', () => {
       // 기존 열려있는 정보창 닫기
       if (openInfowindow.current) {
         openInfowindow.current.close();
+        openInfowindow.current = null;
       }
       infowindow.open(mapInstance.current, marker);
       openInfowindow.current = infowindow;
+
+       // 2초 후 자동으로 닫기
+       setTimeout(() => {
+        if (openInfowindow.current === infowindow) {
+          infowindow.close();
+          openInfowindow.current = null;
+        }
+      }, 2000);
     });
 
     return marker;

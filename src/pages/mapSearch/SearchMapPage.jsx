@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import RegionSelector from '../../components/mapSearch/RegionSelector';
-import SearchHeader from '../../components/mapSearch/SearchHeader';
+
 import MapContainer from '../../components/mapSearch/MapContainer';
 import CategoryFilterBar from '../../components/mapSearch/CategoryFilterBar';
 import ResultList from '../../components/mapSearch/ResultList';
@@ -38,6 +38,7 @@ const SearchMapPage = () => {
       })
       .then(res => {
         setRestaurants(res.data);
+        setCategory('전체');
         if (res.data.length > 0) {
           // 중심좌표 계산: 마커들의 평균값
           const latSum = res.data.reduce((sum, item) => sum + item.latitude, 0);
@@ -51,11 +52,11 @@ const SearchMapPage = () => {
       .catch(err => {
         console.error(err);
       });
-  }, [selectedSido, selectedSigungu, centerPosition]);
+  }, [selectedSido, selectedSigungu, centerPosition,fitToMarkers]);
 
   return (
     <div className="search-map-page">
-      <SearchHeader />
+      
       <div className="region-selector-wrapper">
         <RegionSelector
           selectedSigungu={selectedSigungu}

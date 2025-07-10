@@ -40,8 +40,9 @@ const CourseDetailPage = () => {
       ...spot,
       title
     }))
-  }).then(()=>{
-      alert("코스가 수정 되었습니다.");
+    }).then(() => {
+      
+    alert("코스가 수정 되었습니다.");
       setEditable(false);}
     ).
     catch(err=>console.log(err))
