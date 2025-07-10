@@ -24,16 +24,6 @@ import MyPageLayout from "./components/layout/MyPageLayout";
 import NotificationPage from "./components/myPage/NotificationPage";
 
 function App() {
-  // <Link
-  //         to="/reservation"
-  //         style={{
-  //           textDecoration: "none",
-  //           color: "blue",
-  //           border: "1px solid black",
-  //         }}
-  //       >
-  //         예약하기
-  //       </Link>
 
   return (
     <div className="App">

@@ -70,6 +70,7 @@
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
   margin-bottom: 20px;
+  margin-top: 10%;
 }
 
 .tab-item {
@@ -110,4 +111,146 @@
 .sub-tab-item.active {
   border-bottom: 2px solid #8a2be2;
   color: #8a2be2;
+}
+
+/* user-profile-section: 큰 박스 역할 */
+.user-profile-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem; /* 20px */
+  margin: 1.25rem auto; /* 20px */
+  max-width: 56.25rem; /* 900px */
+  background-color: #f9f9f9;
+  border: 0.0625rem solid #e0e0e0; /* 1px */
+  border-radius: 0.625rem; /* 10px */
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
+}
+
+.user-info-container {
+  display: flex;
+  /* margin-bottom: 10%; */
+  padding-bottom: 10%;
+}
+
+
+/* 사용자 이미지 */
+.user-profile-image {
+  width: 6.25rem; /* 100px */
+  height: 6.25rem; /* 100px */
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1.5625rem; /* 25px */
+  border: 0.125rem solid #ccc; /* 2px */
+}
+
+/* 사용자 정보 텍스트 그룹 (이름, 등급, 포인트) */
+.user-details-group {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* 남은 공간을 최대한 차지하도록 설정 */
+  margin-right: 1.5625rem; /* 25px */
+}
+
+/* 사용자 이름 */
+.user-id-text {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.3125rem; /* 5px */
+}
+
+/* 사용자 등급 */
+.user-grade-text {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 0.1875rem; /* 3px */
+}
+
+/* 포인트 잔액 */
+.user-point-balance {
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* 버튼 그룹 (선호도 수정, 동네 인증) */
+.user-actions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem; /* 10px */
+}
+
+/* 선호도 수정 버튼과 동네 인증 버튼 */
+.profile-edit-btn,
+.local-auth-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  /* 버튼 크기 고정 및 축소 */
+  padding: 0.4rem 0.75rem; /* 상하 6.4px, 좌우 12px 정도 */
+  border-radius: 0.3125rem; /* 5px */
+  cursor: pointer;
+  font-size: 0.8rem; /* 12.8px 정도 */
+  width: 7rem; /* 약 112px로 너비 고정 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+  box-sizing: border-box; /* 패딩과 보더가 너비에 포함되도록 */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 */
+}
+
+.profile-edit-btn:hover,
+.local-auth-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-0.0625rem); /* -1px */
+}
+
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media (max-width: 48rem) { /* 768px */
+  .user-profile-section {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.9375rem; /* 15px */
+  }
+
+  .user-profile-image {
+    margin-right: 0;
+    margin-bottom: 0.9375rem; /* 15px */
+  }
+
+  .user-details-group {
+    margin-right: 0;
+    margin-bottom: 0.9375rem;
+    width: 100%;
+  }
+
+  .user-actions-group {
+    flex-direction: row; /* 작은 화면에서는 버튼 가로 정렬 유지 */
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .profile-edit-btn,
+  .local-auth-btn {
+    flex: 1; /* 사용 가능한 공간을 동일하게 나눔 */
+    margin: 0 0.3125rem; /* 0 5px */
+    width: auto; /* 작은 화면에서는 flex-grow를 사용하도록 width 자동 */
+    padding: 0.35rem 0.6rem; /* 더 작은 패딩 */
+    font-size: 0.75rem; /* 더 작은 폰트 */
+  }
+}
+
+@media (max-width: 30rem) { /* 480px */
+  .user-profile-image {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .user-id-text {
+    font-size: 1.4rem;
+  }
+
+  .user-grade-text,
+  .user-point-balance {
+    font-size: 0.95rem;
+  }
 }

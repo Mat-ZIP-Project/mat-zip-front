@@ -12,27 +12,20 @@ const MyPageHeader = () => {
 
   // 컴포넌트 마운트 시 읽지 않은 알림 개수를 가져온다.
   useEffect(() => {
-    const fetchUnreadNotificationCount = async () => {
+    const UnreadNotificationCount = async () => {
       try {
-        const response = await axiosInstance.get("/mypage/notifications");
-        const notifications = response.data;
-
-        // isRead가 false인 알림의 개수를 세어줌
-        const unreadCount = notifications.filter(
-          (notif) => !notif.isRead
-        ).length;
-
-        setUnreadNotificationCount(unreadCount);
+        const response = await axiosInstance.get("/mypage/notifications/count");
+        setUnreadNotificationCount(response.data);
       } catch (error) {
         console.error("알림 개수 가져오기 실패:", error);
         setUnreadNotificationCount(0);
       }
     };
 
-    fetchUnreadNotificationCount();
+    UnreadNotificationCount();
 
-    // 1분마다 업데이트
-    const intervalId = setInterval(fetchUnreadNotificationCount, 60000);
+    // 1분마다 업데이트 3600000 86400000
+    const intervalId = setInterval(UnreadNotificationCount, 3600000);
     return () => clearInterval(intervalId);
   }, []);
 
