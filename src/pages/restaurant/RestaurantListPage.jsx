@@ -1,90 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import RestaurantCard from '../../components/restaurant/RestaurantCard';
-import RestaurantFilterPanel from '../../components/restaurant/RestaurantFilterPanel';
-import RestaurantMapView from '../../components/restaurant/RestaurantMapView';
 import axiosInstance from '../../api/axiosinstance';
+import '../../assets/styles/restaurant/RestaurantListPage.css';
 
 const RestaurantListPage = () => {
-  
-  const [category, setCategory] = useState('-- 선택 --');
+  const [searchParams] = useSearchParams();
+  const initialCategory = searchParams.get('category'); // 쿼리에서 category 값 읽기
+
+  const [category, setCategory] = useState(initialCategory || '-- 선택 --');
   const [region, setRegion] = useState('-- 선택 --');
   const [sort, setSort] = useState('');
   const [restaurantList, setRestaurantList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searched, setSearched] = useState(false); // 검색 여부
+  const [searched, setSearched] = useState(false);
 
   const handleSearch = async () => {
-  const isCategoryValid = category && category !== '-- 선택 --';
-  const isRegionValid = region && region !== '-- 선택 --';
-  const isSortValid = sort && sort !== '';
+    const isCategoryValid = category && category !== '-- 선택 --';
+    const isRegionValid = region && region !== '-- 선택 --';
+    const isSortValid = sort && sort !== '';
 
-  if (!isCategoryValid && !isRegionValid && !isSortValid) {
-    alert('검색 조건을 하나 이상 선택해주세요.');
-    return;
-  }
+    if (!isCategoryValid && !isRegionValid && !isSortValid) {
+      alert('검색 조건을 하나 이상 선택해주세요.');
+      return;
+    }
 
-  setLoading(true);
-  setSearched(true);
-  try {
-    const response = await axiosInstance.get('/api/restaurants', {
-      params: {
-        ...(isCategoryValid && { category }),
-        ...(isRegionValid && { regionSigungu: region }),
-        ...(isSortValid && { sortBy: sort }),
-      },
-    });
-    setRestaurantList(response.data); 
-  } catch (err) {
-    console.error('식당 목록 불러오기 실패:', err);
-  } finally {
-    setLoading(false);
-  }
-};
+    setLoading(true);
+    setSearched(true);
+    try {
+      const response = await axiosInstance.get('/api/restaurants', {
+        params: {
+          ...(isCategoryValid && { category }),
+          ...(isRegionValid && { regionSigungu: region }),
+          ...(isSortValid && { sortBy: sort }),
+        },
+      });
+      setRestaurantList(response.data);
+    } catch (err) {
+      console.error('식당 목록 불러오기 실패:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  // 🔍 최초 렌더링 시 쿼리스트링에서 category가 있으면 자동 검색 실행
+  useEffect(() => {
+    if (initialCategory) {
+      handleSearch();
+    }
+  }, [initialCategory]);
 
   return (
-    <div className="restaurant-list-page">
-      <h1 className="restaurant-list-page_title">카테고리별 식당 List</h1>
+  <div className="restaurant-list-page">
 
-      <RestaurantFilterPanel
-        category={category}
-        region={region}
-        sort={sort}
-        onCategoryChange={setCategory}
-        onRegionChange={setRegion}
-        onSortChange={setSort}
-      />
-
-      <div className="restaurant-list-page_search-button">
-        <button
-          onClick={handleSearch}
-          className="restaurant-list-page_search-btn"
-        >
-          🔍 검색
-        </button>
+    {loading ? (
+      <p>❗ 로딩 중...</p>
+    ) : restaurantList.length === 0 ? (
+      <p>😥 조건에 맞는 식당이 없습니다.</p>
+    ) : (
+      <div className="restaurant-list-page_list">
+        {restaurantList.map((restaurant) => (
+          <RestaurantCard key={restaurant.restaurantId} data={restaurant} />
+        ))}
       </div>
-
-      {loading ? (
-        <p>❗ 로딩 중...</p>
-      ) : !searched ? (
-        <p>⚠️ 검색 조건을 선택하고 버튼을 눌러주세요.</p>
-      ) : restaurantList.length === 0 ? (
-        <p>😥 조건에 맞는 식당이 없습니다.</p>
-      ) : (
-        <>
-          {/* ✅ 지도 표시 */}
-          <RestaurantMapView restaurants={restaurantList} />
-
-          {/* ✅ 식당 목록 표시 */}
-          <div className="restaurant-list-page_list">
-            {restaurantList.map((restaurant) => (
-              <RestaurantCard key={restaurant.restaurantId} data={restaurant} />
-            ))}
-          </div>
-        </>
-      )}
-    </div>
-  );
+    )}
+    
+  </div>
+);
 };
 
 export default RestaurantListPage;

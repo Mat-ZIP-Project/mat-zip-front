@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axiosInstance from "../../api/axiosinstance";
 import { useSelector } from "react-redux";
 
@@ -21,10 +21,10 @@ const RestaurantCard = ({ data }) => {
   const handleLikeClick = async (e) => {
     e.preventDefault();
 
-    // if (!isLoggedIn) {
-    //   alert("로그인이 필요합니다.");
-    //   return;
-    // }
+    if (!isLoggedIn) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
 
     const prevLiked = isLiked;
     const prevLikes = likes;
@@ -40,16 +40,9 @@ const RestaurantCard = ({ data }) => {
         await axiosInstance.delete(`/api/restaurants/like/${restaurantId}`);
       }
     } catch (error) {
-      alert("찜 기능에 실패했습니다. 다시 시도해주세요.");
+      alert("다시 시도해주세요.");
       setIsLiked(prevLiked);
       setLikes(prevLikes);
-
-      // 여기서도 만약 401이면, 다시 로그인 안내
-      if (error.response?.status === 401) {
-        alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
-      } else {
-        alert("찜 처리에 실패했습니다.");
-      }
     }
   };
 
@@ -58,31 +51,31 @@ const RestaurantCard = ({ data }) => {
       <img
         src={thumbnailImageUrl || "/images/default-thumbnail.jpg"}
         alt={restaurantName}
-        className="restaurant-card__thumbnail"
+        className="restaurant-card_thumbnail"
       />
 
-      <div className="restaurant-card__info">
-        <h2 className="restaurant-card__name">
+      <div className="restaurant-card_info">
+        <h2 className="restaurant-card_name">
           <a href={`/restaurants/${restaurantId}`}>{restaurantName}</a>
         </h2>
-        <p className="restaurant-card__address">{address}</p>
+        <p className="restaurant-card_address">{address}</p>
       </div>
 
-      <div className="restaurant-card__meta">
-        <span className="restaurant-card__reviews">💬 {reviewCount}</span>
-        <span className="restaurant-card__reservations">
+      <div className="restaurant-card_meta">
+        <span className="restaurant-card_reviews">💬 {reviewCount}</span>
+        <span className="restaurant-card_reservations">
           📅 {reservationCount}
         </span>
 
-        <div className="restaurant-card__like-group">
+        <div className="restaurant-card_like-group">
           <button
             onClick={handleLikeClick}
-            className={`restaurant-card__like-button ${isLiked ? "liked" : ""}`}
+            className={`restaurant-card_like-button ${isLiked ? "liked" : ""}`}
             aria-label={isLiked ? "찜 취소" : "찜하기"}
           >
             {isLiked ? "❤️" : "🤍"}
           </button>
-          <span className="restaurant-card__like-count">{likes}</span>
+          <span className="restaurant-card_like-count">{likes}</span>
         </div>
       </div>
     </div>
