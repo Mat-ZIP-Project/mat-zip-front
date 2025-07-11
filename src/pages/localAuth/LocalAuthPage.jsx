@@ -71,12 +71,13 @@ export default function LocalAuthPage() {
 
   return (
     <div className="local-auth-page">
+      <h1 className="page-title">📍 현지인 인증</h1>
       <LocationStatusCard
         regionName={regionName}
         badgeCount={badges.length}
         fetchAll={fetchAll}
       />
-      <BadgeList badges={badges} fetchAll={fetchAll} />
+      <BadgeList badges={badges} badgeCount={badges.length} fetchAll={fetchAll} />
       <AuthLogList authLogs={authLogs} />
       <InfoBanner />
     </div>
