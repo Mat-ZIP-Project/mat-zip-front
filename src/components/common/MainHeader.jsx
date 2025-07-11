@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../../assets/styles/common/MainHeader.module.css';
 import { useNavigate } from 'react-router-dom';
 
 const MainHeader = () => {
     const navigate = useNavigate();
+    const [keyword, setKeyword] = useState('');
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        // 추후 검색 기능 구현
+         const trimmed = keyword.trim();
+        if (trimmed.length > 0) {
+            navigate(`/restaurants/search?keyword=${encodeURIComponent(trimmed)}`);
+        }
     };
 
     const handleLogoClick = () => {
@@ -28,6 +32,8 @@ const MainHeader = () => {
                     <input 
                         type="text" 
                         placeholder="맛집을 검색해 보세요"
+                        value = {keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
                         className={styles.searchInput}
                     />
                 </form>

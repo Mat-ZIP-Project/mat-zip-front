@@ -1,65 +1,78 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosInstance from '../../api/axiosinstance';
-import RestaurantMenuList from '../../components/restaurant/RestaurantMenuList';
-import RestaurantReviewList from '../../components/restaurant/RestaurantReviewList';
-import RestaurantMap from '../../components/restaurant/RestaurantMap';
 import RestaurantDetailInfo from '../../components/restaurant/RestaurantDetailInfo';
-import { useSelector } from 'react-redux';
+import TabMenu from '../../components/restaurant/TabMenu';
+import { Link } from "react-router-dom";
+
+import '../../assets/styles/restaurant/RestaurantDetailPage.css';
 
 const RestaurantDetailPage = () => {
   const { id } = useParams();
-  const user = useSelector((state) => state.auth.userInfo);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const [restaurant, setRestaurant] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('home');
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchRestaurant = async () => {
       try {
-        const data = await axiosInstance.get(`/api/restaurants/${id}`);
-        setRestaurant(data);
+        const res = await axiosInstance.get(`/api/restaurants/${id}`);
+        setRestaurant(res.data);
       } catch (error) {
-        console.error('식당 상세 조회 실패:', error);
+        console.error('식당 정보를 불러오지 못했습니다.', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchData();
-  }, [id]);
+    fetchRestaurant();
+  }, []);
 
-  const handleRegisterWaiting = async () => {
-    if (!user) {
-      alert('로그인 후 이용 가능합니다.');
-      return;
-    }
-
-    try {
-      await axiosInstance.post(`/api/waiting/${restaurantId}`, {
-        restaurantId: id,
-        userId: user.id,
-      });
-      alert('웨이팅 등록 완료!');
-    } catch (err) {
-      alert('웨이팅 등록 실패: ' + (err.response?.data?.message || '오류'));
-    }
-  };
-
-  if (!restaurant) return <div>❗ 로딩 중...</div>;
+  if (loading) return <p>로딩 중...</p>;
+  if (!restaurant) return <p>식당 정보를 표시할 수 없습니다.</p>;
 
   return (
     <div className="restaurant-detail-page">
-      <RestaurantDetailInfo data={restaurant} />
-      <RestaurantMenuList menus={restaurant.menus} />
-      <RestaurantReviewList reviews={restaurant.reviews} />
-      <RestaurantMap location={restaurant.address} />
-
-      {/* 웨이팅 등록 버튼 */}
-      <button
-        onClick={handleRegisterWaiting}
-        className="restaurant-detail-page_waiting-btn"
-      >
-        📋 웨이팅 등록
-      </button>
+  {restaurant.thumbnailImageUrl ? (
+    <img
+      src={restaurant.thumbnailImageUrl}
+      alt={restaurant.restaurantName}
+      className="restaurant-detail-image"
+    />
+  ) : (
+    <div className="restaurant-detail-image placeholder">
+      <span>식당 이미지</span>
     </div>
+  )}
+
+  <RestaurantDetailInfo data={restaurant} />
+  <TabMenu activeTab={activeTab} setActiveTab={setActiveTab} />
+
+  <div className="restaurant-tab-content">
+    {activeTab === 'home' && <p>홈 콘텐츠 영역</p>}
+    {activeTab === 'menu' && <p>메뉴 콘텐츠 영역</p>}
+    {activeTab === 'review' && <p>리뷰 콘텐츠 영역</p>}
+    {activeTab === 'info' && <p>식당 추가 정보 영역</p>}
+  </div>
+
+   {/* 예약하기 버튼 추가 */}
+<div className="restaurant-reservation-button-wrapper">
+  <Link
+    to="/reservation"
+    style={{
+      textDecoration: "none",
+      color: "blue",
+      border: "1px solid black",
+      padding: "6px 12px",
+      borderRadius: "4px",
+      display: "inline-block",
+      margin: "12px 0"
+    }}
+  >
+    예약하기
+  </Link>
+</div>
+</div>
   );
 };
 

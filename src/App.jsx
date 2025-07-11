@@ -20,6 +20,7 @@ import RestaurantListPage from "./pages/restaurant/RestaurantListPage";
 import RestaurantDetailPage from "./pages/restaurant/RestaurantDetailPage";
 import MyPage from "./pages/mypage/MyPage";
 import SignUpPage from "./pages/signup/SignupPage";
+import RestaurantSearchResultPage from "./pages/restaurant/RestaurantSearchResultPage";
 import MyPageLayout from "./components/layout/MyPageLayout";
 import NotificationPage from "./components/myPage/NotificationPage";
 
@@ -33,6 +34,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/restaurants" element={<RestaurantListPage />} />
           <Route path="/restaurants/:id" element={<RestaurantDetailPage />} />
+          <Route path="/restaurants/search" element={<RestaurantSearchResultPage />} />
         </Route>
 
         {/* 로그인관련 레이아웃 그룹(로그인용 푸터/헤더 사용) - 로그인 불필요 */}

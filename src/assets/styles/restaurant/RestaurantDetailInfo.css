@@ -1,0 +1,62 @@
+.restaurant-detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.restaurant-detail-info h1 {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.restaurant-detail-info p {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+
+/* 예약 버튼 스타일 */
+.restaurant-reservation-button {
+  /* margin-top: 16px; */
+  align-self: flex-end;
+  padding: 10px 20px;
+  background-color: transparent;
+color: #ff5722;
+border: 1px solid #ff5722;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.restaurant-reservation-button:hover {
+  background-color: antiquewhite;
+}
+
+.restaurant-reservation-button.inline {
+  margin-top: 0;
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: transparent;
+  color: #ff5722;
+  border: 1px solid #ff5722;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.restaurant-reservation-button.inline:hover {
+  background-color: #ff5722;
+  color: white;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
