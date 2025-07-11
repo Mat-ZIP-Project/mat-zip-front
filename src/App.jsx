@@ -16,23 +16,15 @@ import MyCourseListPage from "./pages/customCourse/MyCourseListPage";
 import CourseDetailPage from "./pages/customCourse/CourseDetailPage";
 import LocalAuthPage from "./pages/localAuth/LocalAuthPage";
 import ReservationPopup from "./components/reservation/ReservationPopup";
-import RestaurantListPage from './pages/restaurant/RestaurantListPage';
-import RestaurantDetailPage from './pages/restaurant/RestaurantDetailPage';
+import RestaurantListPage from "./pages/restaurant/RestaurantListPage";
+import RestaurantDetailPage from "./pages/restaurant/RestaurantDetailPage";
 import MyPage from "./pages/mypage/MyPage";
 import SignUpPage from "./pages/signup/SignupPage";
 import RestaurantSearchResultPage from "./pages/restaurant/RestaurantSearchResultPage";
+import MyPageLayout from "./components/layout/MyPageLayout";
+import NotificationPage from "./components/myPage/NotificationPage";
 
 function App() {
-  // <Link
-  //         to="/reservation"
-  //         style={{
-  //           textDecoration: "none",
-  //           color: "blue",
-  //           border: "1px solid black",
-  //         }}
-  //       >
-  //         예약하기
-  //       </Link>
 
   return (
     <div className="App">
@@ -57,7 +49,6 @@ function App() {
         {/* 🛡️ 일반 사용자 라우트 - 로그인 필요 */}
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
-            <Route path="/mypage" element={<MyPage />} />
             <Route path="/courses" element={<TempCoursePage />} />
             <Route path="/my-courses" element={<MyCourseListPage />} />
             <Route
@@ -66,6 +57,14 @@ function App() {
             />
             <Route path="/local-auth" element={<LocalAuthPage />} />
             <Route path="/reservation" element={<ReservationPopup />} />
+          </Route>
+
+          <Route element={<MyPageLayout />}>
+            <Route path="/mypage" element={<MyPage />} />
+            <Route
+              path="/mypage/notifications"
+              element={<NotificationPage />}
+            />
           </Route>
         </Route>
 

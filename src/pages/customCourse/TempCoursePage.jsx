@@ -28,6 +28,7 @@ const TempCoursePage = () => {
         console.log(res.data);
         res.data.sort((a, b) => a.visitOrder > b.visitOrder ? 1 : -1); //visitOrder 로 오름차순정렬
         setSpots(res.data);
+        localStorage.setItem("myCourseSpots", JSON.stringify(res.data));  //로컬스토리지 코스 추가
       })
       .catch(err => console.error(err));
   }, []);
@@ -50,6 +51,7 @@ const TempCoursePage = () => {
     }).then(res => {
       console.log(res.data)
       alert(res.data);
+      localStorage.setItem("myCourseSpots", JSON.stringify([]));  //로컬스토리지 코스 삭제
       setSpots([]);
       setTitle("");
     })
