@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import axiosInstance from "../../api/axiosinstance";
 import { useSelector } from "react-redux";
+import "../../assets/styles/restaurant/RestaurantCard.css";
+import { useNavigate } from 'react-router-dom';
+
 
 const RestaurantCard = ({ data }) => {
   const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
+  const navigate = useNavigate();
   const {
     restaurantId,
     restaurantName,
@@ -12,7 +16,9 @@ const RestaurantCard = ({ data }) => {
     likeCount,
     reviewCount,
     reservationCount,
-    liked, // 서버에서 받은 찜 상태 (boolean)
+    liked,
+    avgRating,
+    avgRatingLocal,
   } = data;
 
   const [isLiked, setIsLiked] = useState(liked);
@@ -20,6 +26,7 @@ const RestaurantCard = ({ data }) => {
 
   const handleLikeClick = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
 
     if (!isLoggedIn) {
       alert("로그인이 필요합니다.");
@@ -46,39 +53,56 @@ const RestaurantCard = ({ data }) => {
     }
   };
 
+   const handleAddToCourse = (e) => {
+    e.preventDefault(); // 링크 이동 방지
+    alert("코스에 추가했습니다!");
+  };
+
   return (
-    <div className="restaurant-card">
-      <img
-        src={thumbnailImageUrl || "/images/default-thumbnail.jpg"}
-        alt={restaurantName}
-        className="restaurant-card_thumbnail"
-      />
+    // <Link to={`/restaurants/${restaurantId}`} className="restaurant-card-link">
+      <div className="restaurant-card"
+       onClick={() => navigate(`/restaurants/${restaurantId}`)}
+      >
+        <div className="restaurant-card_image">
+          <img src={data.imageUrl || "/default.png"} alt={"이미지"} />
+        </div>
 
-      <div className="restaurant-card_info">
-        <h2 className="restaurant-card_name">
-          <a href={`/restaurants/${restaurantId}`}>{restaurantName}</a>
-        </h2>
-        <p className="restaurant-card_address">{address}</p>
-      </div>
+        <div className="restaurant-card_info">
+          <div className="restaurant-card_name">{data.restaurantName}</div>
+          <div className="restaurant-card_address">{data.address}</div>
 
-      <div className="restaurant-card_meta">
-        <span className="restaurant-card_reviews">💬 {reviewCount}</span>
-        <span className="restaurant-card_reservations">
-          📅 {reservationCount}
-        </span>
+          {/* ✅ 평점 추가 */}
+          <div className="restaurant-card_ratings">
+            <span>⭐ 평균 {avgRating?.toFixed(1) ?? "-"}점</span>
+            <span> 🏠 현지인 {avgRatingLocal?.toFixed(1) ?? "-"}점</span>
+          </div>
 
-        <div className="restaurant-card_like-group">
+          <div className="restaurant-card_meta">
+            <span className="icon comment">💬 {data.reviewCount}</span>
+            <span className="icon calendar">📅 {data.reservationCount}</span>
+            <div className="restaurant-card_like-group">
+              <button
+                onClick={handleLikeClick}
+                className={`restaurant-card_like-button ${
+                  isLiked ? "liked" : ""
+                }`}
+                aria-label={isLiked ? "찜 취소" : "찜하기"}
+              >
+                {isLiked ? "❤️" : "🤍"}
+              </button>
+              <span className="restaurant-card_like-count">{likes}</span>
+            </div>
+             {/* ✅ 코스 추가 버튼 */}
           <button
-            onClick={handleLikeClick}
-            className={`restaurant-card_like-button ${isLiked ? "liked" : ""}`}
-            aria-label={isLiked ? "찜 취소" : "찜하기"}
-          >
-            {isLiked ? "❤️" : "🤍"}
+            onClick={handleAddToCourse}
+            className="restaurant-card_course-button">
+            ➕ 코스에 추가
           </button>
-          <span className="restaurant-card_like-count">{likes}</span>
+          </div>
+         
         </div>
       </div>
-    </div>
+    // </Link>
   );
 };
 
