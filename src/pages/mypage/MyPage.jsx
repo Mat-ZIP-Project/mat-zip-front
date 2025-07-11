@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import ReservationList from "../../components/myPage/ReservationList";
 import ReviewList from "../../components/myPage/ReviewList";
@@ -8,37 +8,47 @@ import MeetingList from "../../components/myPage/MeetingList";
 import MeetupReviewList from "../../components/myPage/MeetingReviewList";
 import "../../assets/styles/pages/myPage/myPage.css";
 import axiosInstance from "../../api/axiosinstance";
-import NotificationPopup from "../../components/myPage/NotificationPopup";
+
+import mukzzangImage from "../../assets/images/먹짱.png";
+import silverImage from "../../assets/images/실버.png";
+import bronzeImage from "../../assets/images/브론즈.png";
+import sproutImage from "../../assets/images/새싹.png";
+import defaultUserImage from "../../assets/images/새싹.png";
+
+// 등급별 이미지 맵 정의
+const gradeImages = {
+  먹짱: mukzzangImage,
+  실버: silverImage,
+  브론즈: bronzeImage,
+  새싹: sproutImage,
+};
 
 const MyPage = () => {
-  const { userInfo } = useSelector((state) => state.auth);
+  // const { userInfo } = useSelector((state) => state.auth);
+  const [userForm, setUserForm] = useState([]);
+  const [userImage, setUserImage] = useState(defaultUserImage);
+
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState("reservations");
   const [activeMeetingTab, setActiveMeetingTab] = useState("attended");
 
-  // 알림 관련 상태
-  const [showNotificationPopup, setShowNotificationPopup] = useState(false);
-  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
-
   useEffect(() => {
-    const unReadNotification = async () => {
+    const userInfo = async () => {
       try {
-        const response = await axiosInstance.get("/mypage/notifications");
-        const notifications = response.data;
+        const response = await axiosInstance.get("/auth/user-info");
+        setUserForm(response.data);
 
-        const unreadCount = notifications.filter(
-          (notif) => !notif.isRead
-        ).length;
-        setUnreadNotificationCount(0);
+        const imageToSet = gradeImages[userForm.userGrade] || defaultUserImage;
+        setUserImage(imageToSet);
       } catch (error) {
-        console.error("읽지 않은 알림 수를 가져오지 못했습니다: ", error);
-        setUnreadNotificationCount(0);
+        console.error("사용자 정보를 가져오지 못했습니다: ", error);
       }
     };
-    unReadNotification();
+    userInfo();
   }, []);
 
+  // 현지인 인증 페이지로 이동
   const handleLocalAuth = () => {
     navigate("/local-auth");
   };
@@ -49,18 +59,6 @@ const MyPage = () => {
 
   const handleMeetingSubTabClick = (subTabName) => {
     setActiveMeetingTab(subTabName);
-  };
-
-  // 알림 팝업
-  const handleNotificationIconClick = () => {
-    setShowNotificationPopup(true);
-    setUnreadNotificationCount(0);
-  };
-  const handleCloseNotificationPopup = () => {
-    setShowNotificationPopup(false);
-  };
-  const handleMarkAllNotificationsAsRead = () => {
-    setUnreadNotificationCount(0);
   };
 
   // 내역들
@@ -111,52 +109,41 @@ const MyPage = () => {
 
   return (
     <div className="my-page-container">
-      <div className="my-page-header">
-        <h1>마이페이지</h1>
-        <Link
-          to="/reservation"
-          style={{
-            textDecoration: "none",
-            color: "blue",
-            border: "1px solid black",
-          }}
-        >
-          예약하기
-        </Link>
-        <Link
-          to="/local-auth"
-          style={{
-            textDecoration: "none",
-            color: "blue",
-            border: "1px solid black",
-          }}
-        >
-          로컬인증하기
-        </Link>
-        <div className="header-icons">
-          <span
-            className="notification-icon-wrapper"
-            onClick={handleNotificationIconClick}
-          >
-            🔔
-            {unreadNotificationCount > 0 && (
-              <span className="notification-count">
-                {unreadNotificationCount}
-              </span>
-            )}
-          </span>
-          <span>⚙️</span>
+      <div className="user-info-container">
+        <img
+          src={userImage}
+          alt="사용자 등급 이미지"
+          className="user-profile-image" /* 클래스명 변경 */
+        />
+        <div className="user-details-group">
+          {" "}
+          {/* 사용자 정보 텍스트 그룹 */}
+          <div className="user-id-text">{userForm.userId}님</div>{" "}
+          {/* 클래스명 변경 */}
+          <div className="user-grade-text">
+            등급 : {userForm.userGrade}
+          </div>{" "}
+          {/* 클래스명 변경 */}
+          <div className="user-point-balance">
+            포인트 잔액 : {userForm.pointBalance}
+          </div>{" "}
+          {/* 클래스명 변경 */}
         </div>
-      </div>
-
-      <div className="user-info-section">
-        <div className="user-id-display">{userInfo?.userId}님</div>
-        <button
-          // onClick={() => navigate("/profile-edit")}
-          className="profile-edit-button"
-        >
-          프로필 수정
-        </button>
+        <div className="user-actions-group">
+          {" "}
+          {/* 버튼 그룹 */}
+          <button
+            // onClick={() => navigate("/profile-edit")}
+            className="profile-edit-btn" /* 클래스명 변경 */
+          >
+            선호도 수정
+          </button>
+          <button onClick={handleLocalAuth} className="local-auth-btn">
+            {" "}
+            {/* 클래스명 변경 */}
+            동네 인증
+          </button>
+        </div>
       </div>
 
       <div className="main-tabs">
@@ -181,13 +168,6 @@ const MyPage = () => {
       </div>
 
       <div className="tab-content">{renderActiveTabComponent()}</div>
-
-      {showNotificationPopup && (
-        <NotificationPopup
-          onClose={handleCloseNotificationPopup}
-          onMarkAllAsRead={handleMarkAllNotificationsAsRead}
-        />
-      )}
     </div>
   );
 };

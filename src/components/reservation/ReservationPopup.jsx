@@ -171,14 +171,14 @@ function ReservationPopup() {
         </div>
         <div className="admin-buttons">
           <button
-            onClick={() => handleAdminApproval("APPROVED")}
+            onClick={() => handleAdminApproval("예약 완료")}
             disabled={isLoading}
             className="approve-button"
           >
             예약 승인
           </button>
           <button
-            onClick={() => handleAdminApproval("REJECTED")}
+            onClick={() => handleAdminApproval("예약 거절")}
             disabled={isLoading}
             className="reject-button"
           >
