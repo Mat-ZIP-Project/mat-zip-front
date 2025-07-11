@@ -115,19 +115,32 @@ const MyPage = () => {
           alt="사용자 등급 이미지"
           className="user-profile-image" /* 클래스명 변경 */
         />
-        <div className="user-details-group"> {/* 사용자 정보 텍스트 그룹 */}
-          <div className="user-id-text">{userForm.userId}님</div> {/* 클래스명 변경 */}
-          <div className="user-grade-text">등급 : {userForm.userGrade}</div> {/* 클래스명 변경 */}
-          <div className="user-point-balance">포인트 잔액 : {userForm.pointBalance}</div> {/* 클래스명 변경 */}
+        <div className="user-details-group">
+          {" "}
+          {/* 사용자 정보 텍스트 그룹 */}
+          <div className="user-id-text">{userForm.userId}님</div>{" "}
+          {/* 클래스명 변경 */}
+          <div className="user-grade-text">
+            등급 : {userForm.userGrade}
+          </div>{" "}
+          {/* 클래스명 변경 */}
+          <div className="user-point-balance">
+            포인트 잔액 : {userForm.pointBalance}
+          </div>{" "}
+          {/* 클래스명 변경 */}
         </div>
-        <div className="user-actions-group"> {/* 버튼 그룹 */}
+        <div className="user-actions-group">
+          {" "}
+          {/* 버튼 그룹 */}
           <button
             // onClick={() => navigate("/profile-edit")}
             className="profile-edit-btn" /* 클래스명 변경 */
           >
             선호도 수정
           </button>
-          <button onClick={handleLocalAuth} className="local-auth-btn"> {/* 클래스명 변경 */}
+          <button onClick={handleLocalAuth} className="local-auth-btn">
+            {" "}
+            {/* 클래스명 변경 */}
             동네 인증
           </button>
         </div>

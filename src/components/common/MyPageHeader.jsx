@@ -5,8 +5,6 @@ import axiosInstance from "../../api/axiosinstance";
 const MyPageHeader = () => {
   const navigate = useNavigate();
 
-  // 알림 관련 상태
-  // const [showNotificationPopup, setShowNotificationPopup] = useState(false);
   // 읽지 않은 알림 개수만 관리
   const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
 
