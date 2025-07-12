@@ -213,3 +213,11 @@
         font-size: 14px; 
     }
 }
+
+.backButton {
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0 10px;
+  color: #333;
+  font-weight: bold;
+}

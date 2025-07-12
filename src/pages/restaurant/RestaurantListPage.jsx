@@ -59,7 +59,7 @@ const RestaurantListPage = () => {
           {/* 여기에 식당 목록 렌더링 */}
           <div className="restaurant-list-page_list">
             {restaurantList.map((restaurant) => (
-              <RestaurantCard key={restaurant.id} data={restaurant} />
+              <RestaurantCard key={restaurant.restaurantId} data={restaurant} />
             ))}
           </div>
         </>

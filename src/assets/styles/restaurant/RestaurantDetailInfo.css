@@ -60,3 +60,77 @@ border: 1px solid #ff5722;
   align-items: center;
   gap: 12px;
 }
+
+/* waiting-modal 스타일 예시 */
+.waiting-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.waiting-modal-content {
+  background: #fff;
+  padding: 32px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  text-align: center;
+}
+
+/* 웨이팅 모달 인원수 input 스타일 */
+.waiting-modal-content input[type="number"] {
+  border: 2px solid #ff9900;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.18s;
+  margin-bottom: 20px; /* 버튼과 간격 넓힘 */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.waiting-modal-content input[type="number"]:focus {
+  border-color: #ff6f3e;
+  background: #fffbe6;
+}
+
+waiting-modal-content .waiting-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 0;
+}
+
+.waiting-modal-content button {
+  padding: 8px 20px;
+  margin: 0 6px;
+  border-radius: 6px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: #ff9900;
+  color: #fff;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.waiting-modal-content button:hover {
+  background: #ff6f3e;
+}
+
+.waiting-modal-content button:last-child {
+  background: #f3f4f8;
+  color: #333;
+  border: 1.5px solid #bfc3d1;
+}
+
+.waiting-modal-content button:last-child:hover {
+  background: #e4e7f0;
+  color: #222;
+  border-color: #8a8fa3;
+}
