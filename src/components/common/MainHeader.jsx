@@ -12,6 +12,7 @@ const MainHeader = () => {
   const isLocalAuthPage = location.pathname === "/local-auth";
   const isSearchPage = location.pathname === "/restaurants/search";
 
+<<<<<<< HEAD
   const showBackButton = (isRestaurantDetail || isLocalAuthPage) && !isSearchPage;
   const hideSearchBar = isRestaurantDetail || isLocalAuthPage;
 
