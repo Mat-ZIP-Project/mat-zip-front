@@ -15,6 +15,7 @@ import RestaurantLike from "../../components/myPage/RestaurantLike";
 
 import PreferenceCategorySelector from "../../components/signup/PreferenceCategorySelector";
 
+
 // 등급별 이미지 맵 정의
 const gradeImages = {
   먹짱: mukzzangImage,
@@ -66,6 +67,7 @@ const MyPage = () => {
   const handleLocalAuth = () => {
     navigate("/local-auth");
   };
+
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);

@@ -24,6 +24,9 @@ import RestaurantSearchResultPage from "./pages/restaurant/RestaurantSearchResul
 import MyPageLayout from "./components/layout/MyPageLayout";
 import NotificationPage from "./components/myPage/NotificationPage";
 
+import ReviewForm from "./pages/review/ReviewForm";
+import OcrModal from './components/review/OcrModal';
+
 function App() {
 
   return (
@@ -57,6 +60,9 @@ function App() {
             />
             <Route path="/local-auth" element={<LocalAuthPage />} />
             <Route path="/reservation/:restaurantId" element={<ReservationPopup />} />
+            <Route path="/ocr" element={<OcrModal/>}/>
+            <Route path="/review" element={<ReviewForm />}/>
+            
           </Route>
 
           <Route element={<MyPageLayout />}>
