@@ -15,6 +15,7 @@ import bronzeImage from "../../assets/images/브론즈.png";
 import sproutImage from "../../assets/images/새싹.png";
 import defaultUserImage from "../../assets/images/새싹.png";
 
+
 // 등급별 이미지 맵 정의
 const gradeImages = {
   먹짱: mukzzangImage,
@@ -52,6 +53,7 @@ const MyPage = () => {
   const handleLocalAuth = () => {
     navigate("/local-auth");
   };
+
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
