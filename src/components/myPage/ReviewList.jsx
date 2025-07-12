@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosinstance";
+import "../../assets/styles/pages/myPage/ReviewList.css";
 
 const ReviewList = () => {
   const [reviews, setReviews] = useState([]);
@@ -16,6 +17,21 @@ const ReviewList = () => {
     reviewAll();
   }, []);
 
+  // 리뷰 삭제 핸들러
+  const handleDeleteReview = async (reviewId) => {
+    if (window.confirm("정말로 이 리뷰를 삭제하시겠습니다?")) {
+      try {
+        await axiosInstance.delete(`/mypage/reviews/delete/${reviewId}`);
+        setReviews(reviews.filter((review) => review.reviewId !== reviewId));
+        alert("리뷰가 성공적으로 삭제되었습니다.");
+      } catch (error) {
+        console.error("리뷰 삭제 실패: ", error);
+      }
+    } else {
+      console.log("리뷰 삭제 취소됨");
+    }
+  }
+
   // 날짜 포맷팅 헬퍼 함수 (LocalDateTime/LocalDate 문자열 처리)
   const formatDateDisplay = (isoDateTimeString) => {
     if (!isoDateTimeString) return "날짜 미정";
@@ -28,24 +44,53 @@ const ReviewList = () => {
     });
   };
 
+  // 별점을 시각적으로 표시하는 헬퍼 함수 (예: ⭐⭐⭐⭐⭐)
+  const renderStars = (rating) => {
+    const fullStar = "⭐";
+    const emptyStar = "☆"; // 또는 다른 빈 별 모양
+    const maxRating = 5;
+    let stars = "";
+    for (let i = 0; i < maxRating; i++) {
+      stars += i < rating ? fullStar : emptyStar;
+    }
+    return stars;
+  };
+
   return (
-    <div>
-      <h3>리뷰 내역</h3>
+    <div className="review-list-container">
       {reviews.length === 0 ? (
-        <p>작성한 리뷰 내역이 없습니다.</p>
+        <p className="no-reviews-message">아직 작성한 리뷰가 없습니다.</p>
       ) : (
-        <ul>
+        <div className="review-cards-grid">
           {reviews.map((review) => (
-            // 백엔드에서 Review 객체의 고유 ID가 'id' 또는 'reviewId'로 내려온다고 가정
-            // 실제 Review 엔티티/DTO 필드명에 맞춰 수정하세요.
-            <li key={review.reviewId}>
-              <strong>식당: {review.restaurantName}</strong> | 별점:{" "}
-              {review.rating}점 | 작성일: {formatDateDisplay(review.reviewedAt)}{" "}
-              | 방문일: {formatDateDisplay(review.visitDate)}
-              <p>내용: {review.content}</p>
-            </li>
+            <div key={review.reviewId} className="review-card">
+              <div className="card-header">
+                <h4 className="restaurant-name">{review.restaurantName}</h4>
+                <div className="review-rating">
+                  <span className="stars">{renderStars(review.rating)}</span>
+                  <span className="rating-text">({review.rating}점)</span>
+                </div>
+              </div>
+              <div className="card-body">
+                <p className="review-content">{review.content}</p>
+              </div>
+              <div className="card-footer">
+                <span className="review-date">
+                  <span className="icon">📝</span> 작성일: {formatDateDisplay(review.reviewedAt)}
+                </span>
+                <span className="visit-date">
+                  <span className="icon">🗓️</span> 방문일: {formatDateDisplay(review.visitDate)}
+                </span>
+              </div>
+              <button
+                  className="delete-button"
+                  onClick={() => handleDeleteReview(review.reviewId)}
+                >
+                  삭제
+                </button>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

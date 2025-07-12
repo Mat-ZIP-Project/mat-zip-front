@@ -2,12 +2,11 @@ import { createReservation, approveReservation } from "../api/reservationApi";
 import { preparePayment, completePayment } from "../api/paymentApi";
 import { handleNotification } from "../../../api/notificationHandle";
 import { useState, useEffect } from "react";
-import { RESTAURANT_NAME } from "../../../constants";
 import "../../../assets/styles/mapSearch/restaurantCard.css";
 
 const IMP_UID = import.meta.env.VITE_IMP_UID;
 
-export const useReservationLogic = () => {
+export const useReservationLogic = (restaurantId) => {
   // 예약 정보 상태
   const [reservationId, setReservationId] = useState(null);
   const [restaurantName, setRestaurantName] = useState("");
@@ -27,9 +26,6 @@ export const useReservationLogic = () => {
   // UI 피드백 상태
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(null);
-
-  // const restaurantName = RESTAURANT_NAME;
-  const restaurantId = 1;
 
   // 관리자 기능용 상태
   const [adminReservationId, setAdminReservationId] = useState("");

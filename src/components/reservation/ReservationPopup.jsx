@@ -2,8 +2,11 @@
 import React from "react";
 import { useReservationLogic } from "./hooks/useReservationLogic";
 import "../../assets/styles/reservation/reservation.css";
+import { useParams } from "react-router-dom";
 
 function ReservationPopup() {
+  const { restaurantId } = useParams();
+
   const {
     // useReservationLogic 훅에서 필요한 상태와 함수들을 가져옵니다.
     reservationDate,
@@ -29,8 +32,7 @@ function ReservationPopup() {
     handleReservationSubmit,
     handleProceedToPayment,
     handleAdminApproval,
-    restaurantName,
-  } = useReservationLogic();
+  } = useReservationLogic(restaurantId);
 
   const handleNumPeopleChange = (e) => {
     const value = e.target.value;

@@ -59,7 +59,7 @@ function App() {
               element={<CourseDetailPage />}
             />
             <Route path="/local-auth" element={<LocalAuthPage />} />
-            <Route path="/reservation" element={<ReservationPopup />} />
+            <Route path="/reservation/:restaurantId" element={<ReservationPopup />} />
             <Route path="/ocr" element={<OcrModal/>}/>
             <Route path="/review" element={<ReviewForm />}/>
             
