@@ -1,0 +1,143 @@
+/* ReviewList.css */
+
+.review-list-container {
+  padding: 20px;
+  max-width: 900px; /* 전체 컨테이너 최대 너비 설정 */
+  margin: 20px auto; /* 중앙 정렬 */
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.no-reviews-message {
+  text-align: center;
+  color: #777;
+  font-size: 1.1em;
+  padding: 50px 0;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.03);
+}
+
+.review-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* 반응형 그리드 */
+  gap: 25px; /* 카드 간 간격 */
+}
+
+.review-card {
+  background-color: #fdfdfd;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* 그림자 강화 */
+  padding: 20px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 내용과 푸터를 분리 */
+}
+
+.review-card:hover {
+  transform: translateY(-5px); /* 호버 시 살짝 위로 이동 */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12); /* 그림자 더 강하게 */
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.restaurant-name {
+  font-size: 1.5em;
+  color: #2c3e50;
+  margin: 0;
+  font-weight: bold;
+}
+
+.review-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* 별과 점수 사이 간격 */
+}
+
+.review-rating .stars {
+  font-size: 1.4em; /* 별 크기 */
+  color: #f39c12; /* 별 색상 (노란색 계열) */
+  letter-spacing: 2px; /* 별 사이 간격 */
+}
+
+.review-rating .rating-text {
+  font-size: 1em;
+  color: #555;
+  font-weight: bold;
+}
+
+.card-body {
+  flex-grow: 1; /* 리뷰 내용이 공간을 채우도록 */
+  margin-bottom: 15px;
+}
+
+.review-content {
+  font-size: 1.1em;
+  color: #444;
+  line-height: 1.6;
+  white-space: pre-wrap; /* 줄 바꿈 유지 */
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between; /* 날짜 정보와 버튼을 양 끝으로 분리 */
+  align-items: flex-end; /* 하단 정렬 */
+  border-top: 1px solid #f0f0f0;
+  padding-top: 15px;
+  color: #777;
+  font-size: 0.9em;
+  flex-wrap: wrap; /* 작은 화면에서 요소들이 줄바꿈되도록 */
+  gap: 10px; /* 요소들 간의 간격 */
+}
+
+.date-info { /* 새로 추가된 날짜 정보 묶음 div */
+  display: flex;
+  flex-direction: column; /* 날짜 정보들을 세로로 정렬 */
+  gap: 5px; /* 날짜 정보들 사이의 간격 */
+}
+
+.review-date,
+.visit-date {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.card-footer .icon {
+  font-size: 1.1em;
+  color: #007bff; /* 아이콘 색상 */
+}
+
+/* 삭제 버튼 스타일 */
+.delete-button {
+  background-color: #FF6B35; /* 빨간색 배경 */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  padding: 5px 8px;
+  font-size: 0.8em;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+  align-self: flex-end; /* 푸터 내에서 오른쪽 아래로 정렬 */
+  white-space: nowrap; /* 버튼 텍스트가 줄바꿈되지 않도록 */
+}
+
+.delete-button:hover {
+  background-color: #c0392b; /* 호버 시 더 어두운 빨간색 */
+  transform: translateY(-1px); /* 살짝 위로 이동 효과 */
+}
+
+.delete-button:active {
+  transform: translateY(0); /* 클릭 시 원위치 */
+}
