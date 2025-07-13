@@ -3,7 +3,10 @@ import styles from '../../assets/styles/owner/ReservationItem.module.css';
 
 const PendingReservationItem = ({ item, onApprove, onReject }) => (
   <div className={styles.itemBox}>
-    <span className={styles.pendingFieldName}>{item.userName}({item.userId})</span>
+    <span className={styles.pendingFieldName}>
+      {item.noShow ? "😈" : ""}
+      {item.userName}({item.userId})
+    </span>
     <span className={styles.pendingFieldPeople}>{item.numPeople}명</span>
     <span className={styles.pendingFieldDate}>{item.date} {item.time}</span>
     <span className={styles.pendingFieldBtn}>

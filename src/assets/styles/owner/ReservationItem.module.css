@@ -96,7 +96,36 @@
   margin-top: 16px;
 }
 
+/* 예약 신청/만료/전체 예약 리스트 스크롤 영역 고정 높이 */
+.listScroll {
+  height: 220px;
+  overflow-y: auto;
+  padding-right: 4px; /* 스크롤바 공간 */
+  background: transparent;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.listTopAlign {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
 /* 예약 신청 목록 헤더 및 아이템 */
+.pendingListHeader,
+.noShowListHeader,
+.listHeader {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f7f7f7;
+}
+
 .pendingListHeader {
   display: flex;
   align-items: center;
