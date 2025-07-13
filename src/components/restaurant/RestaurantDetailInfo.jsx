@@ -48,7 +48,7 @@ const RestaurantDetailInfo = ({ data }) => {
         )}
 
         <Link
-          to={`/reservation?restaurantId=${data.restaurantId}`}
+          to={`/reservation/${data.restaurantId}`}
           className="restaurant-reservation-button inline"
         >
           예약하기

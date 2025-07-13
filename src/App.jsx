@@ -37,6 +37,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/restaurants" element={<RestaurantListPage />} />
           <Route path="/restaurants/:id" element={<RestaurantDetailPage />} />
+          <Route path="/restaurants/:restaurantId/reservation" element={<ReservationPopup />} />
           <Route path="/restaurants/search" element={<RestaurantSearchResultPage />} />
         </Route>
 
@@ -59,7 +60,7 @@ function App() {
               element={<CourseDetailPage />}
             />
             <Route path="/local-auth" element={<LocalAuthPage />} />
-            <Route path="/reservation" element={<ReservationPopup />} />
+            <Route path="/reservation/:restaurantId" element={<ReservationPopup />} />
             <Route path="/ocr" element={<OcrModal/>}/>
             <Route path="/review" element={<ReviewForm />}/>
             

@@ -17,6 +17,9 @@ const MainHeader = () => {
     const handleLogoClick = () => {
         navigate('/');
     };
+    const handleHeartClick = () => {
+        navigate('/mypage');
+    }
 
     return (
         <header className={styles.header}>
@@ -40,7 +43,7 @@ const MainHeader = () => {
                 
                 <div className={styles.actionIcons}>
                     <button className={styles.iconButton}>
-                        <div className={styles.iconHeart}></div>
+                        <div className={styles.iconHeart} onClick={handleHeartClick}></div>
                     </button>
                     <button className={styles.iconButton}>
                         <div className={styles.iconNotification}></div>
