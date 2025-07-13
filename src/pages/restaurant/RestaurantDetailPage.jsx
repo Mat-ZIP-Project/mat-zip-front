@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import axiosInstance from '../../api/axiosinstance';
 import RestaurantDetailInfo from '../../components/restaurant/RestaurantDetailInfo';
 import TabMenu from '../../components/restaurant/TabMenu';
-import { Link } from "react-router-dom";
-
 import '../../assets/styles/restaurant/RestaurantDetailPage.css';
 
 const RestaurantDetailPage = () => {
@@ -12,6 +10,11 @@ const RestaurantDetailPage = () => {
   const [restaurant, setRestaurant] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('home');
+  const navigate = useNavigate();
+
+  const handleNavigateToReservation  = () => {
+    navigate(`/restaurants/${id}/reservation`);
+  }
 
   useEffect(() => {
     const fetchRestaurant = async () => {
@@ -56,22 +59,14 @@ const RestaurantDetailPage = () => {
   </div>
 
    {/* 예약하기 버튼 추가 */}
-<div className="restaurant-reservation-button-wrapper">
-  <Link
-    to="/reservation"
-    style={{
-      textDecoration: "none",
-      color: "blue",
-      border: "1px solid black",
-      padding: "6px 12px",
-      borderRadius: "4px",
-      display: "inline-block",
-      margin: "12px 0"
-    }}
-  >
-    예약하기
-  </Link>
-</div>
+  <div className="restaurant-reservation-button-wrapper">
+    <button
+      onClick={handleNavigateToReservation} // 버튼 클릭 시 모달 열기
+      className="reserve-button" // 새로운 CSS 클래스 추가
+    >
+      예약하기
+    </button>
+  </div>
 </div>
   );
 };
