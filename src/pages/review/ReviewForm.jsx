@@ -6,7 +6,7 @@ import '../../assets/styles/pages/review/reviewForm.css';
 import { useNavigate } from 'react-router-dom';
 
 const ReviewForm = ({ restaurantId ,visitDate}) => {
-    restaurantId=6;
+    restaurantId=8;
     visitDate='2025-01-23'
   const [content, setContent] = useState('');
   const [userId , setUserId] = useState('');
