@@ -53,7 +53,7 @@ const RestaurantManagePage = () => {
   
   return (
     <div className={styles.restaurantManageContainer}>
-      <h2 className={styles.sectionTitle}>식당 상세 정보 수정</h2>
+      <h2 className={styles.sectionTitle}>[ 식당 상세 관리 ]</h2>
       {/* 이미지 영역 */}
       <div className={styles.imageSection}>
         <div className={styles.imageSectionHeader}>

@@ -5,6 +5,9 @@ import styles from '../../assets/styles/pages/owner/OwnerPage.module.css';
 import MenuManagePage from './MenuManagePage';
 import RestaurantManagePage from './RestaurantManagePage';
 import Dashboard from './Dashboard';
+import ReservationManagePage from './ReservationManagePage';
+import ReviewManagePage from './ReviewManagePage';
+import WaitingManagePage from './WaitingManagePage';
 
 const TABS = [
   { key: 'dashboard', label: '대시보드 홈' },
@@ -19,6 +22,7 @@ const TABS = [
 const OwnerPage = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [restaurantInfo, setRestaurantInfo] = useState(null);
+  const [todayReservationCount, setTodayReservationCount] = useState(0);
 
   useEffect(() => {
     // 식당 정보 호출
@@ -31,12 +35,23 @@ const OwnerPage = () => {
       }
     };
     fetchRestaurantInfo();
+
+    // 오늘 예약건수 호출
+    const fetchTodayReservationCount = async () => {
+      try {
+        const res = await ownerApi.getTodayReservations();
+        setTodayReservationCount(Array.isArray(res.data) ? res.data.length : 0);
+      } catch {
+        setTodayReservationCount(0);
+      }
+    };
+    fetchTodayReservationCount();
   }, []);
 
   // 예시: 오늘 예약 일정은 restaurantInfo.todayReservationCount로 받아온다고 가정
   // 실제 예약건수 필드는 백엔드에서 추가 필요 (현재는 없음, 임시로 0)
   const restaurantName = restaurantInfo?.restaurantName || '';
-  const todayReservationCount = restaurantInfo?.todayReservationCount ?? 0;
+  //const todayReservationCount = restaurantInfo?.todayReservationCount ?? 0;
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -47,11 +62,11 @@ const OwnerPage = () => {
       case 'menu':
         return <MenuManagePage />;
       case 'reservation':
-        return <div style={{ padding: '32px', textAlign: 'center', color: '#888' }}>예약 관리 (추후 구현)</div>;
+        return <ReservationManagePage />;
       case 'waiting':
-        return <div style={{ padding: '32px', textAlign: 'center', color: '#888' }}>웨이팅 관리 (추후 구현)</div>;
+        return <WaitingManagePage />;
       case 'review':
-        return <div style={{ padding: '32px', textAlign: 'center', color: '#888' }}>리뷰 관리 (추후 구현)</div>;
+        return <ReviewManagePage />;
       default:
         return null;
     }

@@ -72,3 +72,18 @@ export const showLoadingAlert = (title, text, timer = 2000) => {
     }
   });
 };
+
+export const showQuestionAlert = (title, html) => {
+  return Swal.fire({
+    icon: 'question',
+    title,
+    html, // text 대신 html 사용 (두 줄 출력)
+    showCancelButton: true,
+    confirmButtonText: '확인',
+    cancelButtonText: '취소',
+    confirmButtonColor: '#ff6b35',
+    cancelButtonColor: '#aaa',
+    allowOutsideClick: false,
+    allowEscapeKey: true
+  });
+};

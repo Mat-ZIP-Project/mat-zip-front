@@ -51,7 +51,7 @@ const MenuManagePage = () => {
 
   return (
     <div className={styles.menuManageContainer}>
-      <h2 className={styles.pageTitle}>메뉴관리</h2>
+      <h2 className={styles.pageTitle}>[ 메뉴관리 ]</h2>
       <div className={styles.menuListHeader}>
         {/* 등록모드일 때 메뉴 목록 타이틀 숨김 */}
         {editMode !== 'create' && (

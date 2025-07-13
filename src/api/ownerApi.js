@@ -16,18 +16,20 @@ export const ownerApi = {
   deleteRestaurantImage: async (imageId) => axiosInstance.delete(`/owner/restaurant/images/${imageId}`),
   // 대표 이미지 지정
   setMainImage: async (imageId) => axiosInstance.put(`/owner/restaurant/images/main/${imageId}`),
+
+  /////// 메뉴 관리 API ////////////////////////////////////////////////
   // 메뉴 목록 조회
   getMenus: async () => axiosInstance.get('/owner/menu'),
   // 메뉴 등록
   createMenu: async (formData) => axiosInstance.post('/owner/menu', formData),
   // 메뉴 수정
   updateMenu: async (menuId, formData) => axiosInstance.put(`/owner/menu/${menuId}`, formData),
-    //   { headers: { 'Content-Type': 'multipart/form-data' } }
-    // ),
   // 메뉴 삭제
   deleteMenu: async (menuId) => axiosInstance.delete(`/owner/menu/${menuId}`),
   // 최대 웨이팅 인원수 수정 (식당정보/웨이팅관리 둘 다에서 사용)
   updateMaxWaitingLimit: async (limit) => axiosInstance.patch('/owner/restaurant/waiting-limit', { maxWaitingLimit: limit }),
+  
+  /////// 대시보드 API ////////////////////////////////////////////////
   /** 대시보드 읿별 통계 */
   getDailyStats: ({ restaurantId, from, to }) => axiosInstance.get(
       `/owner/statistics/${restaurantId}/reservations/daily`,
@@ -43,5 +45,25 @@ export const ownerApi = {
       `/owner/statistics/${restaurantId}/reviews/summary`,
       { params: { from, to } }
     ),
+  /////// 예약관리 API ////////////////////////////////////////////////
+  /** 예약 전체 목록 조회 */
+  getAllReservations: async () => axiosInstance.get('/owner/reservations/all'),
+  /** 오늘 예약 목록 조회 */
+  getTodayReservations: async () => axiosInstance.get('/owner/reservation/today'),
+  /** 대기 중인 예약 목록 조회 */
+  getPendingReservations: async () =>
+    axiosInstance.get('/owner/reservations/pending'),
+  /** 노쇼 후보 목록 조회 */
+  getNoShowCandidates: async () =>
+    axiosInstance.get('/owner/reservations/noshow'),
+  /** 예약 승인/거절 */
+  updateReservationStatus: async ({ reservationId, reservationStatus, ownerNotes }) =>
+    axiosInstance.post('/reservation/owner/approve', { reservationId, reservationStatus, ownerNotes }),
+  /** 노쇼 처리 */
+  markNoShow: async ({ reservationId }) =>
+    axiosInstance.post('/owner/reservations/noshow', { reservationId }),
 
+  ////////////////////////////////////////////////////////////////////
+  /** 리뷰 목록 조회 */
+  getRestaurantReviews: async () => axiosInstance.get('/owner/reviews/all'),
 };
