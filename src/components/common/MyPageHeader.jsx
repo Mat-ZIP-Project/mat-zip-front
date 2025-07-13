@@ -34,7 +34,7 @@ const MyPageHeader = () => {
 
   return (
     <div className="mypage-container">
-      <div className="my-page-header">
+      <div className="my-page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "0"}}>
         <h1>마이페이지</h1>
         <Link
           to="/reservation"

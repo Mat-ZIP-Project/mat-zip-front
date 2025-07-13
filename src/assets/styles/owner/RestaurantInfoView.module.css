@@ -1,0 +1,46 @@
+.infoViewContainer {
+  width: 100%;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.descTitle {
+  /* color: #FF6B35; */
+  font-weight: 700;
+  font-size: 17px;
+  margin-bottom: 8px;
+
+}
+
+.descText {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 18px;
+  line-height: 1.7;
+  min-height: 60px;
+  word-break: break-all;
+}
+
+.infoTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.infoTable th,
+.infoTable td {
+  font-weight: 600;
+  padding: 8px 0;
+  text-align: left;
+}
+
+.infoTable th {
+  color: #FF6B35;
+  width: 45%;
+}
+
+.infoTable td {
+  color: #222;
+}

@@ -6,17 +6,19 @@ import { logout } from '../../store/authSlice';
 import axiosInstance from '../../api/axiosinstance';
 
 const MainFooter = () => {
-    const { isAuthenticated } = useSelector(state => state.auth);
+    const { isAuthenticated, userInfo } = useSelector(state => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleMyPageClick = () => {
-        if (isAuthenticated) {
-            navigate('/mypage');
-        } else {
-            navigate('/login');
-        }
-    };
+    if (!isAuthenticated) {
+        navigate('/login');
+    } else if (userInfo?.role === 'ROLE_OWNER') {
+        navigate('/ownerpage');
+    } else {
+        navigate('/mypage');
+    }
+};
 
     const handleLoginClick = () => {
         navigate('/login');

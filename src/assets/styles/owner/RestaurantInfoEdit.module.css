@@ -1,0 +1,79 @@
+.editForm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 15px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 15px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 8px;
+}
+
+.errorMessage {
+  color: #d32f2f;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-left: 4px;
+}
+
+.phoneMessageValid {
+  color: #388e3c;
+  font-size: 13px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.phoneMessageError {
+  color: #d32f2f;
+  font-size: 13px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.checkIcon {
+  font-weight: 500;
+}

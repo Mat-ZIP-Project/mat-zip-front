@@ -70,7 +70,7 @@ function App() {
 
         {/* 🏪 식당 업주 전용 라우트 - ROLE_OWNER */}
         <Route element={<ProtectedRoute requiredRole="ROLE_OWNER" />}>
-          <Route path="/owner" element={<MainLayout />}>
+          <Route path="/ownerpage" element={<MainLayout />}>
             <Route index element={<OwnerPage />} />
           </Route>
         </Route>

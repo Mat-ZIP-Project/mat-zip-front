@@ -1,0 +1,71 @@
+.modalDim {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(40, 40, 40, 0.35);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalBox {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  padding: 32px 24px 24px 24px;
+  position: relative;
+  min-width: 280px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: modalFadeIn 0.2s;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.closeBtn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #888;
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 2;
+}
+
+.closeBtn:hover {
+  color: #ff6b35;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.modalContent {
+  width: 100%;
+}
+
+@media (max-width: 480px) {
+  .modalBox {
+    padding: 18px 8px 16px 8px;
+    min-width: 180px;
+    max-width: 98vw;
+  }
+  .modalTitle {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+}

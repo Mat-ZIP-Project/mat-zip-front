@@ -8,6 +8,8 @@ import FormInput from '../../components/common/FormInput.jsx';
 import FormButton from '../../components/common/FormButton.jsx'; 
 import CheckboxWithLinks from '../../components/login/CheckboxWithLinks.jsx';
 import inputStyles from '../../assets/styles/common/FormInput.module.css';
+import FindIdModal from '../../components/login/FindIdModal.jsx';
+import FindPasswordModal from '../../components/login/FindPasswordModal.jsx';
 
 
 const Login = () => {
@@ -18,6 +20,8 @@ const Login = () => {
     const [errors, setErrors] = useState({});
     const [isRememberMe, setIsRememberMe] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [showFindId, setShowFindId] = useState(false);
+    const [showFindPw, setShowFindPw] = useState(false);
 
     // 아이디 저장
     useEffect(() => {
@@ -122,16 +126,20 @@ const Login = () => {
         }
     }, [formData, isRememberMe, validateForm, dispatch, navigate]);
 
-    const helpLinks = [
-        { text: '아이디 찾기', path: '/find-id' },
-        { text: '비밀번호 찾기', path: '/find-password' }
-    ];
+    // const helpLinks = [
+    //     { text: '아이디 찾기', path: '/find-id' },
+    //     { text: '비밀번호 찾기', path: '/find-password' }
+    // ];
 
     const isFormValid = formData.userId.trim() && formData.password.trim();
 
     return (
         <div className={styles.page}>
             <div className={styles.container}>
+                {/* 모달 컴포넌트 렌더링 */}
+                <FindIdModal open={showFindId} onClose={() => setShowFindId(false)} />
+                <FindPasswordModal open={showFindPw} onClose={() => setShowFindPw(false)} />
+
                 <form onSubmit={handleSubmit} className={styles.form} noValidate>
                     <h1 className={styles.title}>로그인</h1>
 
@@ -165,7 +173,10 @@ const Login = () => {
                         checked={isRememberMe}
                         onChange={handleRememberMeChange}
                         checkboxText="아이디 저장"
-                        links={helpLinks}
+                        links={[
+                            { text: '아이디 찾기', onClick: () => setShowFindId(true) },
+                            { text: '비밀번호 찾기', onClick: () => setShowFindPw(true) }
+                        ]}
                     />
 
                     <FormButton
