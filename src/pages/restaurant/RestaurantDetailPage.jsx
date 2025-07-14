@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import axiosInstance from "../../api/axiosinstance";
 import RestaurantDetailInfo from "../../components/restaurant/RestaurantDetailInfo";
 import TabMenu from "../../components/restaurant/TabMenu";
 import OcrModal from "../../components/review/OcrModal";
 import ReviewForm from "../review/ReviewForm";
 import RestaurantReviewList from "../../components/restaurant/RestaurantReviewList";
-import { Link } from "react-router-dom";
 import "../../assets/styles/restaurant/RestaurantDetailPage.css";
 
 const RestaurantDetailPage = () => {
@@ -18,6 +17,11 @@ const RestaurantDetailPage = () => {
   const [showOcrModal, setShowOcrModal] = useState(false);
   const [reviewFormData, setReviewFormData] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
+
+  const handleNavigateToReservation = () => {
+    navigate(`/restaurants/${id}/reservation`);
+  };
 
   useEffect(() => {
     const fetchRestaurant = async () => {
@@ -30,11 +34,9 @@ const RestaurantDetailPage = () => {
         setLoading(false);
       }
     };
-
     fetchRestaurant();
   }, [id]);
 
-  // 웨이팅 정보 가져오기
   useEffect(() => {
     fetch(`/api/waiting/status/${id}`)
       .then((res) => res.json())
@@ -47,7 +49,6 @@ const RestaurantDetailPage = () => {
       .catch(() => setWaitingInfo(null));
   }, [id]);
 
-  // OCR 모달에서 리뷰 작성 데이터 받기
   const handleOcrModalClose = () => setShowOcrModal(false);
   const handleOcrToReview = (ocrResult) => {
     setReviewFormData({
@@ -59,24 +60,23 @@ const RestaurantDetailPage = () => {
     setActiveTab("reviewForm");
   };
 
-  // 리뷰 불러오기
   useEffect(() => {
-  if (!id) return;
-  axiosInstance
-    .get(`/api/restaurants/${id}/reviews`)
-    .then((res) => {
-      const mapped = res.data.map(r => ({
-        id: r.reviewId,
-        writerName: r.userNickname,
-        createdAt: r.reviewedAt?.slice(0, 10), // 날짜만 표시
-        content: r.content,
-        images: r.imageUrls,
-        rating: r.rating
-      }));
-      setReviews(mapped);
-    })
-    .catch(() => setReviews([]));
-}, [id]);
+    if (!id) return;
+    axiosInstance
+      .get(`/api/restaurants/${id}/reviews`)
+      .then((res) => {
+        const mapped = res.data.map(r => ({
+          id: r.reviewId,
+          writerName: r.userNickname,
+          createdAt: r.reviewedAt?.slice(0, 10),
+          content: r.content,
+          images: r.imageUrls,
+          rating: r.rating
+        }));
+        setReviews(mapped);
+      })
+      .catch(() => setReviews([]));
+  }, [id]);
 
   if (loading) return <p>로딩 중...</p>;
   if (!restaurant) return <p>식당 정보를 표시할 수 없습니다.</p>;
@@ -96,6 +96,9 @@ const RestaurantDetailPage = () => {
       )}
 
       <RestaurantDetailInfo data={restaurant} />
+
+      {/* 버튼 영역을 TabMenu 위에 둘 경우 여기에 추가 */}
+
       <TabMenu activeTab={activeTab} setActiveTab={setActiveTab} />
 
       <div className="restaurant-tab-content">

@@ -37,6 +37,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/restaurants" element={<RestaurantListPage />} />
           <Route path="/restaurants/:id" element={<RestaurantDetailPage />} />
+          <Route path="/restaurants/:restaurantId/reservation" element={<ReservationPopup />} />
           <Route path="/restaurants/search" element={<RestaurantSearchResultPage />} />
         </Route>
 
