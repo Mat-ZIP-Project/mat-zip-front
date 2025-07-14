@@ -107,6 +107,20 @@ const Login = () => {
                 user: data.user
             }));   
 
+            // 로그인 시 이전에 담았던 나만의 코스 불러오기
+            axiosInstance({
+            method: "get",
+            url: "/course/temp",
+            })
+            .then(res => {
+                console.log(res.data);
+                res.data.sort((a, b) => a.visitOrder > b.visitOrder ? 1 : -1); //visitOrder 로 오름차순정렬
+                
+                localStorage.setItem("myCourseSpots", JSON.stringify(res.data));  //로컬스토리지 코스 추가
+            })
+            .catch(err => console.error(err));
+
+
             navigate('/');    
         } catch (error) {
             console.error('로그인 에러:', error);
