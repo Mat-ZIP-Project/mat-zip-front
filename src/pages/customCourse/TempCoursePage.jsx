@@ -58,7 +58,7 @@ const TempCoursePage = () => {
   }
 
   return (
-    <div>
+    <div className="temp-course-page">
       <CourseHeader title={title} setTitle={setTitle} editable={true}/>
       <CourseMap spots={spots} editable={true} />
       {spots.length!==0 ? <CourseSpotList spots={spots} setSpots={setSpots} editable={true} />
