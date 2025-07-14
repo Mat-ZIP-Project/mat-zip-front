@@ -55,6 +55,7 @@ const MainFooter = () => {
             } else {
                 dispatch(logout());
             }
+            dispatchEvent(new Event("storage")); // 푸터에 나만의 코스 숫자 0 반영되게!
             navigate('/');
         }
     };
