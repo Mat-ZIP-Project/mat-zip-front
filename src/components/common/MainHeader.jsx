@@ -15,9 +15,10 @@ const MainHeader = () => {
   const isRestaurantDetail = !!matchPath("/restaurants/:id", location.pathname);
   const isLocalAuthPage = location.pathname === "/local-auth";
   const isSearchPage = location.pathname === "/restaurants/search";
+  const isMyCoursePage = location.pathname === "/my-courses";
   
-  const showBackButton = (isRestaurantDetail || isLocalAuthPage) && !isSearchPage;
-  const hideSearchBar = isRestaurantDetail || isLocalAuthPage;
+  const showBackButton = (isRestaurantDetail || isLocalAuthPage || isMyCoursePage) && !isSearchPage;
+  const hideSearchBar = isRestaurantDetail || isLocalAuthPage || isMyCoursePage;
 
   // 종(알림) 아이콘 클릭 시
   const handleNotificationClick = async () => {
@@ -37,8 +38,10 @@ const MainHeader = () => {
       navigate(location.state.from);
     } else if (isLocalAuthPage) {
       navigate("/mypage");
-    } else {
+    } else if (isRestaurantDetail) {
       navigate("/restaurants");
+    } else{
+      navigate("/courses")
     }
   };
 
