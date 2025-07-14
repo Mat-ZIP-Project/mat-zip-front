@@ -1,0 +1,76 @@
+.review-form {
+  max-width: 500px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.review-form h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+textarea,
+input[type="date"],
+input[type="file"] {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.star-rating {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.star-rating span {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.star-rating .filled {
+  color: #ff6b00;
+}
+
+.preview-area {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0.5rem;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #ff6b00;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #e65a00;
+}
+
+.local-review {
+  text-align: center;
+  color: #ff6b00;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}

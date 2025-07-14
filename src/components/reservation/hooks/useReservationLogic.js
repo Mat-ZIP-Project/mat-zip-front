@@ -1,13 +1,15 @@
-import { createReservation, approveReservation } from "../api/reservationApi";
+import { createReservation } from "../api/reservationApi";
 import { preparePayment, completePayment } from "../api/paymentApi";
 import { handleNotification } from "../../../api/notificationHandle";
 import { useState, useEffect } from "react";
-import { RESTAURANT_NAME } from "../../../constants";
 import "../../../assets/styles/mapSearch/restaurantCard.css";
 
 const IMP_UID = import.meta.env.VITE_IMP_UID;
 
-export const useReservationLogic = () => {
+export const useReservationLogic = (
+  restaurantId,
+  navigateToRestaurantDetail
+) => {
   // 예약 정보 상태
   const [reservationId, setReservationId] = useState(null);
   const [restaurantName, setRestaurantName] = useState("");
@@ -27,9 +29,6 @@ export const useReservationLogic = () => {
   // UI 피드백 상태
   const [feedbackMessage, setFeedbackMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(null);
-
-  // const restaurantName = RESTAURANT_NAME;
-  const restaurantId = 1;
 
   // 관리자 기능용 상태
   const [adminReservationId, setAdminReservationId] = useState("");
@@ -290,6 +289,9 @@ export const useReservationLogic = () => {
         );
         setIsSuccess(true);
         console.log("결제 최종 완료 응답:", response);
+        if (navigateToRestaurantDetail) {
+          navigateToRestaurantDetail();
+        }
       } else {
         setFeedbackMessage(`결제 최종 처리 실패: ${response.message}`);
         setIsSuccess(false);
@@ -311,54 +313,54 @@ export const useReservationLogic = () => {
   /**
    * 관리자가 예약 상태를 승인 또는 거절하는 함수
    */
-  const handleAdminApproval = async (status) => {
-    setIsLoading(true);
-    setFeedbackMessage("");
-    setIsSuccess(null);
+  // const handleAdminApproval = async (status) => {
+  //   setIsLoading(true);
+  //   setFeedbackMessage("");
+  //   setIsSuccess(null);
 
-    if (!adminReservationId) {
-      setFeedbackMessage("승인/거절할 예약 ID를 입력하세요.");
-      setIsSuccess(false);
-      setIsLoading(false);
-      return;
-    }
+  //   if (!adminReservationId) {
+  //     setFeedbackMessage("승인/거절할 예약 ID를 입력하세요.");
+  //     setIsSuccess(false);
+  //     setIsLoading(false);
+  //     return;
+  //   }
 
-    try {
-      const requestBody = {
-        reservationId: Number(adminReservationId),
-        reservationStatus: status,
-        ownerNotes: ownerNote,
-      };
+  //   try {
+  //     const requestBody = {
+  //       reservationId: Number(adminReservationId),
+  //       reservationStatus: status,
+  //       ownerNotes: ownerNote,
+  //     };
 
-      console.log(`[handleAdminApproval] 백엔드에 보낼 요청:`, requestBody);
+  //     console.log(`[handleAdminApproval] 백엔드에 보낼 요청:`, requestBody);
 
-      const response = await approveReservation(requestBody);
+  //     const response = await approveReservation(requestBody);
 
-      if (response) {
-        setFeedbackMessage(
-          `예약 ID ${adminReservationId} ${status} 성공: ${response.message}`
-        );
-        setIsSuccess(true);
-        console.log("관리자 승인/거절 성공:", response);
-      } else {
-        setFeedbackMessage(
-          `예약 ID ${adminReservationId} ${status} 실패: ${response.message}`
-        );
-        setIsSuccess(false);
-        console.error("관리자 승인/거절 실패 응답:", response);
-      }
-    } catch (error) {
-      setFeedbackMessage(
-        `예약 ${status} 중 오류 발생: ${
-          error.response ? error.response.data : error.message
-        }`
-      );
-      setIsSuccess(false);
-      console.error("관리자 승인/거절 오류:", error.response || error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     if (response) {
+  //       setFeedbackMessage(
+  //         `예약 ID ${adminReservationId} ${status} 성공: ${response.message}`
+  //       );
+  //       setIsSuccess(true);
+  //       console.log("관리자 승인/거절 성공:", response);
+  //     } else {
+  //       setFeedbackMessage(
+  //         `예약 ID ${adminReservationId} ${status} 실패: ${response.message}`
+  //       );
+  //       setIsSuccess(false);
+  //       console.error("관리자 승인/거절 실패 응답:", response);
+  //     }
+  //   } catch (error) {
+  //     setFeedbackMessage(
+  //       `예약 ${status} 중 오류 발생: ${
+  //         error.response ? error.response.data : error.message
+  //       }`
+  //     );
+  //     setIsSuccess(false);
+  //     console.error("관리자 승인/거절 오류:", error.response || error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return {
     // 상태
@@ -385,7 +387,7 @@ export const useReservationLogic = () => {
     onNotificationsClick,
     handleReservationSubmit,
     handleProceedToPayment,
-    handleAdminApproval,
+    // handleAdminApproval,
     // 기타
     restaurantName,
   };

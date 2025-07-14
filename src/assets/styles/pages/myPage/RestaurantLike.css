@@ -1,0 +1,113 @@
+/* src/assets/styles/mypage/RestaurantLike.css */
+
+.restaurant-like-container {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+}
+
+.no-likes-message {
+    text-align: center;
+    font-size: 1.1em;
+    color: #777;
+    padding: 40px 0;
+    border: 1px dashed #ddd;
+    border-radius: 5px;
+    background-color: #f8f8f8;
+}
+
+.restaurant-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.restaurant-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background-color: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.restaurant-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.restaurant-info {
+    flex: 3;
+    padding-right: 20px;
+}
+
+.restaurant-name {
+    font-size: 1.5em;
+    color: #222;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.restaurant-category {
+    font-size: 0.9em;
+    color: #007bff;
+    background-color: #e0f0ff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.restaurant-address,
+.restaurant-phone,
+.restaurant-rating,
+.restaurant-descript {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 6px;
+    line-height: 1.4;
+}
+
+.restaurant-rating {
+    font-weight: bold;
+    color: #FFD700;
+}
+
+.restaurant-descript {
+    font-style: italic;
+    color: #777;
+    border-left: 3px solid #ccc;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.like-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.9em;
+    color: #888;
+    white-space: nowrap;
+}
+
+.liked-at {
+    margin-bottom: 8px;
+    background-color: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.restaurant-hours {
+    background-color: #e6ffe6;
+    color: #28a745;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+}

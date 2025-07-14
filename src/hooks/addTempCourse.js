@@ -23,6 +23,7 @@ export const addTempCourse = ({ restaurantId, restaurantName }) => {
 
     // ✅ localStorage에 추가
     localStorage.setItem("myCourseSpots", JSON.stringify([...saved, spot]));
+    dispatchEvent(new Event("storage")); // 푸터에 숫자 반영되게!
     
     //DB에 추가
     axiosInstance({
@@ -35,6 +36,7 @@ export const addTempCourse = ({ restaurantId, restaurantName }) => {
         }
     }).then((res) => {
         alert(res.data);
+
     }).catch(((err)=> {
         console.error(err);
     }))

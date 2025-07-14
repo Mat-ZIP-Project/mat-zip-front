@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosinstance";
+import { useReservationLogic } from "../reservation/hooks/useReservationLogic";
 
 const MyPageHeader = () => {
   const navigate = useNavigate();
+
+  const {onNotificationsClick} = useReservationLogic();
+  const [showNotificationPopup, setShowNotificationPopup] = useState(false);
 
   // 읽지 않은 알림 개수만 관리
   const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
@@ -36,16 +40,6 @@ const MyPageHeader = () => {
     <div className="mypage-container">
       <div className="my-page-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "0"}}>
         <h1>마이페이지</h1>
-        <Link
-          to="/reservation"
-          style={{
-            textDecoration: "none",
-            color: "blue",
-            border: "1px solid black",
-          }}
-        >
-          예약하기
-        </Link>
         <div className="header-icons">
           <span
             className="notification-icon-wrapper"
@@ -58,7 +52,13 @@ const MyPageHeader = () => {
               </span>
             )}
           </span>
-          <span>⚙️</span>
+          <span onClick={onNotificationsClick} style={{ cursor:"pointer" }}>⚙️</span>
+          {showNotificationPopup && (
+            <NotificationSettingsPopup
+              isOpen={showNotificationPopup}
+              onClose={() => setShowNotificationPopup(false)} // 팝업 닫기 함수
+            />
+          )}
         </div>
       </div>
     </div>

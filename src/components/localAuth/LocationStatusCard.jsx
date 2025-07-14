@@ -1,11 +1,14 @@
+import { useState } from "react";
 import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/localAuth/locationStatusCard.css";
 
 
 
 
-
 export default function LocationStatusCard({ regionName, badgeCount, fetchAll }) {
+  
+
+
   const handleAuth = () => {
     axiosInstance
       .post("/local", { regionName })
@@ -32,12 +35,14 @@ export default function LocationStatusCard({ regionName, badgeCount, fetchAll })
         className="auth-button"
         disabled={!regionName || badgeCount >= 2}
       >
-        현지인 인증하기
+        동네 인증하기
       </button>
+      
 
       {badgeCount >= 2 && (
         <p className="notice-text">⚠️ 인증 뱃지는 최대 2개까지만 발급됩니다.</p>
       )}
+
     </div>
   );
 }

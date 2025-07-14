@@ -4,11 +4,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../assets/styles/common/MainFooter.module.css';
 import { logout } from '../../store/authSlice';
 import axiosInstance from '../../api/axiosinstance';
+import  { useEffect, useState } from 'react';
 
 const MainFooter = () => {
     const { isAuthenticated, userInfo } = useSelector(state => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [spotCount, setSpotCount] = useState(0);
+
+    useEffect(() => {
+        const updateCount = () => {
+            const saved = JSON.parse(localStorage.getItem("myCourseSpots")) || [];
+            setSpotCount(saved.length);
+        };
+
+        // 최초 렌더링 시
+        updateCount();
+
+        // storage 이벤트 리스너 (다른 탭에서 변경 시에도 반영되도록)
+        window.addEventListener("storage", updateCount);
+
+        return () => window.removeEventListener("storage", updateCount);
+        }, []);
 
     const handleMyPageClick = () => {
     if (!isAuthenticated) {
@@ -62,7 +79,9 @@ const MainFooter = () => {
                 
                 <div className={styles.navItem}>
                     <Link to="/courses" className={styles.navLink}>
-                        <div className={styles.iconCourse}></div>
+                         <div className={styles.iconCourse}>
+                         {spotCount > 0 && <span className={styles.badge}>{spotCount}</span>}
+                         </div>
                         <span>나만의 코스</span>
                     </Link>
                 </div>

@@ -7,10 +7,22 @@ const serverIp = import.meta.env.VITE_API_SERVER_IP;
 const axiosInstance = axios.create({ 
     baseURL: serverIp, 
     timeout: 30000,
-    // headers: {
-    //     'Content-Type': 'application/json',
-    // },
-    withCredentials: true // RefreshToken 쿠키 전송용
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: true, // RefreshToken 쿠키 전송용
+     // paramsSerializer 추가
+    paramsSerializer: params => {
+        const searchParams = new URLSearchParams();
+        Object.entries(params).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+                value.forEach(v => searchParams.append(key, v));
+            } else if (value !== undefined && value !== null) {
+                searchParams.append(key, value);
+            }
+        });
+        return searchParams.toString();
+    }
 });
 
 // 요청 인터셉터 - AccessToken 헤더 설정

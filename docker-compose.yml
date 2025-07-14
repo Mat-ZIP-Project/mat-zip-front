@@ -1,0 +1,10 @@
+version: "3" # docker-compose 파일의 버전 명시
+
+services: # 여러 서비스(컨테이너) 정의 시작
+  react-app: # 서비스 이름 (사용자 정의 이름)
+    build: . # 현재 디렉토리의 Dockerfile을 기준으로 이미지 빌드
+    container_name: react-container # 생성될 컨테이너의 이름 지정
+    ports:
+      - "80:80" # 호스트 포트:컨테이너 포트 매핑
+    restart: always # 컨테이너가 중지되면 항상 재시작
+

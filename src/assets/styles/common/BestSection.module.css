@@ -1,0 +1,83 @@
+.section {
+  margin-bottom: 36px;
+}
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+.sectionTitleStrong {
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+.sectionTitleSub {
+  color: #888;
+  font-size: 0.95rem;
+  margin-top: 2px;
+}
+.sectionLink {
+  color: #ff4d4f;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+.sectionSpacing {
+  margin-bottom: 36px;
+}
+.bestList {
+  display: flex;
+  gap: 16px;
+  /* 추가: 3개가 항상 한 줄에 균등하게 */
+  justify-content: space-between;
+}
+.bestItem {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 12px;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bestImgWrapper {
+  width: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bestImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bestName {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 4px;
+  text-align: center;
+}
+.bestInfo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 4px;
+}
+.bestStar {
+  color: #FFA500;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.bestRating {
+  font-weight: bold;
+  margin-right: 4px;
+}
+.bestCategories {
+  color: #888;
+  font-size: 0.95rem;
+}
