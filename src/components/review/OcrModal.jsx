@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosinstance";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import '../../assets/styles/review/ocrModal.css';
 
 
 const OcrModal = ({ onClose }) => {
+  // const restaurantId = useParams("restaurantId");
+  const restaurantId = 21;
   const [isMobile, setIsMobile] = useState(false);
   const [preview, setPreview] = useState(null);
   const [ocrResult, setOcrResult] = useState(null);
@@ -26,7 +28,7 @@ const OcrModal = ({ onClose }) => {
 
     setLoading(true);
     axiosInstance
-      .post("/api/ocr", formData, {
+      .post("/reviews/ocr/" + restaurantId , formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {

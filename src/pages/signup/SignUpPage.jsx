@@ -116,11 +116,13 @@ const SignUpPage = () => {
                 };
                 return (
                     <ResiterRestaurantPage
-                        onNext={handleNext} 
-                        onBack={handleBack} 
+                        onNext={handleNext}
+                        onBack={handleBack}
                         signupData={finalSignupData}
                     />
-                );}
+
+                );
+            }S
             default:
                 return <TypeSelectionPage onSelect={handleUserTypeSelect} />;
         }
