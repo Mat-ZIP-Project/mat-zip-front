@@ -9,7 +9,7 @@ const MainHeader = () => {
   const location = useLocation();
   const [keyword, setKeyword] = useState("");
   const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
-  const [waitingList, setWaitingList] = useState([]);
+  const [waitingInfo, setWaitingInfo] = useState(null);
 
   // 어떤 경로인지 확인
   const isRestaurantDetail = !!matchPath("/restaurants/:id", location.pathname);
@@ -23,12 +23,11 @@ const MainHeader = () => {
   // 종(알림) 아이콘 클릭 시
   const handleNotificationClick = async () => {
   setIsWaitingModalOpen(true);
-
   try {
     const res = await axiosInstance.get("/api/waiting/me");
-    setWaitingList(Array.isArray(res.data) ? res.data : [res.data]);
+    setWaitingInfo(res.data); // 객체 1개만 저장
   } catch (e) {
-    setWaitingList([]);
+    setWaitingInfo(null);
   }
 };
 
@@ -99,11 +98,11 @@ const MainHeader = () => {
       </div>
       {/* 웨이팅 현황 모달 */}
       {isWaitingModalOpen && (
-        <WaitingStatusModal
-          waitingList={waitingList}
-          onClose={() => setIsWaitingModalOpen(false)}
-        />
-      )}
+  <WaitingStatusModal
+    waitingInfo={waitingInfo}
+    onClose={() => setIsWaitingModalOpen(false)}
+  />
+)}
     </header>
   );
 };

@@ -64,6 +64,7 @@ const RestaurantCard = ({ data }) => {
 
   const handleAddToCourse = async (e) => {
     e.preventDefault(); // 링크 이동 방지
+    e.stopPropagation();
     
     await addTempCourse({ restaurantId, restaurantName }); // 객체로 전달!
   
