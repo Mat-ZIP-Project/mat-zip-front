@@ -1,40 +1,71 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { addTempCourse } from "../../hooks/addTempCourse";
+import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/restaurant/RestaurantDetailInfo.css";
 
 const RestaurantDetailInfo = ({ data }) => {
   const {
+    restaurantId,
     restaurantName,
     address,
-    avg_rating,
-    avg_rating_local,
+    avgRating,
+    avgRatingLocal,
     phone,
     category,
-    descript,
     openTime,
     closeTime,
   } = data;
+
+  const [numPeople, setNumPeople] = useState(1);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     console.log("식당 데이터 확인:", data);
   }, [data]);
 
+  // 웨이팅 등록 핸들러
+  const handleWaiting = async () => {
+    try {
+      const requestDto = { restaurantId, numPeople };
+      console.log("웨이팅 등록 요청 데이터:", requestDto);
+      await axiosInstance.post("/api/waiting", requestDto);
+      alert("웨이팅 등록이 완료되었습니다!");
+      setShowModal(false);
+      window.location.reload();
+    } catch (err) {
+      alert("웨이팅 등록에 실패했습니다.");
+      console.error("웨이팅 등록 에러:", err.response?.data);
+    }
+  };
+
+  // 모달 열기
+  const openWaitingModal = () => {
+    setShowModal(true);
+  };
+
+  // 모달 닫기
+  const closeWaitingModal = () => {
+    setShowModal(false);
+  };
+
+  const handleAddToCourse = async () => {
+    await addTempCourse({ restaurantId, restaurantName });
+  };
+
+  const handleReceiptReview = () => {
+    alert("영수증 리뷰 기능은 준비 중입니다.");
+  };
+
   return (
     <div className="restaurant-detail-info">
       <h1>{restaurantName}</h1>
-      {descript && <p>{descript}</p>}
-
       <p>📍 주소: {address}</p>
       <p>
-        ⭐ 평균 별점:{" "}
-        {avg_rating !== null && avg_rating !== undefined
-          ? avg_rating
-          : "정보 없음"}{" "}
-        / 지역 별점:{" "}
-        {avg_rating_local !== null && avg_rating_local !== undefined
-          ? avg_rating_local
-          : "정보 없음"}
+        ⭐ 평점:{" "}
+        {avgRating == null ? "정보 없음" : `${avgRating}점`}{" "}
+        / 🏠 로컬 평점:{" "}
+        {avgRatingLocal == null ? "정보 없음" : `${avgRatingLocal}점`}
       </p>
       <p>🍽️ 카테고리: {category}</p>
       {phone && <p>📞 연락처: {phone}</p>}
@@ -46,14 +77,56 @@ const RestaurantDetailInfo = ({ data }) => {
         ) : (
           <p>🕒 영업시간 정보 없음</p>
         )}
+      </div>
 
+      <div className="restaurant-detail-buttons">
         <Link
-          to={`/reservation/${data.restaurantId}`}
-          className="restaurant-reservation-button inline"
+          to={`/reservation?restaurantId=${restaurantId}`}
+          className="restaurant-reservation-button"
         >
           예약하기
         </Link>
+        <button
+          type="button"
+          className="restaurant-waiting-button"
+          onClick={openWaitingModal}
+        >
+          웨이팅하기
+        </button>
+        <button
+          type="button"
+          className="restaurant-course-button"
+          onClick={handleAddToCourse}
+        >
+          ➕ 나만의 코스
+        </button>
+        <button
+          type="button"
+          className="restaurant-receipt-review-button"
+          onClick={handleReceiptReview}
+        >
+          영수증리뷰하기
+        </button>
       </div>
+
+      {/* 웨이팅 인원 선택 모달 */}
+      {showModal && (
+        <div className="waiting-modal">
+          <div className="waiting-modal-content">
+            <h3>웨이팅 인원 선택</h3>
+            <input
+              type="number"
+              min="1"
+              max="20"
+              value={numPeople}
+              onChange={e => setNumPeople(Number(e.target.value))}
+              style={{ width: 60, marginRight: 8 }}
+            />
+            <button onClick={handleWaiting}>확인</button>
+            <button onClick={closeWaitingModal} style={{ marginLeft: 8 }}>취소</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

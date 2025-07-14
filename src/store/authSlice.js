@@ -38,7 +38,8 @@ const authSlice = createSlice({
         id: user.id,
         userId: user.userId,
         name: user.name,
-        role: user.role
+        role: user.role,
+        preferences: user.preferences || []
       };
     },
 
