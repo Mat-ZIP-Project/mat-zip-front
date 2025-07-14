@@ -105,7 +105,7 @@ const SignUpPage = () => {
                         />
                     );
                 }
-            case 4:
+            case 4: {
                 // 최종 제출 시 모든 데이터 병합
                 const finalSignupData = {
                     ...signupData,
@@ -120,7 +120,7 @@ const SignUpPage = () => {
                         onBack={handleBack} 
                         signupData={finalSignupData}
                     />
-                );
+                );}
             default:
                 return <TypeSelectionPage onSelect={handleUserTypeSelect} />;
         }
