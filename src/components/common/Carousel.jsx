@@ -27,8 +27,15 @@ const Carousel = ({
     return () => clearInterval(timerRef.current);
   }, [hovered, autoSlide, itemCount, interval, isDragging]);
 
-  const goPrev = () => setCurrent((current - 1 + itemCount) % itemCount);
-  const goNext = () => setCurrent((current + 1) % itemCount);
+  // 캐러셀 이동 함수
+  const goPrev = () => {
+    setIsDragging(false); // 드래그 상태 해제
+    setCurrent((prev) => (prev - 1 + itemCount) % itemCount);
+  };
+  const goNext = () => {
+    setIsDragging(false); // 드래그 상태 해제
+    setCurrent((prev) => (prev + 1) % itemCount);
+  };
 
   // useHorizontalDrag 훅 사용
   const drag = useHorizontalDrag({
@@ -78,31 +85,56 @@ const Carousel = ({
           transition: isDragging ? "none" : "transform 0.3s"
         }}
       >
-        <img
-          src={items[prevIdx].imgUrl}
-          alt=""
-          className="carousel-img"
-          style={{ width: `${width}px`, height: "100%" }}
-          draggable={false}
-        />
-        <img
-          src={items[current].imgUrl}
-          alt=""
-          className="carousel-img"
-          style={{
-            width: `${width}px`,
-            height: "100%",
-            filter: showText ? "brightness(0.88)" : "none"
-          }}
-          draggable={false}
-        />
-        <img
-          src={items[nextIdx].imgUrl}
-          alt=""
-          className="carousel-img"
-          style={{ width: `${width}px`, height: "100%" }}
-          draggable={false}
-        />
+        {/* 이전/현재/다음 아이템 분기 렌더링 */}
+        {[prevIdx, current, nextIdx].map(idx => {
+          const item = items[idx];
+          if (item.type === "image" || item.imgUrl) {
+            // 완성형 이미지 배너
+            return (
+              <img
+                key={idx}
+                src={item.imgUrl}
+                alt=""
+                className="carousel-img"
+                style={{ width: `${width}px`, height: "100%" }}
+                draggable={false}
+              />
+            );
+          } else if (item.type === "dynamic") {
+            // 동적 배너
+            return (
+              <div
+                key={idx}
+                className="carousel-img"
+                style={{
+                  width: `${width}px`,
+                  height: "100%",
+                  background: item.bgColor || "#eee",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "relative"
+                }}
+              >
+                <img
+                  src={item.iconUrl}
+                  alt=""
+                  style={{
+                    width: "120px",
+                    height: "120px",
+                    marginRight: "32px"
+                  }}
+                />
+                <div style={{ color: "#222", textAlign: "left" }}>
+                  <div style={{ fontSize: "22px", fontWeight: "bold" }}>{item.title}</div>
+                  <div style={{ fontSize: "32px", fontWeight: "bold" }}>{item.desc}</div>
+                  <div style={{ fontSize: "18px", marginTop: "8px" }}>{item.sub}</div>
+                </div>
+              </div>
+            );
+          }
+          return null;
+        })}
       </div>
       {showText && (
         <div className="carousel-text-box">
@@ -118,8 +150,26 @@ const Carousel = ({
       )}
       {hovered && !isDragging && (
         <>
-          <button className="carousel-arrow left" onClick={goPrev} aria-label="이전">&#60;</button>
-          <button className="carousel-arrow right" onClick={goNext} aria-label="다음">&#62;</button>
+          <button
+            className="carousel-arrow left"
+            onClick={(e) => {
+              e.stopPropagation();
+              goPrev();
+            }}
+            aria-label="이전"
+          >
+            &#60;
+          </button>
+          <button
+            className="carousel-arrow right"
+            onClick={(e) => {
+              e.stopPropagation();
+              goNext();
+            }}
+            aria-label="다음"
+          >
+            &#62;
+          </button>
         </>
       )}
     </div>

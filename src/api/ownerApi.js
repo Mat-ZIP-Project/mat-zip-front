@@ -63,6 +63,17 @@ export const ownerApi = {
   markNoShow: async ({ reservationId }) =>
     axiosInstance.post('/owner/reservations/noshow', { reservationId }),
 
+
+  /////// 웨이팅 관리 API ////////////////////////////////////////////////
+  /** 웨이팅 요약 정보 조회 */
+  // getWaitingSummary: async () => axiosInstance.get('/api/waiting/status/{restaurantId}'),
+  // /** 웨이팅 대기자 목록 조회 */ 
+  // getWaitingList: async () => axiosInstance.get('/owner/waiting/list'),
+  // /** 다음 대기자 호출 */
+  // callNextWaiting: async (waitingId) => axiosInstance.post(`/api/waiting/next/${waitingId}`),
+  // /** 노쇼 처리 */
+  // markWaitingNoShow: async (waitingId) => axiosInstance.post(`/api/waiting/noshow/${waitingId}`),
+
   ////////////////////////////////////////////////////////////////////
   /** 리뷰 목록 조회 */
   getRestaurantReviews: async () => axiosInstance.get('/owner/reviews/all'),

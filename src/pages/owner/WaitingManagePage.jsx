@@ -17,8 +17,8 @@ const WaitingManagePage = () => {
       const listRes = await ownerApi.getWaitingList();
       setSummary(summaryRes.data);
       setWaitingList(listRes.data);
-    } catch {
-      if (err?.response?.status !== 404 && err?.response?.status !== 204) {
+    } catch (err) {
+      if (err?.response && err.response.status >= 400 && err.response.status !== 404 && err.response.status !== 204)  {
         showErrorAlert('웨이팅 정보 조회 실패', '데이터를 불러올 수 없습니다.');}
       setSummary({ teamCount: 0, expectedTime: '-' });
       setWaitingList([]);
