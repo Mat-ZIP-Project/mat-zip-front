@@ -18,6 +18,11 @@ jobs:
         with:
           node-version: 20   # Node.js 20버전 설치
 
+      - name: Create .env file for React App
+        run: |
+          echo "VITE_API_SERVER_IP=${{ secrets.VITE_API_SERVER_IP }}" > .env  # 환경 변수 설정
+          echo "VITE_IMP_UID=${{ secrets.VITE_IMP_UID }}" >> .env  # 추가 환경 변수 설정
+
       - name: Install dependencies
         run: npm install  # React 프로젝트의 의존성 설치
 
