@@ -14,6 +14,7 @@ import defaultUserImage from "../../assets/images/새싹.png";
 import RestaurantLike from "../../components/myPage/RestaurantLike";
 
 import PreferenceCategorySelector from "../../components/signup/PreferenceCategorySelector";
+import localBadgeImage from "../../assets/images/로컬뱃지.png";
 
 // 등급별 이미지 맵 정의
 const gradeImages = {
@@ -38,6 +39,8 @@ const MyPage = () => {
   // 서버에서 불러온 원래 선호 카테고리 (수정 완료 후 업데이트, 취소 시 되돌리기용)
   const [userPreferences, setUserPreferences] = useState("");
 
+  const [badges, setBadges] = useState([]);
+
   useEffect(() => {
     const userInfo = async () => {
       try {
@@ -52,6 +55,10 @@ const MyPage = () => {
         const userPreference = response.data.preferenceCategory || "";
         setUserPreferences(userPreference);
         setTempSelectedPreferences(userPreference);
+
+        const badgesResponse = await axiosInstance.get("/local/badges");
+        setBadges(badgesResponse.data);
+
       } catch (error) {
         console.error("사용자 정보를 가져오지 못했습니다: ", error);
         setUserImage(defaultUserImage);
@@ -99,7 +106,9 @@ const MyPage = () => {
   };
 
   const pointDescriptions = {
-    "": "예약 시 150포인트 적립",
+    "새싹, 브론즈": "예약 시 150포인트 적립",
+    "실버": "예약 시 200포인트 적립",
+    "먹짱": "예약 시 250포인트 적립",
   };
 
   const openPreferenceModal = () => {
@@ -170,7 +179,21 @@ const MyPage = () => {
         <div className="user-details-group">
           {" "}
           {/* 사용자 정보 텍스트 그룹 */}
-          <div className="user-id-text">{userForm.userId}님</div>{" "}
+          <div className="user-id-text">{userForm.userId}님
+            {/* 뱃지 아이콘들을 여기에 렌더링 */}
+            <div className="user-local-badges">
+              {badges.map((badgeItem) => (
+                <img
+                  key={badgeItem.badgeId} // 각 뱃지 아이템의 고유 ID를 key로 사용
+                  src={localBadgeImage} // 로컬 뱃지 이미지 사용
+                  alt="로컬 뱃지"
+                  className="small-badge-icon"
+                  // 뱃지 정보 툴팁 (선택 사항)
+                  title={`${badgeItem.regionName} (${badgeItem.validUntil})`}
+                />
+              ))}
+            </div>  
+          </div>{" "}
           {/* 클래스명 변경 */}
           <div className="user-grade-text">
             <span
