@@ -164,3 +164,28 @@
   color: #FF6B35;
   border-color: #FF6B35;
 }
+.restaurant-detail-buttons-fixed {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0 12px 0;
+  flex-wrap: nowrap;         /* 한 줄로만 표시 */
+  overflow-x: auto;          /* 넘치면 가로 스크롤 */
+  width: 100%;               /* 부모 영역 꽉 채우기 */
+  box-sizing: border-box;
+}
+
+.restaurant-detail-buttons-fixed {
+  display: flex;
+  gap: 16px;
+  margin: 24px 0 12px 0;
+  flex-wrap: nowrap;         /* 한 줄로만 표시 */
+  overflow-x: auto;          /* 넘치면 가로 스크롤 */
+  width: 100%;               /* 부모 영역 꽉 채우기 */
+  box-sizing: border-box;
+  background: #fff;          /* 배경색 고정(선택) */
+  z-index: 10;               /* 겹침 방지(선택) */
+}
+.restaurant-detail-buttons-fixed > * {
+  min-width: 120px;
+  flex-shrink: 0;
+}

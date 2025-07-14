@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import axiosInstance from "../../api/axiosinstance";
 import RestaurantDetailInfo from "../../components/restaurant/RestaurantDetailInfo";
 import TabMenu from "../../components/restaurant/TabMenu";
+import OcrModal from "../../components/review/OcrModal";
+import ReviewForm from "../review/ReviewForm";
+import RestaurantReviewList from "../../components/restaurant/RestaurantReviewList";
 import { Link } from "react-router-dom";
-
 import "../../assets/styles/restaurant/RestaurantDetailPage.css";
 
 const RestaurantDetailPage = () => {
@@ -13,6 +15,9 @@ const RestaurantDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("home");
   const [waitingInfo, setWaitingInfo] = useState(null);
+  const [showOcrModal, setShowOcrModal] = useState(false);
+  const [reviewFormData, setReviewFormData] = useState(null);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const fetchRestaurant = async () => {
@@ -31,15 +36,46 @@ const RestaurantDetailPage = () => {
 
   // 웨이팅 정보 가져오기
   useEffect(() => {
-  fetch(`/api/waiting/status/${id}`)
-    .then(res => res.json())
-    .then(data => {
-      setWaitingInfo({
-        count: data.waitingCount,
-        estimatedTime: data.expectedEntryTime,
-      });
+    fetch(`/api/waiting/status/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setWaitingInfo({
+          count: data.waitingCount,
+          estimatedTime: data.expectedEntryTime,
+        });
+      })
+      .catch(() => setWaitingInfo(null));
+  }, [id]);
+
+  // OCR 모달에서 리뷰 작성 데이터 받기
+  const handleOcrModalClose = () => setShowOcrModal(false);
+  const handleOcrToReview = (ocrResult) => {
+    setReviewFormData({
+      restaurantId: ocrResult.restaurantId,
+      visitDate: ocrResult.visitDate,
+      restaurantName: ocrResult.restaurantName,
+    });
+    setShowOcrModal(false);
+    setActiveTab("reviewForm");
+  };
+
+  // 리뷰 불러오기
+  useEffect(() => {
+  if (!id) return;
+  axiosInstance
+    .get(`/api/restaurants/${id}/reviews`)
+    .then((res) => {
+      const mapped = res.data.map(r => ({
+        id: r.reviewId,
+        writerName: r.userNickname,
+        createdAt: r.reviewedAt?.slice(0, 10), // 날짜만 표시
+        content: r.content,
+        images: r.imageUrls,
+        rating: r.rating
+      }));
+      setReviews(mapped);
     })
-    .catch(() => setWaitingInfo(null));
+    .catch(() => setReviews([]));
 }, [id]);
 
   if (loading) return <p>로딩 중...</p>;
@@ -64,33 +100,36 @@ const RestaurantDetailPage = () => {
 
       <div className="restaurant-tab-content">
         {activeTab === "home" && (
-  <div className="waiting-section">
-    <div className="waiting-header">
-      <h2>실시간 식당 웨이팅 </h2>
-      <button className="waiting-refresh-btn" onClick={() => window.location.reload()}>
-        새로고침 <span className="refresh-icon">⟳</span>
-      </button>
-    </div>
-    {waitingInfo ? (
-  waitingInfo.count > 0 ? (
-    <div className="waiting-status-card">
-      <span className="waiting-badge">매장</span>
-      <span className="waiting-title">매장 식사</span>
-      <span className="waiting-count">{waitingInfo.count}팀</span>
-    </div>
-  ) : (
-    <div className="waiting-status-card">
-      <span className="waiting-badge">매장</span>
-      <span className="waiting-title">현재 웨이팅이 없습니다.</span>
-    </div>
-  )
-) : (
-  <div className="waiting-status-card">
-    <span className="waiting-title">웨이팅 정보가 없습니다.</span>
-  </div>
-)}
-  </div>
-)}
+          <div className="waiting-section">
+            <div className="waiting-header">
+              <h2>실시간 식당 웨이팅 </h2>
+              <button
+                className="waiting-refresh-btn"
+                onClick={() => window.location.reload()}
+              >
+                새로고침 <span className="refresh-icon">⟳</span>
+              </button>
+            </div>
+            {waitingInfo ? (
+              waitingInfo.count > 0 ? (
+                <div className="waiting-status-card">
+                  <span className="waiting-badge">매장</span>
+                  <span className="waiting-title">매장 식사</span>
+                  <span className="waiting-count">{waitingInfo.count}팀</span>
+                </div>
+              ) : (
+                <div className="waiting-status-card">
+                  <span className="waiting-badge">매장</span>
+                  <span className="waiting-title">현재 웨이팅이 없습니다.</span>
+                </div>
+              )
+            ) : (
+              <div className="waiting-status-card">
+                <span className="waiting-title">웨이팅 정보가 없습니다.</span>
+              </div>
+            )}
+          </div>
+        )}
         {activeTab === "menu" && (
           <div>
             <h2>메뉴</h2>
@@ -99,9 +138,15 @@ const RestaurantDetailPage = () => {
         )}
         {activeTab === "review" && (
           <div>
-            <h2>리뷰</h2>
-            <p>방문자 리뷰가 여기에 표시됩니다.</p>
+            <RestaurantReviewList reviews={reviews} />
           </div>
+        )}
+        {activeTab === "reviewForm" && reviewFormData && (
+          <ReviewForm
+            restaurantId={reviewFormData.restaurantId}
+            visitDate={reviewFormData.visitDate}
+            restaurantName={reviewFormData.restaurantName}
+          />
         )}
         {activeTab === "localReview" && (
           <div>
@@ -110,6 +155,13 @@ const RestaurantDetailPage = () => {
           </div>
         )}
       </div>
+
+      {showOcrModal && (
+        <OcrModal
+          onClose={handleOcrModalClose}
+          onOcrComplete={handleOcrToReview}
+        />
+      )}
     </div>
   );
 };

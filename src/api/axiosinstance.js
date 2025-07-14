@@ -10,7 +10,19 @@ const axiosInstance = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
-    withCredentials: true // RefreshToken 쿠키 전송용
+    withCredentials: true, // RefreshToken 쿠키 전송용
+     // paramsSerializer 추가
+    paramsSerializer: params => {
+        const searchParams = new URLSearchParams();
+        Object.entries(params).forEach(([key, value]) => {
+            if (Array.isArray(value)) {
+                value.forEach(v => searchParams.append(key, v));
+            } else if (value !== undefined && value !== null) {
+                searchParams.append(key, value);
+            }
+        });
+        return searchParams.toString();
+    }
 });
 
 // SPA 방식 로그인 페이지 이동

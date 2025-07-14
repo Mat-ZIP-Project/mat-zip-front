@@ -7,14 +7,15 @@ import "../../assets/styles/restaurant/RestaurantListPage.css";
 
 const RestaurantListPage = () => {
   const [searchParams] = useSearchParams();
-  const category = searchParams.get("category"); // 쿼리로 받음
+  const category = searchParams.getAll("category");
+  const sortBy = searchParams.get("sortBy"); // 정렬 기준
 
   const [sort, setSort] = useState("");
   const [restaurantList, setRestaurantList] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const fetchRestaurants = async () => {
-    if (!category) return;
+    if (!category || category.length === 0) return;
 
     setLoading(true);
     try {
@@ -33,9 +34,23 @@ const RestaurantListPage = () => {
   };
 
   useEffect(() => {
+    // category가 배열이므로 join해서 의존성 배열에 넣어 무한루프 방지
     fetchRestaurants();
-  }, [category, sort]);
+    // eslint-disable-next-line
+  }, [category.join(','), sort]); 
 
+  useEffect(() => {
+    axiosInstance.get("/api/restaurants", {
+      params: {
+        ...(category.length > 0 && { category }),
+        ...(sortBy && { sortBy }),
+      }
+    }).then(res => {
+      setRestaurantList(res.data);
+    });
+  }, [category.join(","), sortBy]);
+  
+  
   return (
     <div className="restaurant-list-page">
       {/* <h1 className="restaurant-list-page_title">{category} 식당 목록</h1> */}

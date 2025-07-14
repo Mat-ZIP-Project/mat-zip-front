@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosinstance";
 import { useSelector } from "react-redux";
 import "../../assets/styles/restaurant/RestaurantCard.css";
@@ -9,6 +9,7 @@ const RestaurantCard = ({ data }) => {
   const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
   const location = useLocation();
+  
 
   const {
     restaurantId,
@@ -25,6 +26,12 @@ const RestaurantCard = ({ data }) => {
 
   const [isLiked, setIsLiked] = useState(liked);
   const [likes, setLikes] = useState(likeCount);
+
+  // 추가: 부모에서 liked 값이 바뀌면 isLiked도 바꿔줌
+  useEffect(() => {
+    setIsLiked(liked);
+    setLikes(likeCount);
+  }, [liked, likeCount]);
 
   const handleLikeClick = async (e) => {
     e.preventDefault();
