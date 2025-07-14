@@ -11,6 +11,18 @@ import { signupApi } from '../../api/signupApi';
  * - 사업자 회원가입을 위한 기본 정보 수집 (일반회원과 동일)
  * - 식당 정보 입력페이지(다음 단계) 로 데이터 전달
  */
+const passwordValid = (pw) => {
+  const lengthValid = pw.length >= 10;
+  const types = [
+    /[A-Z]/.test(pw),
+    /[a-z]/.test(pw),
+    /[0-9]/.test(pw),
+    /[^A-Za-z0-9]/.test(pw),
+  ];
+  const typeCount = types.filter(Boolean).length;
+  return lengthValid && typeCount >= 2;
+};
+
 const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
     
     // 업주 회원가입용 폼 상태 관리
@@ -89,6 +101,13 @@ const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
         });
     }, [formData, validateForm, onNext]);
 
+    const [pwValid, setPwValid] = React.useState(false);
+
+    const handleInputChangeWithPw = (e) => {
+        handleInputChange(e);
+        if (e.target.name === 'password') setPwValid(passwordValid(e.target.value));
+    };
+
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>기본 정보 입력</h1>
@@ -133,14 +152,34 @@ const OwnerSignupForm = ({ onNext, onBack, initialData = {} }) => {
                     <label className={styles.label}>비밀번호 *</label>
                     <FormInput
                         ref={inputRefs.password}
-                        name="password" 
+                        name="password"
                         type="password"
                         placeholder="비밀번호를 입력해주세요"
                         value={formData.password}
-                        onChange={handleInputChange}
+                        onChange={handleInputChangeWithPw}
                         error={errors.password}
                         autoComplete="new-password" 
                     />
+                    <div
+                        className={
+                          formData.password
+                            ? pwValid
+                              ? styles.pwMessageValid
+                              : styles.pwMessageError
+                            : ''
+                        }
+                      >
+                        {formData.password && (
+                          pwValid ? (
+                            <>
+                              <span className={styles.checkIcon}>✔</span>
+                              최소 10자리, 영문 대소문자/숫자/특수문자 중 2종류 이상 조합해야 합니다.
+                            </>
+                          ) : (
+                            <>최소 10자리, 영문 대소문자/숫자/특수문자 중 2종류 이상 조합해야 합니다.</>
+                          )
+                        )}
+                      </div>
                 </div>
 
                 <div className={styles.formGroup}>

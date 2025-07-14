@@ -1,4 +1,4 @@
-.footer {
+/* .footer {
     height: 66px;
     width: 100%;
     max-width: 600px;
@@ -8,6 +8,16 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 1000;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+} */
+
+.footer {
+    height: 66px;
+    width: 100%;
+    position: relative;    /* 수정됨: fixed 제거 */
+    background: white;
+    border-top: 1px solid #e0e0e0;
     z-index: 1000;
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -31,6 +41,8 @@
 }
 
 .footerNav {
+    max-width: 600px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -75,7 +87,12 @@
 }
 
 .iconCourse {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23666' viewBox='0 0 24 24'%3E%3Cpath d='M14 6V4h-4v2h4zM4 8v11h16V8H4zm16-2c1.11 0 2 .89 2 2v11c0 1.11-.89 2-2 2H4c-1.11 0-2-.89-2-2V8c0-1.11.89-2 2-2h16z'/%3E%3C/svg%3E");
+  position: relative; /* badge 위치 기준 */
+  width: 24px;
+  height: 24px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23666' viewBox='0 0 24 24'%3E%3Cpath d='M14 6V4h-4v2h4zM4 8v11h16V8H4zm16-2c1.11 0 2 .89 2 2v11c0 1.11-.89 2-2 2H4c-1.11 0-2-.89-2-2V8c0-1.11.89-2 2-2h16z'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .iconLocation {
@@ -114,4 +131,18 @@
         width: 22px;
         height: 22px;
     }
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -8px;
+  background-color: #ff4d4f;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  min-width: 18px;
+  text-align: center;
+  font-weight: bold;
 }

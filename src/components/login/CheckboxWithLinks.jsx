@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from '../../assets/styles/login/CheckboxWithLinks.module.css';
 
 const CheckboxWithLinks = ({ 
@@ -8,7 +7,6 @@ const CheckboxWithLinks = ({
   checkboxText = "보안접속",
   links = []
 }) => {
-  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
@@ -25,11 +23,11 @@ const CheckboxWithLinks = ({
       {links.length > 0 && (
         <div className={styles.links}>
           {links.map((link, index) => (
-            <React.Fragment key={link.path}>
+            <React.Fragment key={link.path || index}>
               <button 
                 type="button" 
                 className={styles.linkButton}
-                onClick={() => navigate(link.path)}
+                onClick={link.onClick}
               >
                 {link.text}
               </button>

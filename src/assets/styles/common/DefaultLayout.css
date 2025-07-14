@@ -1,21 +1,48 @@
-/* Default 레이아웃 형태 정의 */
+/* 전체 높이 및 기본 설정 */
 html, body, #root {
   height: 100%;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* 레이아웃 컨테이너 */
 .default-layout {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;       /* 뷰포트 전체 높이 */
+  display: grid;
+  grid-template-rows: auto 1fr auto; /* header-auto, main-1fr, footer-auto */
+  height: 100vh;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
 }
 
-.default-layout > header, 
+/* 헤더/푸터는 고정 위치가 아니라 flow에 따라 배치 */
+.default-layout > header,
 .default-layout > footer {
-  flex: 0 0 auto;      /* 고정 크기(헤더/푸터의 내용 높이만큼) */
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  flex-shrink: 0;
 }
 
+/* 메인 콘텐츠 영역 */
 .AppMain {
-  flex: 1 1 auto;      /* 남는 공간을 모두 차지 */
-  overflow-y: auto;    /* 내용이 길어지면 스크롤 */
+  grid-row: 2;
+  overflow-y: auto;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 600px) {
+  .default-layout {
+    max-width: 100%;
+    border-radius: 0;
+  }
+  .default-layout > header,
+  .default-layout > footer {
+    max-width: 100%;
+  }
 }

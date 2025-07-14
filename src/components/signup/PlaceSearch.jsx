@@ -23,7 +23,16 @@ const PlaceSearch = ({ onPlaceSelect, error, onErrorClear }) => {
 
         const firstPart = addressParts[0];
         const specialCities = ['서울', '인천', '대전', '대구', '울산', '부산', '광주', '세종특별자치시'];
-        
+        const cityMap = {
+            '서울': '서울특별시',
+            '인천': '인천광역시',
+            '대전': '대전광역시',
+            '대구': '대구광역시',
+            '울산': '울산광역시',
+            '부산': '부산광역시',
+            '광주': '광주광역시'
+        };
+
         let regionSido = '';
         let regionSigungu = '';
 
@@ -32,7 +41,7 @@ const PlaceSearch = ({ onPlaceSelect, error, onErrorClear }) => {
             if (firstPart === '세종특별자치시') {
                 regionSido = '세종특별자치시';
             } else {
-                regionSido = firstPart + '시';
+                regionSido = cityMap[firstPart] || (firstPart + '시');
             }
             regionSigungu = addressParts[1] || '';
         } else {
