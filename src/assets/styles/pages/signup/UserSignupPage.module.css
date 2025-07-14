@@ -75,8 +75,8 @@
 }
 
 .checkIcon {
-  color: #4caf50;
-  font-weight: bold;
+  font-weight: 500;
+  color: #388e3c;
 }
 
 .passwordMatchMessage {
@@ -111,6 +111,24 @@
 
 .buttonContainer button {
   flex: 1;
+}
+
+.pwMessageValid {
+  color: #388e3c;
+  font-size: 13px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pwMessageError {
+  color: #d32f2f;
+  font-size: 13px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 @media (max-width: 480px) {

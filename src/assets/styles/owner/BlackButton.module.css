@@ -1,0 +1,19 @@
+.blackButton {
+  width: 90px;
+  height: 35px;
+  background-color: #222;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blackButton:hover:not(:disabled) {
+  background-color: #ff6b35;
+  color: white;
+}

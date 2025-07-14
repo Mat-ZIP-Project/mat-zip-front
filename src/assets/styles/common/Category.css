@@ -1,0 +1,50 @@
+/* 카테고리 리스트 */
+.category-list {
+  width: 580px;
+  margin: 25px auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  padding-bottom: 12px;
+}
+
+/* 카테고리 아이템 */
+.category-list > .category-item {
+  flex: 1 1 0;
+  max-width: 100px;
+  min-width: 0;
+  margin: 0 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.category-img {
+  width: 72px;
+  height: 72px;
+  background: #eee;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2px;
+  overflow: hidden;
+}
+.category-img img {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.category-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #222;
+  text-align: center;
+  margin-top: 2px;
+}

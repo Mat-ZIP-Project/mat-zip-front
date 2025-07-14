@@ -1,4 +1,4 @@
-.footer {
+/* .footer {
     height: 66px;
     width: 100%;
     max-width: 600px;
@@ -8,6 +8,16 @@
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 1000;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+} */
+
+.footer {
+    height: 66px;
+    width: 100%;
+    position: relative;    /* 수정됨: fixed 제거 */
+    background: white;
+    border-top: 1px solid #e0e0e0;
     z-index: 1000;
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -31,6 +41,8 @@
 }
 
 .footerNav {
+    max-width: 600px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-around;
     align-items: center;

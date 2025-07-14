@@ -1,22 +1,20 @@
 /* 전체 컨테이너 스타일 */
 .App {
-  max-width: 600px;
   width: 100%;
+  height: 100vh;
   margin: 0 auto;
-  min-height: 100vh;
+  padding: 0;
   background-color: #ffffff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  position: relative;
 }
 
 /* 메인 콘텐츠 영역 */
 .AppMain {
   width: 100%;
-  min-height: calc(100vh - 122px); /* 56px(헤더) + 66px(푸터) = 122px */
-  padding-top: 56px;
-  padding-bottom: 66px;
+ /* min-height: calc(100vh - 122px); /* 56px(헤더) + 66px(푸터) = 122px */
+  padding: 0px;
   box-sizing: border-box;
-  overflow-y: auto; /* 컨텐츠가 많을 경우 스크롤 */
+  overflow-y: auto;
 }
 
 
@@ -103,15 +101,15 @@
   
   .App {
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
-    max-width: 600px;
+    width: 600px;
   }
-  
+
   .AppMain {
     min-height: calc(100vh - 122px);
     padding-top: 56px;
     padding-bottom: 66px;
   }
-
+  
 
 }
 
@@ -147,6 +145,9 @@
 
 /* SweetAlert2 커스텀 */
 .swal2-popup {
+    width: 400px !important;
+    height: auto !important;
+    padding: 1.3em !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
 }
@@ -159,8 +160,8 @@
 }
 
 .swal2-html-container {
-    font-size: 14px !important;
-    color: #666 !important;
+    font-size: 15px !important;
+    color: #1f1f1f !important;
     line-height: 1.5 !important;
 }
 
@@ -203,4 +204,31 @@
     .swal2-html-container {
         font-size: 13px !important;
     }
+}
+
+/** DatePicker CSS 적용 */
+.datePickers {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.datePickers span {
+  font-weight: 700;
+  font-size: 17px;
+  color: #000000;
+}
+.react-datepicker__input-container input {
+  width: 140px;
+  margin: 0 5px;
+  padding: 8px 10px;
+  border: 2px solid #929292 !important;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #000000;
+  background: #fff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(109, 109, 109, 0.08);
+  transition: border 0.2s, box-shadow 0.2s;
 }

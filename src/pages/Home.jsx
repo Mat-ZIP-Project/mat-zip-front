@@ -4,6 +4,9 @@ import { useSelector } from "react-redux";
 import BestSection from "../components/common/BestSection";
 import styles from "../assets/styles/common/Home.module.css";
 import axiosInstance from "../api/axiosinstance";
+import mainBannerList from "../data/mainBannerList";
+import Carousel from "../components/common/Carousel";
+import CategoryList from "../components/common/CategoryList";
 
 const categories = [
   { name: "한식", value: "한식" },
@@ -109,24 +112,17 @@ const Home = () => {
 
   return (
     <div className={styles.mainContainer}>
-      {/* 1. 배너 */}
-      <section className={styles.mainBanner}>[배너/캐러셀 자리]</section>
+      {/* 배너 */}
+        <Carousel
+          items={mainBannerList}
+          width={580} height={280}
+          showText={true}
+          autoSlide={true}
+          showIndex={true}
+          />
 
-      {/* 2. 카테고리 */}
-      <section className={styles.categorySection}>
-        <div className={styles.categoryList}>
-          {categories.map((cat) => (
-            <div
-              key={cat.value}
-              className={styles.categoryItem}
-              onClick={() => navigate(`/restaurants?category=${cat.value}`)}
-            >
-              <div className={styles.circle}></div>
-              <span className={styles.categoryName}>{cat.name}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* 카테고리 */}
+      <CategoryList />
 
       {isAuthenticated && preferences.length > 0 && (
         <section className={styles.preferenceSection}>
