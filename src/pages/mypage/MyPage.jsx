@@ -15,9 +15,6 @@ import RestaurantLike from "../../components/myPage/RestaurantLike";
 
 import PreferenceCategorySelector from "../../components/signup/PreferenceCategorySelector";
 
-
-
-
 // 등급별 이미지 맵 정의
 const gradeImages = {
   먹짱: mukzzangImage,
@@ -47,14 +44,14 @@ const MyPage = () => {
         const response = await axiosInstance.get("/auth/user-info");
         setUserForm(response.data);
         console.log("사용자 정보: ", response.data);
-        const imageToSet = gradeImages[response.data.userGrade] || defaultUserImage;
+        const imageToSet =
+          gradeImages[response.data.userGrade] || defaultUserImage;
         setUserImage(imageToSet);
 
         // 사용자 선호도 정보 설정
         const userPreference = response.data.preferenceCategory || "";
         setUserPreferences(userPreference);
         setTempSelectedPreferences(userPreference);
-
       } catch (error) {
         console.error("사용자 정보를 가져오지 못했습니다: ", error);
         setUserImage(defaultUserImage);
@@ -69,7 +66,6 @@ const MyPage = () => {
   const handleLocalAuth = () => {
     navigate("/local-auth");
   };
-
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);
@@ -96,35 +92,35 @@ const MyPage = () => {
 
   // 등급 설명을 저장할 객체
   const gradeDescriptions = {
-    '새싹' : "기본 사용자 등급",
-    "브론즈" : "동네 인증 3번 이상 시 부여",
-    "실버" : "3000포인트 이상 보유 시 부여",
-    "먹짱" : "10000포인트 이상 보유 시 부여",
+    새싹: "기본 사용자 등급",
+    브론즈: "동네 인증 3번 이상 시 부여",
+    실버: "3000포인트 이상 보유 시 부여",
+    먹짱: "10000포인트 이상 보유 시 부여",
   };
 
   const pointDescriptions = {
-    "":"예약 시 150포인트 적립",
+    "": "예약 시 150포인트 적립",
   };
 
   const openPreferenceModal = () => {
     setTempSelectedPreferences(userPreferences);
     setShowPreferenceModal(true);
-  }
+  };
 
   const handleCategoryChangeInModal = useCallback((category) => {
-    setTempSelectedPreferences(prevSelected => {
-      const selectedArray = prevSelected ? prevSelected.split(',') : [];
+    setTempSelectedPreferences((prevSelected) => {
+      const selectedArray = prevSelected ? prevSelected.split(",") : [];
 
       if (selectedArray.includes(category)) {
-        return selectedArray.filter(c => c !== category).join(',');
+        return selectedArray.filter((c) => c !== category).join(",");
       } else {
         if (selectedArray.length < 2) {
-          return [...selectedArray, category].join(',');
+          return [...selectedArray, category].join(",");
         }
         return prevSelected; // 최대 2개까지만 선택 가능
       }
     });
-  },[])
+  }, []);
 
   const handleSavePreferences = async () => {
     try {
@@ -134,12 +130,18 @@ const MyPage = () => {
       }
 
       // 서버로 보낼 데이터 준비: 쉼표로 구분된 문자열 또는 빈 문자열
-      const preferencesToSend = tempSelectedPreferences.split(',').filter(p => p !== '').join(',');
+      const preferencesToSend = tempSelectedPreferences
+        .split(",")
+        .filter((p) => p !== "")
+        .join(",");
       const payload = {
-          preferenceCategory: preferencesToSend,
+        preferenceCategory: preferencesToSend,
       };
 
-      const response = await axiosInstance.post("/mypage/update/preference", payload);
+      const response = await axiosInstance.post(
+        "/mypage/update/preference",
+        payload
+      );
 
       if (response.status !== 200 && response.status !== 201) {
         throw new Error("선호 카테고리 업데이트에 실패했습니다.");
@@ -148,7 +150,6 @@ const MyPage = () => {
 
       setUserPreferences(tempSelectedPreferences);
       setShowPreferenceModal(false);
-
     } catch (error) {
       console.error("선호 카테고리 업데이트 중 오류 발생:", error);
     }
@@ -172,41 +173,45 @@ const MyPage = () => {
           <div className="user-id-text">{userForm.userId}님</div>{" "}
           {/* 클래스명 변경 */}
           <div className="user-grade-text">
-            <span 
+            <span
               className="grade-display-info"
               onMouseEnter={() => setShowTooltip(true)}
               onMouseLeave={() => setShowTooltip(false)}
             >
               ⓘ
               {showTooltip && (
-              <div className="user-grade-tooltip">
-                {Object.entries(gradeDescriptions).map(([grade, description]) => (
-                  <p key={grade}>
-                    <strong>{grade}</strong>: {description}
-                  </p>
-                ))}
-              </div>
-             )}
+                <div className="user-grade-tooltip">
+                  {Object.entries(gradeDescriptions).map(
+                    ([grade, description]) => (
+                      <p key={grade}>
+                        <strong>{grade}</strong>: {description}
+                      </p>
+                    )
+                  )}
+                </div>
+              )}
             </span>
             등급 : {userForm.userGrade}
           </div>
           {/* 클래스명 변경 */}
           <div className="user-point-balance">
-            <span 
+            <span
               className="grade-display-info"
               onMouseEnter={() => setShowPointTooltip(true)}
               onMouseLeave={() => setShowPointTooltip(false)}
             >
-              ⓘ 
+              ⓘ
               {showPointTooltip && (
-              <div className="user-grade-tooltip">
-                {Object.entries(pointDescriptions).map(([point, description]) => (
-                  <p key={point}>
-                    <strong>{point}</strong>: {description}
-                  </p>
-                ))}
-              </div>
-             )}
+                <div className="user-grade-tooltip">
+                  {Object.entries(pointDescriptions).map(
+                    ([point, description]) => (
+                      <p key={point}>
+                        <strong>{point}</strong>: {description}
+                      </p>
+                    )
+                  )}
+                </div>
+              )}
             </span>
             포인트 잔액 : {userForm.pointBalance}
           </div>{" "}
@@ -216,7 +221,7 @@ const MyPage = () => {
           {/* '선호도 수정' 버튼은 항상 표시 */}
           <button
             onClick={openPreferenceModal} // 모달 열기 함수 호출
-            className="profile-edit-btn" 
+            className="profile-edit-btn"
           >
             선호도 수정
           </button>
@@ -231,7 +236,9 @@ const MyPage = () => {
       <div className="main-tabs">
         <span
           onClick={() => handleTabClick("restaurantLikes")}
-          className={`tab-item ${activeTab === "restaurantLikes" ? "active" : ""}`}
+          className={`tab-item ${
+            activeTab === "restaurantLikes" ? "active" : ""
+          }`}
         >
           식당 찜 내역
         </span>
@@ -261,7 +268,10 @@ const MyPage = () => {
               maxSelection={2}
             />
             <div className="modal-actions">
-              <button onClick={handleSavePreferences} className="modal-save-btn">
+              <button
+                onClick={handleSavePreferences}
+                className="modal-save-btn"
+              >
                 수정 완료
               </button>
               <button onClick={handleCancelEdit} className="modal-cancel-btn">

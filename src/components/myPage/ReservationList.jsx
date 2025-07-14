@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosinstance";
 import React, { useEffect, useState } from "react";
-import '../../assets/styles/pages/myPage/ReservationList.css';
+import "../../assets/styles/pages/myPage/ReservationList.css";
 
 const ReservationList = () => {
   const [reservations, setReservations] = useState([]);
@@ -39,14 +39,20 @@ const ReservationList = () => {
 
   // 리뷰 작성 버튼 클릭 핸들러
   const handleWriterReview = (reservationId) => {
-    navigate(`/review/write/${reservationId}`);
-  }
+    navigate(`/review/${reservationId}`);
+  };
 
   // 예약 취소 버튼 클릭 핸들러
-  const handleCancelReservation = async (reservationId, reservationDate, reservationTime) => {
+  const handleCancelReservation = async (
+    reservationId,
+    reservationDate,
+    reservationTime
+  ) => {
     const now = new Date();
-    const reservationDateTime = new Date(`${reservationDate}T${reservationTime}:00`);
-    
+    const reservationDateTime = new Date(
+      `${reservationDate}T${reservationTime}:00`
+    );
+
     const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
     const timeUntilReservation = reservationDateTime.getTime() - now.getTime();
     if (reservationDateTime < now) {
@@ -60,90 +66,107 @@ const ReservationList = () => {
 
     if (window.confirm("정말 예약을 취소하시겠습니까?")) {
       try {
-        const response = await axiosInstance.delete(`/mypage/reservations/cancel/{reservationId}`);
+        const response = await axiosInstance.delete(
+          `/mypage/reservations/cancel/{reservationId}`
+        );
 
         if (response.data === "성공") {
           alert("예약이 성공적으로 취소되었습니다.");
-          setReservations(reservations.filter(r => r.reservationId !== reservationId));
+          setReservations(
+            reservations.filter((r) => r.reservationId !== reservationId)
+          );
         } else {
           console.error("예약 취소 실패: ", response.data);
-          }
+        }
       } catch (error) {
         console.error("예약 취소 중 오류 발생: ", error);
       }
     }
-  }
+  };
 
   return (
-        <div className="reservation-list-container">
-            {/* errorMessage 조건부 렌더링 제거 */}
-            {reservations.length === 0 ? (
-                <p className="no-reservations-message">아직 예약 내역이 없습니다.</p>
-            ) : (
-                <div className="reservation-cards-grid">
-                    {reservations.map((r) => {
-                        const reservationDateTime = new Date(`${r.date}T${r.time}:00`);
-                        const now = new Date();
-                        const isPastReservation = reservationDateTime < now;
+    <div className="reservation-list-container">
+      {/* errorMessage 조건부 렌더링 제거 */}
+      {reservations.length === 0 ? (
+        <p className="no-reservations-message">아직 예약 내역이 없습니다.</p>
+      ) : (
+        <div className="reservation-cards-grid">
+          {reservations.map((r) => {
+            const reservationDateTime = new Date(`${r.date}T${r.time}:00`);
+            const now = new Date();
+            const isPastReservation = reservationDateTime < now;
 
-                        const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
-                        const canCancel = r.reservationStatus === 'APPROVED' &&
-                                          !isPastReservation &&
-                                          (reservationDateTime.getTime() - now.getTime()) >= ONE_DAY_IN_MS;
+            const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+            const canCancel =
+              r.reservationStatus === "APPROVED" &&
+              !isPastReservation &&
+              reservationDateTime.getTime() - now.getTime() >= ONE_DAY_IN_MS;
 
-                        return (
-                            <div key={`${r.reservationId}-${r.restaurantId}`} className="reservation-card">
-                                <div className="card-header">
-                                    <h4 className="restaurant-name">{r.restaurantName}</h4>
-                                    <span className={`payment-status ${r.paymentStatus === '결제완료' ? 'paid' : 'pending'}`}>
-                                        {r.paymentStatus}
-                                    </span>
-                                </div>
-                                <div className="card-body">
-                                    <p className="reservation-info">
-                                        <span className="icon">📅</span>
-                                        <span className="info-label">날짜:</span> {formatDate(r.date)}
-                                    </p>
-                                    <p className="reservation-info">
-                                        <span className="icon">⏰</span>
-                                        <span className="info-label">시간:</span> {formatTime(r.time)}
-                                    </p>
-                                    <p className="reservation-info">
-                                        <span className="icon">👥</span>
-                                        <span className="info-label">인원:</span> {r.numPeople}명
-                                    </p>
-                                    {r.ownerNotes && (
-                                        <p className="owner-notes">
-                                            <span className="icon">📝</span>
-                                            <span className="info-label">사장님 메모:</span> {r.ownerNotes}
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="card-actions">
-                                    {canCancel && (
-                                        <button
-                                            onClick={() => handleCancelReservation(r.reservationId, r.date, r.time)}
-                                            className="cancel-reservation-btn"
-                                        >
-                                            예약 취소
-                                        </button>
-                                    )}
-                                    {isPastReservation && (
-                                        <button
-                                            onClick={() => handleWriterReview(r.reservationId)}
-                                            className="write-review-btn"
-                                        >
-                                            리뷰 작성
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        );
-                    })}
+            return (
+              <div
+                key={`${r.reservationId}-${r.restaurantId}`}
+                className="reservation-card"
+              >
+                <div className="card-header">
+                  <h4 className="restaurant-name">{r.restaurantName}</h4>
+                  <span
+                    className={`payment-status ${
+                      r.paymentStatus === "결제완료" ? "paid" : "pending"
+                    }`}
+                  >
+                    {r.paymentStatus}
+                  </span>
                 </div>
-            )}
+                <div className="card-body">
+                  <p className="reservation-info">
+                    <span className="icon">📅</span>
+                    <span className="info-label">날짜:</span>{" "}
+                    {formatDate(r.date)}
+                  </p>
+                  <p className="reservation-info">
+                    <span className="icon">⏰</span>
+                    <span className="info-label">시간:</span>{" "}
+                    {formatTime(r.time)}
+                  </p>
+                  <p className="reservation-info">
+                    <span className="icon">👥</span>
+                    <span className="info-label">인원:</span> {r.numPeople}명
+                  </p>
+                  {r.ownerNotes && (
+                    <p className="owner-notes">
+                      <span className="icon">📝</span>
+                      <span className="info-label">사장님 메모:</span>{" "}
+                      {r.ownerNotes}
+                    </p>
+                  )}
+                </div>
+                <div className="card-actions">
+                  {canCancel && (
+                    <button
+                      onClick={() =>
+                        handleCancelReservation(r.reservationId, r.date, r.time)
+                      }
+                      className="cancel-reservation-btn"
+                    >
+                      예약 취소
+                    </button>
+                  )}
+                  {isPastReservation && (
+                    <button
+                      onClick={() => handleWriterReview(r.reservationId)}
+                      className="write-review-btn"
+                    >
+                      리뷰 작성
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default ReservationList;
