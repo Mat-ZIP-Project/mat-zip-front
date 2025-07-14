@@ -1,15 +1,41 @@
-const RestaurantReviewList = ({ reviews = [] }) => {
+import React from "react";
+import '../../assets/styles/restaurant/RestaurantReviewList.css';
+
+const RestaurantReviewList = ({ reviews = [], onDelete }) => {
   return (
     <div className="restaurant-review-list">
-      <h2 className="restaurant-review-list_title">📝 리뷰</h2>
       {reviews.length === 0 ? (
         <p className="restaurant-review-list_empty">리뷰가 아직 없습니다.</p>
       ) : (
         <ul className="restaurant-review-list_items">
           {reviews.map((review, idx) => (
             <li key={idx} className="restaurant-review-list_item">
-              <p className="restaurant-review-list_content">{review.content}</p>
-              <div className="restaurant-review-list_writer">작성자: {review.writerName}</div>
+              <div className="review-header">
+                <span className="review-writer">{review.writerName}</span>
+                <span className="review-date">{review.createdAt}</span>
+                <span className="review-rating">
+                  <span role="img" aria-label="별">⭐</span> {review.rating}
+                </span>
+                {onDelete && (
+                  <button className="review-delete-btn" onClick={() => onDelete(review.id)}>
+                    삭제
+                  </button>
+                )}
+              </div>
+              <div className="review-content-area">
+                <div className="review-content">{review.content}</div>
+                <div className="review-images-area">
+                  {review.images && review.images.length > 0 ? (
+                    <div className="review-images">
+                      {review.images.map((img, i) => (
+                        <img key={i} src={img} alt="리뷰 이미지" className="review-image" />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="review-image-placeholder">사진 없음</div>
+                  )}
+                </div>
+              </div>
             </li>
           ))}
         </ul>

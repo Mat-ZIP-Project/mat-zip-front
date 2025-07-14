@@ -1,0 +1,134 @@
+.waitingPageContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+}
+.title {
+  color: #FF6B35;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.summaryBox {
+  display: flex;
+  gap: 32px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 18px 20px;
+  margin-bottom: 18px;
+}
+.summaryLabel {
+  font-size: 15px;
+  color: #222;
+  margin-right: 8px;
+}
+.summaryValue {
+  font-weight: 700;
+  color: #FF6B35;
+  font-size: 16px;
+}
+.waitingListSection {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  /* padding: 18px 20px; */
+  margin-top: 8px;
+}
+.waitingListHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 15px;
+  color: #222;
+  background: #e6e6e6;
+  border-radius: 5px;
+  margin-bottom: 4px;
+}
+.waitingItemBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 12px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+.fieldName {
+  flex-basis: 24%;
+  text-align: left;
+}
+.fieldPeople {
+  flex-basis: 12%;
+  text-align: center;
+}
+.fieldTime {
+  flex-basis: 20%;
+  text-align: center;
+}
+.fieldNumber {
+  flex-basis: 12%;
+  text-align: center;
+}
+.fieldBtn {
+  flex-basis: 32%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.btnGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.callBtn,
+.noShowBtn {
+  background: #FF6B35;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.callBtn:hover,
+.noShowBtn:hover {
+  background: #e65a2a;
+}
+.emptyMessage {
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+  padding: 40px 0;
+}
+@media (max-width: 480px) {
+  .waitingPageContainer {
+    padding: 8px 0;
+  }
+  .summaryBox {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 8px;
+  }
+  .waitingListSection {
+    padding: 12px 8px;
+  }
+  .waitingListHeader,
+  .waitingItemBox {
+    padding: 8px 4px;
+    font-size: 13px;
+  }
+  .btnGroup {
+    gap: 4px;
+  }
+  .callBtn,
+  .noShowBtn {
+    font-size: 13px;
+    padding: 5px 8px;
+  }
+}
