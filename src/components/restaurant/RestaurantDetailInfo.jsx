@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { addTempCourse } from "../../hooks/addTempCourse";
 import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/restaurant/RestaurantDetailInfo.css";
@@ -19,6 +19,12 @@ const RestaurantDetailInfo = ({ data }) => {
 
   const [numPeople, setNumPeople] = useState(1);
   const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleNavigateToReservation = () => {
+    navigate(`/restaurants/${restaurantId}/reservation`);
+  };
 
   useEffect(() => {
     console.log("식당 데이터 확인:", data);
@@ -62,10 +68,8 @@ const RestaurantDetailInfo = ({ data }) => {
       <h1>{restaurantName}</h1>
       <p>📍 주소: {address}</p>
       <p>
-        ⭐ 평점:{" "}
-        {avgRating == null ? "정보 없음" : `${avgRating}점`}{" "}
-        / 🏠 로컬 평점:{" "}
-        {avgRatingLocal == null ? "정보 없음" : `${avgRatingLocal}점`}
+        ⭐ 평점: {avgRating == null ? "정보 없음" : `${avgRating}점`} / 🏠 로컬
+        평점: {avgRatingLocal == null ? "정보 없음" : `${avgRatingLocal}점`}
       </p>
       <p>🍽️ 카테고리: {category}</p>
       {phone && <p>📞 연락처: {phone}</p>}
@@ -80,12 +84,12 @@ const RestaurantDetailInfo = ({ data }) => {
       </div>
 
       <div className="restaurant-detail-buttons">
-        <Link
-          to={`/reservation?restaurantId=${restaurantId}`}
+        <button
+          onClick={handleNavigateToReservation}
           className="restaurant-reservation-button"
         >
           예약하기
-        </Link>
+        </button>
         <button
           type="button"
           className="restaurant-waiting-button"
@@ -119,11 +123,13 @@ const RestaurantDetailInfo = ({ data }) => {
               min="1"
               max="20"
               value={numPeople}
-              onChange={e => setNumPeople(Number(e.target.value))}
+              onChange={(e) => setNumPeople(Number(e.target.value))}
               style={{ width: 60, marginRight: 8 }}
             />
             <button onClick={handleWaiting}>확인</button>
-            <button onClick={closeWaitingModal} style={{ marginLeft: 8 }}>취소</button>
+            <button onClick={closeWaitingModal} style={{ marginLeft: 8 }}>
+              취소
+            </button>
           </div>
         </div>
       )}
