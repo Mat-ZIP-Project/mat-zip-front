@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import styles from "../../assets/styles/pages/signup/UserSignupPage.module.css";
 import FormInput from "../../components/common/FormInput";
 import FormButton from "../../components/common/FormButton";
@@ -111,6 +111,15 @@ const UserSignupPage = ({ onBack }) => {
         setIsLoading(false);
       }}, [formData, validateForm, setIsLoading, setErrors, navigate]);
 
+  const [form, setForm] = useState({ password: '', confirmPassword: '' });
+  const [pwValid, setPwValid] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm(prev => ({ ...prev, [name]: value }));
+    if (name === 'password') setPwValid(passwordValid(value));
+  };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>회원 정보 입력</h1>
@@ -162,6 +171,26 @@ const UserSignupPage = ({ onBack }) => {
                 onChange={handleInputChange} 
                 error={errors.password}
             />
+            <div
+              className={
+                form.password
+                  ? pwValid
+                    ? styles.pwMessageValid
+                    : styles.pwMessageError
+                  : ''
+              }
+            >
+              {form.password && (
+                pwValid ? (
+                  <>
+                    <span className={styles.checkIcon}>✔</span>
+                    최소 10자리, 영문 대소문자/숫자/특수문자 중 2종류 이상 조합해야 합니다.
+                  </>
+                ) : (
+                  <>최소 10자리, 영문 대소문자/숫자/특수문자 중 2종류 이상 조합해야 합니다.</>
+                )
+              )}
+            </div>
         </div>
 
         <div className={styles.formGroup}>

@@ -15,24 +15,16 @@ export const formatters = {
     // 02 지역번호 (서울)
     if (numbers.startsWith('02')) {
       if (numbers.length <= 2) return numbers;
-      if (numbers.length <= 6) return `${numbers.slice(0, 2)}-${numbers.slice(2)}`;
-      return `${numbers.slice(0, 2)}-${numbers.slice(2, 6)}-${numbers.slice(6, 10)}`;
-    }
-    
-    // 070 (인터넷전화)
-    if (numbers.startsWith('070')) {
+      if (numbers.length <= 5) return `${numbers.slice(0, 2)}-${numbers.slice(2)}`;
+      if (numbers.length <= 8) return `${numbers.slice(0, 2)}-${numbers.slice(2, 5)}-${numbers.slice(5)}`;
+      return `${numbers.slice(0, 2)}-${numbers.slice(2, 5)}-${numbers.slice(5, 9)}`;
+    } else {
+      // 000-000-0000
       if (numbers.length <= 3) return numbers;
-      if (numbers.length <= 7) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-      return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
-    }
-    
-    // 기타 지역번호 (031, 032, 033, 041, 042, 043, 044, 051, 052, 053, 054, 055, 061, 062, 063, 064)
-    if (numbers.length <= 3) return numbers;
-    if (numbers.length <= 6) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
-    if (numbers.length === 10) {
+      if (numbers.length <= 6) return `${numbers.slice(0, 3)}-${numbers.slice(3)}`;
+      if (numbers.length <= 10) return `${numbers.slice(0, 3)}-${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`;
       return `${numbers.slice(0, 3)}-${numbers.slice(3, 6)}-${numbers.slice(6, 10)}`;
     }
-    return `${numbers.slice(0, 3)}-${numbers.slice(3, 7)}-${numbers.slice(7, 11)}`;
   },
 
   businessNumber: (value) => {

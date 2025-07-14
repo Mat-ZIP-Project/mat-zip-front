@@ -63,15 +63,18 @@ export const useRestaurantForm = () => {
             newErrors.category = '카테고리를 선택해주세요';
         }
 
-        // 식당 전화번호 검증 (일반 전화번호 형식)
+        // 식당 전화번호 검증 (02: 02-000-0000, 그 외: 000-000-0000)
         if (!restaurantData.phone.trim()) {
             newErrors.phone = '식당 전화번호를 입력해주세요';
         } else {
-            const cleanPhone = restaurantData.phone.replace(/-/g, '');
-            // 일반 전화번호 형식: 02-XXXX-XXXX, 031~064-XXX(X)-XXXX, 070-XXXX-XXXX
-            const phonePattern = /^(02|031|032|033|041|042|043|044|051|052|053|054|055|061|062|063|064|070)\d{7,8}$/;
-            if (!phonePattern.test(cleanPhone)) {
-                newErrors.phone = '올바른 전화번호를 입력해주세요';
+            if (restaurantData.phone.startsWith('02')) {
+                if (!/^02-\d{3}-\d{4}$/.test(restaurantData.phone)) {
+                    newErrors.phone = '02 지역번호는 02-000-0000 형태여야 합니다.';
+                }
+            } else {
+                if (!/^\d{3}-\d{3}-\d{4}$/.test(restaurantData.phone)) {
+                    newErrors.phone = '연락처는 000-000-0000 형태여야 합니다.';
+                }
             }
         }
 
