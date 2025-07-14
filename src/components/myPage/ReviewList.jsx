@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/pages/myPage/ReviewList.css";
+import { deleteReview } from "../../hooks/deleteReview";
 
 const ReviewList = () => {
   const [reviews, setReviews] = useState([]);
@@ -16,21 +17,6 @@ const ReviewList = () => {
     };
     reviewAll();
   }, []);
-
-  // 리뷰 삭제 핸들러
-  const handleDeleteReview = async (reviewId) => {
-    if (window.confirm("정말로 이 리뷰를 삭제하시겠습니다?")) {
-      try {
-        await axiosInstance.delete(`/mypage/reviews/delete/${reviewId}`);
-        setReviews(reviews.filter((review) => review.reviewId !== reviewId));
-        alert("리뷰가 성공적으로 삭제되었습니다.");
-      } catch (error) {
-        console.error("리뷰 삭제 실패: ", error);
-      }
-    } else {
-      console.log("리뷰 삭제 취소됨");
-    }
-  }
 
   // 날짜 포맷팅 헬퍼 함수 (LocalDateTime/LocalDate 문자열 처리)
   const formatDateDisplay = (isoDateTimeString) => {
@@ -76,18 +62,20 @@ const ReviewList = () => {
               </div>
               <div className="card-footer">
                 <span className="review-date">
-                  <span className="icon">📝</span> 작성일: {formatDateDisplay(review.reviewedAt)}
+                  <span className="icon">📝</span> 작성일:{" "}
+                  {formatDateDisplay(review.reviewedAt)}
                 </span>
                 <span className="visit-date">
-                  <span className="icon">🗓️</span> 방문일: {formatDateDisplay(review.visitDate)}
+                  <span className="icon">🗓️</span> 방문일:{" "}
+                  {formatDateDisplay(review.visitDate)}
                 </span>
               </div>
               <button
-                  className="delete-button"
-                  onClick={() => handleDeleteReview(review.reviewId)}
-                >
-                  삭제
-                </button>
+                className="delete-button"
+                onClick={() => deleteReview(review.reviewId)}
+              >
+                삭제
+              </button>
             </div>
           ))}
         </div>

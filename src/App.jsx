@@ -19,16 +19,15 @@ import ReservationPopup from "./components/reservation/ReservationPopup";
 import RestaurantListPage from "./pages/restaurant/RestaurantListPage";
 import RestaurantDetailPage from "./pages/restaurant/RestaurantDetailPage";
 import MyPage from "./pages/mypage/MyPage";
-import SignUpPage from "./pages/signup/SignupPage";
 import RestaurantSearchResultPage from "./pages/restaurant/RestaurantSearchResultPage";
 import MyPageLayout from "./components/layout/MyPageLayout";
 import NotificationPage from "./components/myPage/NotificationPage";
 
 import ReviewForm from "./pages/review/ReviewForm";
-import OcrModal from './components/review/OcrModal';
+import OcrModal from "./components/review/OcrModal";
+import SignUpPage from "./pages/signup/SignUpPage";
 
 function App() {
-
   return (
     <div className="App">
       <Routes>
@@ -37,8 +36,14 @@ function App() {
           <Route index element={<Home />} />
           <Route path="/restaurants" element={<RestaurantListPage />} />
           <Route path="/restaurants/:id" element={<RestaurantDetailPage />} />
-          <Route path="/restaurants/:restaurantId/reservation" element={<ReservationPopup />} />
-          <Route path="/restaurants/search" element={<RestaurantSearchResultPage />} />
+          <Route
+            path="/restaurants/:restaurantId/reservation"
+            element={<ReservationPopup />}
+          />
+          <Route
+            path="/restaurants/search"
+            element={<RestaurantSearchResultPage />}
+          />
         </Route>
 
         {/* 로그인관련 레이아웃 그룹(로그인용 푸터/헤더 사용) - 로그인 불필요 */}
@@ -60,10 +65,12 @@ function App() {
               element={<CourseDetailPage />}
             />
             <Route path="/local-auth" element={<LocalAuthPage />} />
-            <Route path="/reservation/:restaurantId" element={<ReservationPopup />} />
-            <Route path="/ocr" element={<OcrModal/>}/>
-            <Route path="/review" element={<ReviewForm />}/>
-            
+            <Route
+              path="/reservation/:restaurantId"
+              element={<ReservationPopup />}
+            />
+            <Route path="/ocr" element={<OcrModal />} />
+            <Route path="/review" element={<ReviewForm />} />
           </Route>
 
           <Route element={<MyPageLayout />}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from "react-router-dom";
 import axiosInstance from "../../api/axiosinstance";
 import RestaurantDetailInfo from "../../components/restaurant/RestaurantDetailInfo";
 import TabMenu from "../../components/restaurant/TabMenu";
@@ -17,11 +17,6 @@ const RestaurantDetailPage = () => {
   const [showOcrModal, setShowOcrModal] = useState(false);
   const [reviewFormData, setReviewFormData] = useState(null);
   const [reviews, setReviews] = useState([]);
-  const navigate = useNavigate();
-
-  const handleNavigateToReservation = () => {
-    navigate(`/restaurants/${id}/reservation`);
-  };
 
   useEffect(() => {
     const fetchRestaurant = async () => {
@@ -65,13 +60,13 @@ const RestaurantDetailPage = () => {
     axiosInstance
       .get(`/api/restaurants/${id}/reviews`)
       .then((res) => {
-        const mapped = res.data.map(r => ({
+        const mapped = res.data.map((r) => ({
           id: r.reviewId,
           writerName: r.userNickname,
           createdAt: r.reviewedAt?.slice(0, 10),
           content: r.content,
           images: r.imageUrls,
-          rating: r.rating
+          rating: r.rating,
         }));
         setReviews(mapped);
       })
