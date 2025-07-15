@@ -2,6 +2,7 @@ import React from "react";
 import '../../assets/styles/restaurant/RestaurantReviewList.css';
 
 const RestaurantReviewList = ({ reviews = [], onDelete }) => {
+  console.log(reviews);
   return (
     <div className="restaurant-review-list">
       {reviews.length === 0 ? (
