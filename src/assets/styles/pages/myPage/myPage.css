@@ -3,6 +3,11 @@
 .my-page-container {
   padding: 2rem;
 }
+.small-badge-icon {
+  margin-top: 0.3rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
 
 .mypage-container {
   padding: 1rem;
@@ -82,8 +87,8 @@
 }
 
 .tab-item.active {
-  border-bottom: 2px solid #8a2be2;
-  color: #8a2be2;
+  border-bottom: 2px solid #FF6B35;
+  color: #FF6B35;
 }
 
 .tab-content {
@@ -154,6 +159,7 @@
 
 /* 사용자 이름 */
 .user-id-text {
+  display: flex;
   font-size: 2rem;
   font-weight: bold;
   color: #333;
