@@ -7,10 +7,10 @@ const serverIp = import.meta.env.VITE_API_SERVER_IP;
 const axiosInstance = axios.create({
   baseURL: serverIp,
   timeout: 30000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-  withCredentials: true, // RefreshToken 쿠키 전송용
+  // headers: {
+  //   "Content-Type": "application/json",
+  // },
+  // withCredentials: true, // RefreshToken 쿠키 전송용
   // paramsSerializer 추가
   paramsSerializer: (params) => {
     const searchParams = new URLSearchParams();
