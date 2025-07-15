@@ -47,7 +47,7 @@ useEffect(() => {
       .get("/api/restaurants", {
         params: {
           category: preferences,
-          size: 3,
+          size: 20,  //가져올 식당수
         },
       })
       .then((res) => {
@@ -69,10 +69,11 @@ useEffect(() => {
   }
 }, [isAuthenticated, preferences.join(",")]);
 
+// 2. 로컬 맛집 top (로컬 평점 순)
   useEffect(() => {
   axiosInstance
     .get("/api/restaurants", {
-      params: { sortBy: "avgRatingLocal", size: 3 },
+      params: { sortBy: "avgRatingLocal", size: 20 },
     })
     .then((res) => {
       const mapped = res.data.slice(0, 3).map((item) => ({
@@ -91,11 +92,11 @@ useEffect(() => {
     });
 }, []);
 
-  // 2. 실시간 인기 맛집 top3 (예약 많은 순)
+  // 3. 실시간 인기 맛집 top3 (예약 많은 순)
   useEffect(() => {
     axiosInstance
       .get("/api/restaurants", {
-        params: { sortBy: "reservationCount", size: 3 },
+        params: { sortBy: "reservationCount", size: 20 },
       })
       .then((res) => {
         const mapped = res.data.slice(0, 3).map((item) => ({
