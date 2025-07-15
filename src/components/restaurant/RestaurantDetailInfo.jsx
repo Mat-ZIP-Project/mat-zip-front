@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { addTempCourse } from "../../hooks/addTempCourse";
 import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/restaurant/RestaurantDetailInfo.css";
+import OcrModal from "../review/OcrModal";
 
 const RestaurantDetailInfo = ({ data }) => {
   const {
@@ -19,6 +20,7 @@ const RestaurantDetailInfo = ({ data }) => {
 
   const [numPeople, setNumPeople] = useState(1);
   const [showModal, setShowModal] = useState(false);
+  const [showOcrModal, setShowOcrModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -107,7 +109,7 @@ const RestaurantDetailInfo = ({ data }) => {
         <button
           type="button"
           className="restaurant-receipt-review-button"
-          onClick={handleReceiptReview}
+          onClick={() => setShowOcrModal(true)}
         >
           영수증리뷰하기
         </button>
@@ -133,6 +135,11 @@ const RestaurantDetailInfo = ({ data }) => {
           </div>
         </div>
       )}
+      {/* 영수증 ocr 모달 */}
+      {showOcrModal && (
+        <OcrModal onClose={() => setShowOcrModal(false)} restaurantId={restaurantId}/>
+      )}
+
     </div>
   );
 };

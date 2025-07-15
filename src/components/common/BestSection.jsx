@@ -21,15 +21,22 @@ const BestSection = ({ title, subtitle, link, items, className }) => (
         >
           <div className={styles.bestImgWrapper}>
             <img src={item.img} alt={item.name} className={styles.bestImg} />
-          </div>
+          </div> 
           <div className={styles.bestName}>{item.name}</div>
           <div className={styles.bestInfo}>
-            <span className={styles.bestStar}>★</span>
-            <span className={styles.bestRating}>{item.rating}</span>
-            <span className={styles.bestCategories}>
-              {item.categories ? item.categories.join(", ") : ""}
-            </span>
-          </div>
+  <span className={styles.bestStar}>★</span>
+  <span className={styles.bestRating}>{item.rating}</span>
+  {item.localRating !== undefined && (
+    <>
+      <span className={styles.bestDivider}> | </span>
+      <span className={styles.bestStar}>🏠</span>
+      <span className={styles.bestRating}>{item.localRating}</span>
+    </>
+  )}
+  <span className={styles.bestCategories}>
+    {item.categories ? item.categories.join(", ") : ""}
+  </span>
+</div>
         </Link>
       ))}
     </div>
