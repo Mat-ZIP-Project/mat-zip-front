@@ -99,7 +99,7 @@ const MapContainer = ({ mapMoved, setMapMoved, markers ,setMarkers,setRestaurant
 infowindowContent.innerHTML = `
   <div class="info-window">
     <div class="restaurant-name">${restaurantName}</div>
-    <button class="add-course-btn">➕ 코스에 추가</button>
+    <button class="add-course-btn">➕ 나만의 코스</button>
   </div>
 `;
  

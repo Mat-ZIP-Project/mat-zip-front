@@ -1,7 +1,8 @@
 
 import { useState } from 'react';
 import '../../assets/styles/mapSearch/resultList.css';
-import RestaurantCard from './RestaurantCard';
+
+import RestaurantCard from '../restaurant/RestaurantCard';
 
 const ResultList = ({ filteredList }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -16,7 +17,7 @@ const ResultList = ({ filteredList }) => {
           <p className="empty-text">검색된 맛집이 없습니다.</p>
         ) : (
           filteredList.map((r) => (
-            <RestaurantCard key={r.restaurantId} restaurant={r} onClick={""} />
+            <RestaurantCard key={r.restaurantId} data={r}  />
           ))
         )}
       </div>

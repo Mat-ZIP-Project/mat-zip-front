@@ -100,12 +100,14 @@
     margin-right: 8px;
     font-size: 1.2em;
     color: #007bff;
+    margin: 0;
 }
 
 .reservation-info .info-label {
     font-weight: 600;
     margin-right: 5px;
     color: #333;
+    margin:4px;
 }
 
 .owner-notes {

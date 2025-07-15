@@ -55,6 +55,7 @@ useEffect(() => {
           id: item.restaurantId,
           name: item.restaurantName,
           rating: item.avgRating,
+          localRating: item.avgRatingLocal,
           categories: [item.category],
           img: item.thumbnailImageUrl || "/default.jpg",
         }));
@@ -78,6 +79,7 @@ useEffect(() => {
         id: item.restaurantId,
         name: item.restaurantName,
         rating: item.avgRatingLocal, 
+        localRating: item.avgRatingLocal,
         categories: [item.category],
         img: item.thumbnailImageUrl || "/default.jpg",
         isLiked: item.isLiked,
@@ -100,6 +102,7 @@ useEffect(() => {
           id: item.restaurantId,
           name: item.restaurantName,
           rating: item.avgRating,
+          localRating: item.avgRatingLocal,
           categories: [item.category],
           img: item.thumbnailImageUrl || "/default.jpg",
         }));
