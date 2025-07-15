@@ -17,6 +17,7 @@ const RestaurantDetailPage = () => {
   const [showOcrModal, setShowOcrModal] = useState(false);
   const [reviewFormData, setReviewFormData] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [localReviews, setLocalReviews] = useState([]);
 
   useEffect(() => {
     const fetchRestaurant = async () => {
@@ -57,6 +58,8 @@ const RestaurantDetailPage = () => {
 
   useEffect(() => {
     if (!id) return;
+
+    // 기존 일반 리뷰
     axiosInstance
       .get(`/api/restaurants/${id}/reviews`)
       .then((res) => {
@@ -71,6 +74,23 @@ const RestaurantDetailPage = () => {
         setReviews(mapped);
       })
       .catch(() => setReviews([]));
+
+    // 👉 로컬 리뷰 추가 fetch
+    axiosInstance
+      .get(`/api/restaurants/${id}/reviews?localOnly=true`)
+      .then((res) => {
+        console.log(  "로컬 리뷰 데이터:", res.data);
+        const mapped = res.data.map((r) => ({
+          id: r.reviewId,
+          writerName: r.userNickname,
+          createdAt: r.reviewedAt?.slice(0, 10),
+          content: r.content,
+          images: r.imageUrls,
+          rating: r.rating,
+        }));
+        setLocalReviews(mapped);
+      })
+      .catch(() => setLocalReviews([]));
   }, [id]);
 
   if (loading) return <p>로딩 중...</p>;
@@ -148,8 +168,7 @@ const RestaurantDetailPage = () => {
         )}
         {activeTab === "localReview" && (
           <div>
-            <h2>로컬 리뷰</h2>
-            <p>로컬 리뷰가 여기에 표시됩니다.</p>
+            <RestaurantReviewList reviews={localReviews} />
           </div>
         )}
       </div>
