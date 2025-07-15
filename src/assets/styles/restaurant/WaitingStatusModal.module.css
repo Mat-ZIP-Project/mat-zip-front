@@ -28,7 +28,7 @@
   to { opacity: 1; transform: translateY(0);}
 }
 
-h2 {
+.modalTitle {
   margin-top: 0;
   margin-bottom: 18px;
   font-size: 1.25rem;
@@ -54,13 +54,13 @@ h2 {
   background: #ececec;
 }
 
-ul {
+.modalList {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-li {
+.modalItem {
   padding: 12px 0;
   border-bottom: 1px solid #f0f0f0;
   font-size: 1rem;
@@ -69,18 +69,23 @@ li {
   align-items: center;
 }
 
-li:last-child {
+.modalItem:last-child {
   border-bottom: none;
 }
 
-strong {
+.modalStrong {
   color: #2d7cff;
   font-weight: 600;
 }
 
-p {
+.modalEmpty {
   text-align: center;
   color: #888;
   margin: 32px 0 0 0;
   font-size: 1.05rem;
+}
+
+.myOrder {
+  color: #FF6B35;
+  font-weight: 500;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "../../assets/styles/common/BestSection.module.css";
+import BestCard from "./BestCard";
 
 const BestSection = ({ title, subtitle, link, items, className }) => (
   <section className={className ? `${styles.section} ${className}` : styles.section}>
@@ -13,24 +14,16 @@ const BestSection = ({ title, subtitle, link, items, className }) => (
     </div>
     <div className={styles.bestList}>
       {items.slice(0, 3).map((item, idx) => (
-        <Link
-          to={`/restaurants/${item.id}`}
+        <BestCard
           key={item.id || item.name || idx}
-          className={styles.bestItem}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <div className={styles.bestImgWrapper}>
-            <img src={item.img} alt={item.name} className={styles.bestImg} />
-          </div>
-          <div className={styles.bestName}>{item.name}</div>
-          <div className={styles.bestInfo}>
-            <span className={styles.bestStar}>★</span>
-            <span className={styles.bestRating}>{item.rating}</span>
-            <span className={styles.bestCategories}>
-              {item.categories ? item.categories.join(", ") : ""}
-            </span>
-          </div>
-        </Link>
+          id={item.id}
+          name={item.name}
+          img={item.img}
+          rating={item.rating}
+          categories={item.categories}
+          isLiked={item.isLiked}
+          benefit={item.benefit}
+        />
       ))}
     </div>
   </section>

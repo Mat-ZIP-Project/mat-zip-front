@@ -8,76 +8,119 @@
   margin-bottom: 12px;
 }
 .sectionTitleStrong {
-  font-size: 1.15rem;
+  font-size: 1.7rem;
   font-weight: bold;
+  margin-bottom: 2px;
 }
 .sectionTitleSub {
   color: #888;
-  font-size: 0.95rem;
+  font-size: 1.08rem;
   margin-top: 2px;
 }
 .sectionLink {
   color: #ff4d4f;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   text-decoration: none;
+  font-weight: 500;
 }
 .sectionSpacing {
   margin-bottom: 36px;
 }
 .bestList {
   display: flex;
-  gap: 16px;
-  /* 추가: 3개가 항상 한 줄에 균등하게 */
-  justify-content: space-between;
+  gap: 32px;
+  justify-content: flex-start;
+  margin-bottom: 10px;
 }
 .bestItem {
+  width: 220px;
   background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  padding: 12px;
-  flex: 1 1 0;
-  min-width: 0;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow: hidden;
+  text-align: center;
+  padding-bottom: 16px;
+  transition: box-shadow 0.2s;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+.bestItem:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
 .bestImgWrapper {
   width: 100%;
-  aspect-ratio: 1/1;
-  overflow: hidden;
-  border-radius: 8px;
-  margin-bottom: 8px;
+  height: 160px;
+  background: #e0e0e0;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  position: relative;
+  border-radius: 12px;
 }
 .bestImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background: #e0e0e0;
+}
+.bestBenefit {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #ff4d4f;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 6px 0;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  opacity: 0.95;
 }
 .bestName {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 4px;
-  text-align: center;
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-top: 12px;
+  color: #222;
+  word-break: keep-all;
 }
 .bestInfo {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-top: 4px;
+  gap: 6px;
+  margin-top: 6px;
+  justify-content: center;
 }
 .bestStar {
   color: #FFA500;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 .bestRating {
   font-weight: bold;
   margin-right: 4px;
+  font-size: 1.08rem;
 }
 .bestCategories {
   color: #888;
-  font-size: 0.95rem;
+  font-size: 1rem;
+}
+.bestLike {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.heart {
+  font-size: 2rem;
+  color: #ffb6c1;
+  transition: color 0.2s;
+}
+.heartActive {
+  font-size: 2rem;
+  color: #ff4d4f;
+  transition: color 0.2s;
 }

@@ -107,6 +107,33 @@
   font-size: 16px;
   padding: 40px 0;
 }
+
+.callBellBtn {
+  background: #FF6B35;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: 700;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  margin-left: 16px;
+  transition: background 0.2s;
+}
+.callBellBtn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.callBellBtn:hover:not(:disabled) {
+  background: #e65a2a;
+}
+
+.fieldPhone {
+  flex-basis: 18%;
+  text-align: center;
+}
+
 @media (max-width: 480px) {
   .waitingPageContainer {
     padding: 8px 0;

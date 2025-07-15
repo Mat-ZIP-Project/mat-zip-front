@@ -5,22 +5,27 @@ import styles from '../../assets/styles/pages/owner/WaitingManagePage.module.css
 import { ownerApi } from '../../api/ownerApi';
 import { showSuccessAlert, showErrorAlert, showQuestionAlert } from '../../utils/sweetAlert';
 
-const WaitingManagePage = () => {
+const WaitingManagePage = ({ restaurantId }) => {
+  console.log('WaitingManagePage restaurantId:', restaurantId);
   const [summary, setSummary] = useState({ teamCount: 0, expectedTime: '-' });
+  const [callList, setCallList] = useState([]);
   const [waitingList, setWaitingList] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // restaurantId가 없으면 API 호출하지 않음
   const fetchWaitingData = async () => {
+    if (!restaurantId) return;
     setLoading(true);
     try {
-      const summaryRes = await ownerApi.getWaitingSummary();
-      const listRes = await ownerApi.getWaitingList();
+      const summaryRes = await ownerApi.getWaitingSummary(restaurantId);
+      const callListRes = await ownerApi.getWaitingCallList();
+      const waitingListRes = await ownerApi.getWaitingList();
       setSummary(summaryRes.data);
-      setWaitingList(listRes.data);
+      setCallList(callListRes.data);
+      setWaitingList(waitingListRes.data);
     } catch (err) {
-      if (err?.response && err.response.status >= 400 && err.response.status !== 404 && err.response.status !== 204)  {
-        showErrorAlert('웨이팅 정보 조회 실패', '데이터를 불러올 수 없습니다.');}
       setSummary({ teamCount: 0, expectedTime: '-' });
+      setCallList([]);
       setWaitingList([]);
     } finally {
       setLoading(false);
@@ -29,16 +34,27 @@ const WaitingManagePage = () => {
 
   useEffect(() => {
     fetchWaitingData();
-  }, []);
+  }, [restaurantId]);
 
-  // 다음 대기자 호출
-  const handleCallNext = async (waitingId) => {
+  // 다음 대기자 호출 (벨 클릭)
+  const handleCallNext = async () => {
     try {
-      await ownerApi.callNextWaiting(waitingId);
+      await ownerApi.callNextWaiting(restaurantId);
       showSuccessAlert('호출 완료', '다음 대기자가 호출되었습니다.');
       fetchWaitingData();
     } catch {
       showErrorAlert('호출 실패', '호출에 실패했습니다.');
+    }
+  };
+
+  // 입장완료 처리
+  const handleEnter = async (waitingId) => {
+    try {
+      await ownerApi.enterWaiting(waitingId);
+      showSuccessAlert('입장 완료', '해당 대기자가 입장 처리되었습니다.');
+      fetchWaitingData();
+    } catch {
+      showErrorAlert('입장 처리 실패', '입장 처리에 실패했습니다.');
     }
   };
 
@@ -59,15 +75,40 @@ const WaitingManagePage = () => {
   return (
     <div className={styles.waitingPageContainer}>
       <h2 className={styles.title}>[ 웨이팅 관리 ]</h2>
-      <WaitingSummaryBox teamCount={summary.teamCount} expectedTime={summary.expectedTime} />
+      <WaitingSummaryBox
+        teamCount={summary.teamCount}
+        expectedTime={summary.expectedTime}
+        onCallNext={handleCallNext}
+        loading={loading}
+      />
+      {/* 호출자 명단 */}
+      <WaitingList
+        loading={loading}
+        waitingList={callList}
+        title="호출자 명단"
+        showPhone={true}
+        onEnter={handleEnter}
+        onNoShow={handleNoShow}
+        showEnterBtn={true}
+        showNoShowBtn={true}
+      />
+      {/* 입장대기 명단 */}
       <WaitingList
         loading={loading}
         waitingList={waitingList}
-        onCall={handleCallNext}
+        title="입장대기 명단"
+        showPhone={false}
+        onEnter={null}
         onNoShow={handleNoShow}
+        showEnterBtn={false}
+        showNoShowBtn={true}
       />
     </div>
   );
 };
+
+// WaitingManagePage.propTypes = {
+//   restaurantId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+// };
 
 export default WaitingManagePage;
