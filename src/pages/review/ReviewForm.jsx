@@ -84,7 +84,7 @@ const ReviewForm = () => {
   return (
     <form className="review-form" onSubmit={handleSubmit}>
       <h3>리뷰 작성</h3>
-      {isLocal && <h4 className="local-review">{userId} 님의 동네 인증 지역입니다.</h4>}
+      {!isLocal && <h4 className="local-review">{userId} 님의 동네 인증 지역입니다.</h4>}
        <div className="form-group">
         
         <div className="star-rating">

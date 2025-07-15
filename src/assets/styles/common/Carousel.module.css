@@ -1,4 +1,4 @@
-.carousel-container {
+.carouselContainer {
   position: relative;
   margin: 15px auto;
   border-radius: 15px;
@@ -9,24 +9,37 @@
   transition: box-shadow 0.2s;
 }
 
-.carousel-wrapper {
+.carouselTrack {
   display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
-  margin-top: 12px;
-  margin-bottom: 18px;
+  height: 100%;
+  will-change: transform;
+  backface-visibility: hidden;
 }
 
-.carousel-img {
+.carouselImgWrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f6fa;
+}
+
+.carouselImg {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  background-color: #f5f6fa;
   transition: filter 0.3s;
   display: block;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-.carousel-text-box {
+.carouselTextBox {
   position: absolute;
   left: 38px;
   top: 38px;
@@ -41,14 +54,14 @@
   max-width: 60%;
 }
 
-.carousel-title {
+.carouselTitle {
   font-size: 20px;
   font-weight: 700;
   opacity: 0.92;
   margin-bottom: 8px;
 }
 
-.carousel-desc {
+.carouselDesc {
   font-size: 32px;
   font-weight: bold;
   line-height: 1.6;
@@ -56,13 +69,13 @@
   margin-bottom: 8px;
 }
 
-.carousel-sub {
+.carouselSub {
   font-size: 19px;
   margin-top: 0;
   opacity: 0.96;
 }
 
-.carousel-index {
+.carouselIndex {
   position: absolute;
   right: 18px;
   bottom: 16px;
@@ -75,7 +88,7 @@
   padding: 5px 16px;
 }
 
-.carousel-arrow {
+.carouselArrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -86,7 +99,7 @@
   color: #fff;
   border: none;
   border-radius: 50%;
-  font-size: 22px;
+  font-size: 30px;
   font-weight: 700;
   cursor: pointer;
   opacity: 0.95;
@@ -94,20 +107,35 @@
   align-items: center;
   justify-content: center;
   transition: background 0.2s;
+  padding: 0;
 }
-.carousel-arrow.left { left: 12px; }
-.carousel-arrow.right { right: 12px; }
-.carousel-arrow:hover { background: rgba(22,22,22,0.82); }
 
-/* carousel-track 스타일 */
-.carousel-track {
-  will-change: transform;
+.arrowIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
 }
+
+.left { left: 12px; }
+.right { right: 12px; }
+.carouselArrow:hover { background: rgba(22,22,22,0.82); }
 
 /* 반응형 */
 @media (max-width: 600px) {
-  .carousel-wrapper {
-    width: 100%;
+  .carouselContainer {
+    width: 100vw !important;
     max-width: 100vw;
+  }
+  .carouselTrack {
+    width: 100vw !important;
+  }
+  .carouselImgWrapper {
+    width: 100vw !important;
+    height: 100%;
   }
 }
