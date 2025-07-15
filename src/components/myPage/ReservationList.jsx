@@ -38,12 +38,9 @@ const ReservationList = () => {
   };
 
   // 리뷰 작성 버튼 클릭 핸들러
-  const handleWriterReview = (reservationId, isPastReservation) => {
-    if (!isPastReservation) {
-      alert("예약이 완료된 후 리뷰를 작성할 수 있습니다.");
-      return;
-    }
-    navigate(`/review/${reservationId}`);
+  const handleWriterReview = (restaurantId, restaurantName, visitDate) => {
+    console.log(restaurantId, restaurantName, visitDate);
+    navigate("/review", { state: {restaurantName,visitDate , restaurantId} });
   };
 
   // 예약 취소 버튼 클릭 핸들러
@@ -97,9 +94,11 @@ const ReservationList = () => {
       ) : (
         <div className="reservation-cards-grid">
           {reservations.map((r) => {
-            const reservationDateTime = new Date(`${r.date}T${r.time}:00`);
+            //const reservationDateTime = new Date(`${r.date}T${r.time}:00`);
+            const reservationDateTime = new Date(`${r.date}`);
             const now = new Date();
             const isPastReservation = reservationDateTime < now;
+            console.log(r.date,reservationDateTime,isPastReservation);
 
             // const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
             // const canCancel =
@@ -154,14 +153,16 @@ const ReservationList = () => {
                     >
                     예약 취소
                   </button>
+                  {isPastReservation &&
                   <button
-                    onClick={() =>
-                      handleWriterReview(r.reservationId, isPastReservation)
+                      onClick={() =>
+                      handleWriterReview(r.restaurantId,r.restaurantName,r.date)
                     }
                     className="write-review-btn"
                   >
                     리뷰 작성
-                  </button>
+                    </button>
+                  }
                 </div>
               </div>
             );
