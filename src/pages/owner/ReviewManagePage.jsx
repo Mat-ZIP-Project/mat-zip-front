@@ -10,7 +10,10 @@ const ReviewManagePage = () => {
 
   useEffect(() => {
     ownerApi.getRestaurantReviews()
-      .then(res => setReviews(res.data))
+      .then(res => {
+      console.log('리뷰 응답:', res.data);
+      setReviews(Array.isArray(res.data) ? res.data : res.data.reviews || []);
+    })
       .catch(() => showErrorAlert('리뷰 조회 실패', '리뷰 목록을 불러올 수 없습니다.'))
       .finally(() => setLoading(false));
   }, []);

@@ -8,25 +8,6 @@ import mainBannerList from "../data/mainBannerList";
 import Carousel from "../components/common/Carousel";
 import CategoryList from "../components/common/CategoryList";
 
-const categories = [
-  { name: "한식", value: "한식" },
-  { name: "중식", value: "중식" },
-  { name: "일식", value: "일식" },
-  { name: "양식", value: "양식" },
-  { name: "카페", value: "카페" },
-];
-
-const localBest = [
-  { id: 1, name: "로컬맛집A", category: "한식", img: "/img1.jpg" },
-  { id: 2, name: "로컬맛집B", category: "중식", img: "/img2.jpg" },
-  { id: 3, name: "로컬맛집C", category: "양식", img: "/img3.jpg" },
-];
-const popularBest = [
-  { id: 4, name: "맛집A", img: "/img4.jpg" },
-  { id: 5, name: "맛집B", img: "/img5.jpg" },
-  { id: 6, name: "맛집C", img: "/img6.jpg" },
-];
-
 const Home = () => {
   const [top3, setTop3] = useState([]);
   const [preferences, setPreferences] = useState([]);
@@ -44,8 +25,6 @@ const Home = () => {
    console.log('isAuthenticated:', isAuthenticated);
    console.log('preferences:', preferences);
 
-  // 임시 테스트용
-  // const preferences = ["한식", "중식"];
 
    // 1. 선호 카테고리 top3
 useEffect(() => {
@@ -68,7 +47,7 @@ useEffect(() => {
       .get("/api/restaurants", {
         params: {
           category: preferences,
-          size: 3,
+          size: 20,  //가져올 식당수
         },
       })
       .then((res) => {
@@ -90,10 +69,11 @@ useEffect(() => {
   }
 }, [isAuthenticated, preferences.join(",")]);
 
+// 2. 로컬 맛집 top (로컬 평점 순)
   useEffect(() => {
   axiosInstance
     .get("/api/restaurants", {
-      params: { sortBy: "avgRatingLocal", size: 3 },
+      params: { sortBy: "avgRatingLocal", size: 20 },
     })
     .then((res) => {
       const mapped = res.data.slice(0, 3).map((item) => ({
@@ -103,6 +83,7 @@ useEffect(() => {
         localRating: item.avgRatingLocal,
         categories: [item.category],
         img: item.thumbnailImageUrl || "/default.jpg",
+        isLiked: item.isLiked,
       }));
       setLocalBest(mapped);
     })
@@ -111,11 +92,11 @@ useEffect(() => {
     });
 }, []);
 
-  // 2. 실시간 인기 맛집 top3 (예약 많은 순)
+  // 3. 실시간 인기 맛집 top3 (예약 많은 순)
   useEffect(() => {
     axiosInstance
       .get("/api/restaurants", {
-        params: { sortBy: "reservationCount", size: 3 },
+        params: { sortBy: "reservationCount", size: 20 },
       })
       .then((res) => {
         const mapped = res.data.slice(0, 3).map((item) => ({
@@ -164,14 +145,14 @@ useEffect(() => {
 
      <BestSection className = {styles.sectionSpacing}
         title="우리 동네 로컬 맛집"
-        subtitle="지역 주민이 인정한 진짜 맛집만 모았어요"
+        subtitle="지역 주민의 생생한 리뷰로 검증된 믿을 수 있는 맛집만 모았어요"
         link="/restaurants?sortBy=avgRatingLocal"
         items={localBest}
       />
 
      <BestSection className = {styles.sectionSpacing}
-        title="실시간 인기 맛집"
-        subtitle="지금 가장 핫한 매장을 만나보세요"
+        title="실시간 인기 맛집 BEST"
+        subtitle="실시간 인기 폭발! 모두가 사랑하는 맛집을 만나보세요."
         link="/restaurants?sortBy=reservationCount"
         items={popularBest}
       />

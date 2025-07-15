@@ -30,7 +30,9 @@ const OwnerPage = () => {
       try {
         const res = await ownerApi.getRestaurantInfo();
         setRestaurantInfo(res.data);
-      } catch (err) {
+        console.log('식당 정보:', res.data);
+      } catch (e) {
+        console.error('식당 정보를 불러오는 데 실패했습니다.', e);
         setRestaurantInfo(null);
       }
     };
@@ -48,10 +50,8 @@ const OwnerPage = () => {
     fetchTodayReservationCount();
   }, []);
 
-  // 예시: 오늘 예약 일정은 restaurantInfo.todayReservationCount로 받아온다고 가정
-  // 실제 예약건수 필드는 백엔드에서 추가 필요 (현재는 없음, 임시로 0)
   const restaurantName = restaurantInfo?.restaurantName || '';
-  //const todayReservationCount = restaurantInfo?.todayReservationCount ?? 0;
+  const restaurantId = restaurantInfo?.restaurantId || '';
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -64,7 +64,7 @@ const OwnerPage = () => {
       case 'reservation':
         return <ReservationManagePage />;
       case 'waiting':
-        return <WaitingManagePage />;
+        return restaurantInfo ? <WaitingManagePage restaurantId={restaurantInfo.restaurantId} /> : <div>⌛ 식당 정보를 불러오는 중...</div>;
       case 'review':
         return <ReviewManagePage />;
       default:

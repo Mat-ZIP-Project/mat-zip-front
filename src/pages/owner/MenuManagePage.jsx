@@ -58,7 +58,7 @@ const MenuManagePage = () => {
           <span className={styles.menuListTitle}>메뉴 목록</span>
         )}
         {!editMode && (
-          <BlackButton type="button" onClick={handleCreateClick}>등록</BlackButton>
+          <BlackButton type="button" onClick={handleCreateClick}>메뉴 등록</BlackButton>
         )}
       </div>
       {/* 메뉴 등록모드일 때는 목록 숨김, 등록폼만 출력 */}
