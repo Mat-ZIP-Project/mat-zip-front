@@ -78,7 +78,11 @@ const OwnerPage = () => {
         <span>
           안녕하세요. <span className={styles.restaurantName}>{restaurantName}</span> 사장님 🙌
         </span>
-        <span className={styles.todayReservation}>
+        <span
+          className={styles.todayReservation}
+          style={{ cursor: 'pointer' }}
+          onClick={() => setActiveTab('reservation')}
+        >
           <span style={{ fontSize: '13px', color: '#ccc' }}>오늘 예약 일정</span><br />
           <span style={{ fontSize: '28px', fontWeight: 700 }}>{todayReservationCount}</span>
           <span style={{ fontSize: '15px', marginLeft: 2 }}>건</span>

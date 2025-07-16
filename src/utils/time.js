@@ -35,3 +35,24 @@ export function formatTime(value) {
   }
   return String(value);
 }
+
+// 날짜를 yyyy-mm-dd 형태로 변환하는 함수
+export function formatDate(dateStr) {
+  if (!dateStr) return "";
+  if (dateStr instanceof Date) {
+    const yyyy = dateStr.getFullYear();
+    const mm = String(dateStr.getMonth() + 1).padStart(2, "0");
+    const dd = String(dateStr.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+  if (typeof dateStr === "number") {
+    const d = new Date(dateStr);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+  if (typeof dateStr !== "string") dateStr = String(dateStr);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return dateStr;
+  return dateStr.replace(/[.,\/]/g, "-");
+}

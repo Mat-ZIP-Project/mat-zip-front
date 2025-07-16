@@ -6,7 +6,7 @@ import CourseSpotList from '../../components/customCourse/CourseSpotList';
 import ActionButtons from '../../components/common/ActionButtons';
 import CourseHeader from "../../components/customCourse/CourseHeader";
 import '../../assets/styles/pages/customCourse/tempCoursePage.css';
-import { showErrorAlert, showErrorConfirmAlert, showSuccessConfirmAlert } from "../../utils/sweetAlert";
+import { showErrorAlert, showErrorConfirmAlert, showSuccessAlert, showSuccessConfirmAlert } from "../../utils/sweetAlert";
 
 
 
@@ -49,7 +49,7 @@ const TempCoursePage = () => {
       
     }).then(res => {
       console.log(res.data)
-      alert(res.data);
+      showSuccessAlert(res.data);
       localStorage.setItem("myCourseSpots", JSON.stringify([]));  //로컬스토리지 코스 삭제
       dispatchEvent(new Event("storage")); // 푸터에 숫자 반영되게!
       setSpots([]);

@@ -138,11 +138,15 @@ const SignUpPage = () => {
 
   return (
     <div className={styles.page}>
-      <ProgressBar
-        currentStep={currentStep}
-        totalSteps={totalSteps[userType] || 3}
-        stepTitles={stepTitles[userType] || stepTitles.user}
-      />
+      {/* ProgressBar를 항상 상단에 고정 */}
+      <div className={styles.progressbarDiv}>
+        <ProgressBar
+          currentStep={currentStep}
+          totalSteps={totalSteps[userType] || 3}
+          stepTitles={stepTitles[userType] || stepTitles.user}
+        />
+      </div>
+      {/* 아래에 각 단계별 컨텐츠가 ProgressBar에 가려지지 않도록 충분한 padding-top 적용 */}
       <div className={styles.container}>
         <div className={styles["step-content"]}>{renderCurrentStep()}</div>
       </div>
