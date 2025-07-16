@@ -51,6 +51,7 @@ const TempCoursePage = () => {
       console.log(res.data)
       alert(res.data);
       localStorage.setItem("myCourseSpots", JSON.stringify([]));  //로컬스토리지 코스 삭제
+      dispatchEvent(new Event("storage")); // 푸터에 숫자 반영되게!
       setSpots([]);
       setTitle("");
     })
