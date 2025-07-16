@@ -27,22 +27,38 @@ const ReservationList = () => {
   }, []);
 
   // 날짜와 시간을 포맷하는 헬퍼 함수
-  const formatDate = (isoDateTime) => {
-    if (!isoDateTime) return "날짜 미정";
+  const formatDate = (dateTimeArray) => {
+    if (!dateTimeArray) return "날짜 미정";
 
-    const date = new Date(`${isoDateTime}T00:00:00`);
+    const year = dateTimeArray[0];
+    const month = dateTimeArray[1] - 1; // 월은 0부터 시작 (0=1월, 11=12월)
+    const day = dateTimeArray[2];
 
-    return date.toLocaleDateString("ko-KR", {
+    const date = new Date(year, month, day);
+
+    const formatData = date.toLocaleDateString("ko-KR", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
+    return `${formatData}`;
   };
 
   const formatTime = (timeString) => {
     if (!timeString) return "시간 미정";
 
-    return String(timeString).substring(0, 5);
+    const hours = timeString[0] || 0;
+    const minutes = timeString[1];
+
+    const date = new Date(2025, 1,1,hours, minutes);
+
+    const formatTime = date.toLocaleTimeString("ko-KR", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    return `${formatTime}`;
+
   };
 
   // 리뷰 작성 버튼 클릭 핸들러
@@ -58,11 +74,18 @@ const ReservationList = () => {
     reservationTime
   ) => {
     const now = new Date();
-    const reservationDateTime = new Date(
-      `${reservationDate}T${reservationTime}:00`
-    );
+    
+    const [year, month, day] = reservationDate;
+    const [hour, minute] = reservationTime;
 
-    const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+    const reservationDateTime = new Date(year, month - 1, day, hour, minute);
+
+
+    // const reservationDateTime = new Date(
+    //   `${reservationDate}T${reservationTime}:00`
+    // );
+
+    const ONE_DAY_IN_MS = 3 * 60 * 60 * 1000;
     const timeUntilReservation = reservationDateTime.getTime() - now.getTime();
 
     if (reservationDateTime < now) {
