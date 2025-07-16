@@ -21,8 +21,10 @@ const ReviewList = () => {
   // 날짜 포맷팅 헬퍼 함수 (LocalDateTime/LocalDate 문자열 처리)
   const formatDateDisplay = (isoDateTimeString) => {
     if (!isoDateTimeString) return "날짜 미정";
+    const validDateString = isoDateTimeString.replace(" ", "T");
+
     // LocalDateTime (2023-01-01T10:30:00) 또는 LocalDate (2023-01-01) 모두 Date 객체로 파싱 가능
-    const date = new Date(isoDateTimeString);
+    const date = new Date(validDateString);
     return date.toLocaleDateString("ko-KR", {
       year: "numeric",
       month: "long",

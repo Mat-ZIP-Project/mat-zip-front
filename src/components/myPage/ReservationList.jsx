@@ -2,7 +2,12 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosinstance";
 import React, { useEffect, useState } from "react";
 import "../../assets/styles/pages/myPage/ReservationList.css";
-import { showErrorAlert, showSuccessAlert, showQuestionAlert, showErrorConfirmAlert } from "../../utils/sweetAlert";
+import {
+  showErrorAlert,
+  showSuccessAlert,
+  showQuestionAlert,
+  showErrorConfirmAlert,
+} from "../../utils/sweetAlert";
 
 const ReservationList = () => {
   const [reservations, setReservations] = useState([]);
@@ -24,7 +29,9 @@ const ReservationList = () => {
   // 날짜와 시간을 포맷하는 헬퍼 함수
   const formatDate = (isoDateTime) => {
     if (!isoDateTime) return "날짜 미정";
-    const date = new Date(isoDateTime);
+
+    const date = new Date(`${isoDateTime}T00:00:00`);
+
     return date.toLocaleDateString("ko-KR", {
       year: "numeric",
       month: "long",
@@ -34,14 +41,14 @@ const ReservationList = () => {
 
   const formatTime = (timeString) => {
     if (!timeString) return "시간 미정";
-    const parts = timeString.split(":");
-    return `${parts[0]}:${parts[1]}`;
+
+    return String(timeString).substring(0, 5);
   };
 
   // 리뷰 작성 버튼 클릭 핸들러
   const handleWriterReview = (restaurantId, restaurantName, visitDate) => {
     console.log(restaurantId, restaurantName, visitDate);
-    navigate("/review", { state: {restaurantName,visitDate , restaurantId} });
+    navigate("/review", { state: { restaurantName, visitDate, restaurantId } });
   };
 
   // 예약 취소 버튼 클릭 핸들러
@@ -100,7 +107,7 @@ const ReservationList = () => {
             const reservationDateTime = new Date(`${r.date}`);
             const now = new Date();
             const isPastReservation = reservationDateTime < now;
-            console.log(r.date,reservationDateTime,isPastReservation);
+            console.log(r.date, reservationDateTime, isPastReservation);
 
             // const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
             // const canCancel =
@@ -152,19 +159,23 @@ const ReservationList = () => {
                       handleCancelReservation(r.reservationId, r.date, r.time)
                     }
                     className="cancel-reservation-btn"
-                    >
+                  >
                     예약 취소
                   </button>
-                  {isPastReservation &&
-                  <button
+                  {isPastReservation && (
+                    <button
                       onClick={() =>
-                      handleWriterReview(r.restaurantId,r.restaurantName,r.date)
-                    }
-                    className="write-review-btn"
-                  >
-                    리뷰 작성
+                        handleWriterReview(
+                          r.restaurantId,
+                          r.restaurantName,
+                          r.date
+                        )
+                      }
+                      className="write-review-btn"
+                    >
+                      리뷰 작성
                     </button>
-                  }
+                  )}
                 </div>
               </div>
             );
