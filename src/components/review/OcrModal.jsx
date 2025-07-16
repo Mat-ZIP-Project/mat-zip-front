@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosinstance";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import '../../assets/styles/review/ocrModal.css';
 
 
-const OcrModal = ({ onClose }) => {
-  // const restaurantId = useParams("restaurantId");
-  const restaurantId = 21;
+const OcrModal = ({ onClose ,restaurantId}) => {
+  console.log(restaurantId)
+  //const restaurantId = 21;
   const [isMobile, setIsMobile] = useState(false);
   const [preview, setPreview] = useState(null);
   const [ocrResult, setOcrResult] = useState(null);
@@ -28,7 +28,7 @@ const OcrModal = ({ onClose }) => {
 
     setLoading(true);
     axiosInstance
-      .post("/reviews/ocr/" + restaurantId , formData, {
+      .post(`/reviews/ocr/${restaurantId}` , formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((res) => {
@@ -36,14 +36,14 @@ const OcrModal = ({ onClose }) => {
       })
       .catch((err) => {
         console.error("OCR 실패", err);
-        alert("OCR 요청 실패");
+        alert(err.response.data.detail);
       })
       .finally(() => setLoading(false));
   };
 
   const handleGoToReview = () => {
     if (!ocrResult) return;
-    nav("/review", { state: ocrResult }); // 리뷰 페이지로 OCR 데이터 전달
+    nav("/review", { state: {...ocrResult , restaurantId} }); // 리뷰 페이지로 OCR 데이터 전달
     onClose(); // 모달 닫기
   };
 

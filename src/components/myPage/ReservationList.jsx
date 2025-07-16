@@ -12,7 +12,7 @@ const ReservationList = () => {
       try {
         const response = await axiosInstance.get("/mypage/reservations");
         setReservations(response.data);
-        console.log(response.data);
+        console.log("받아오는 예약 내역 : ", response.data);
       } catch (error) {
         console.error("예약 내역 가져오기 실패: ", error);
       }
@@ -38,8 +38,9 @@ const ReservationList = () => {
   };
 
   // 리뷰 작성 버튼 클릭 핸들러
-  const handleWriterReview = (reservationId) => {
-    navigate(`/review/${reservationId}`);
+  const handleWriterReview = (restaurantId, restaurantName, visitDate) => {
+    console.log(restaurantId, restaurantName, visitDate);
+    navigate("/review", { state: {restaurantName,visitDate , restaurantId} });
   };
 
   // 예약 취소 버튼 클릭 핸들러
@@ -55,6 +56,7 @@ const ReservationList = () => {
 
     const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
     const timeUntilReservation = reservationDateTime.getTime() - now.getTime();
+
     if (reservationDateTime < now) {
       alert("이미 지난 예약은 취소할 수 없습니다.");
       return;
@@ -67,7 +69,7 @@ const ReservationList = () => {
     if (window.confirm("정말 예약을 취소하시겠습니까?")) {
       try {
         const response = await axiosInstance.delete(
-          `/mypage/reservations/cancel/{reservationId}`
+          `/mypage/reservations/cancel/${reservationId}`
         );
 
         if (response.data === "성공") {
@@ -92,15 +94,17 @@ const ReservationList = () => {
       ) : (
         <div className="reservation-cards-grid">
           {reservations.map((r) => {
-            const reservationDateTime = new Date(`${r.date}T${r.time}:00`);
+            //const reservationDateTime = new Date(`${r.date}T${r.time}:00`);
+            const reservationDateTime = new Date(`${r.date}`);
             const now = new Date();
             const isPastReservation = reservationDateTime < now;
+            console.log(r.date,reservationDateTime,isPastReservation);
 
-            const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
-            const canCancel =
-              r.reservationStatus === "APPROVED" &&
-              !isPastReservation &&
-              reservationDateTime.getTime() - now.getTime() >= ONE_DAY_IN_MS;
+            // const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+            // const canCancel =
+            //   r.paymentStatus  === "paid" &&
+            //   !isPastReservation &&
+            //   reservationDateTime.getTime() - now.getTime() >= ONE_DAY_IN_MS;
 
             return (
               <div
@@ -111,7 +115,7 @@ const ReservationList = () => {
                   <h4 className="restaurant-name">{r.restaurantName}</h4>
                   <span
                     className={`payment-status ${
-                      r.paymentStatus === "결제완료" ? "paid" : "pending"
+                      r.paymentStatus === "paid" ? "예약 완료" : "예약 거절"
                     }`}
                   >
                     {r.paymentStatus}
@@ -141,24 +145,24 @@ const ReservationList = () => {
                   )}
                 </div>
                 <div className="card-actions">
-                  {canCancel && (
-                    <button
+                  <button
+                    onClick={() =>
+                      handleCancelReservation(r.reservationId, r.date, r.time)
+                    }
+                    className="cancel-reservation-btn"
+                    >
+                    예약 취소
+                  </button>
+                  {isPastReservation &&
+                  <button
                       onClick={() =>
-                        handleCancelReservation(r.reservationId, r.date, r.time)
-                      }
-                      className="cancel-reservation-btn"
-                    >
-                      예약 취소
+                      handleWriterReview(r.restaurantId,r.restaurantName,r.date)
+                    }
+                    className="write-review-btn"
+                  >
+                    리뷰 작성
                     </button>
-                  )}
-                  {isPastReservation && (
-                    <button
-                      onClick={() => handleWriterReview(r.reservationId)}
-                      className="write-review-btn"
-                    >
-                      리뷰 작성
-                    </button>
-                  )}
+                  }
                 </div>
               </div>
             );

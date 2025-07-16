@@ -6,6 +6,8 @@ import TabMenu from "../../components/restaurant/TabMenu";
 import OcrModal from "../../components/review/OcrModal";
 import ReviewForm from "../review/ReviewForm";
 import RestaurantReviewList from "../../components/restaurant/RestaurantReviewList";
+import MenuListView from "../../components/owner/MenuListView";
+import Carousel from "../../components/common/Carousel";
 import "../../assets/styles/restaurant/RestaurantDetailPage.css";
 
 const RestaurantDetailPage = () => {
@@ -51,6 +53,7 @@ const RestaurantDetailPage = () => {
   useEffect(() => {
     fetchWaitingInfo();
   }, [id]);
+
 
   useEffect(() => {
     // 로그인 여부 확인
@@ -119,20 +122,28 @@ const RestaurantDetailPage = () => {
       .catch(() => setLocalReviews([]));
   }, [id]);
 
+
   if (loading) return <p>로딩 중...</p>;
   if (!restaurant) return <p>식당 정보를 표시할 수 없습니다.</p>;
 
+  // 캐러셀
+  const carouselItems =
+    restaurant.imageUrls && restaurant.imageUrls.length > 0
+      ? restaurant.imageUrls.map((url) => ({ imgUrl: url }))
+      : [];
+
   return (
     <div className="restaurant-detail-page">
-      {restaurant.thumbnailImageUrl ? (
-        <img
-          src={restaurant.thumbnailImageUrl}
-          alt={restaurant.restaurantName}
-          className="restaurant-detail-image"
+      {carouselItems.length > 0 ? (
+        <Carousel
+          items={carouselItems}
+          width={570}
+          height={320}
+          showText={false}
         />
       ) : (
         <div className="restaurant-detail-image placeholder">
-          <span>식당 이미지</span>
+          <span>식당 이미지 준비중</span>
         </div>
       )}
 
@@ -143,6 +154,7 @@ const RestaurantDetailPage = () => {
         setActiveTab={setActiveTab}
         showLocalReviewTab={isLoggedIn && hasLocalBadge}
       />
+
 
       <div className="restaurant-tab-content">
         {activeTab === "home" && (
@@ -184,9 +196,8 @@ const RestaurantDetailPage = () => {
           </div>
         )}
         {activeTab === "menu" && (
-          <div>
-            <h2>메뉴</h2>
-            <p>메뉴 리스트가 여기에 표시됩니다.</p>
+          <div className="menu-section">
+            <MenuListView menus={restaurant.menus || []} showButtons={false} />
           </div>
         )}
         {activeTab === "review" && (
