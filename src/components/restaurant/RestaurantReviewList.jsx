@@ -62,9 +62,9 @@ const RestaurantReviewList = ({ reviews = [], onDelete }) => {
                   <div className="review-content">{review.content}</div>
                 </div>
                 <div className="review-image-col">
-                  {review.images && review.images.length > 0 ? (
+                  {review.imageUrls && review.imageUrls.length > 0 ? (
                     <img
-                      src={review.images[0]}
+                      src={review.imageUrls[0]}
                       alt="리뷰 이미지"
                       className="review-image"
                     />

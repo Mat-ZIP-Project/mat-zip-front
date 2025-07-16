@@ -19,11 +19,10 @@ const RestaurantLike = () => {
     };
     restaurantLikeAll();
   }, []);
-
+  
   return (
     <div className="restaurant-like-container">
       {/* <h3 className="restaurant-like-title">찜한 식당 내역</h3> */}
-
       {restaurantLikes.length === 0 ? (
         <p className="no-likes-message">아직 찜한 식당이 없습니다.</p>
       ) : (

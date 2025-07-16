@@ -58,6 +58,7 @@ const ReservationList = () => {
       hour12: true,
     });
     return `${formatTime}`;
+
   };
 
   // 리뷰 작성 버튼 클릭 핸들러
