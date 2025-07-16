@@ -138,13 +138,13 @@ const SignUpPage = () => {
 
   return (
     <div className={styles.page}>
+      <ProgressBar
+        currentStep={currentStep}
+        totalSteps={totalSteps[userType] || 3}
+        stepTitles={stepTitles[userType] || stepTitles.user}
+      />
       <div className={styles.container}>
-        <ProgressBar
-          currentStep={currentStep}
-          totalSteps={totalSteps[userType] || 3}
-          stepTitles={stepTitles[userType] || stepTitles.user}
-        />
-        {renderCurrentStep()}
+        <div className={styles["step-content"]}>{renderCurrentStep()}</div>
       </div>
     </div>
   );

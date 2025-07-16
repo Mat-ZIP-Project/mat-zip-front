@@ -3,7 +3,7 @@ import Modal from '../common/Modal';
 import FormInput from '../common/FormInput';
 import FormButton from '../common/FormButton';
 import styles from '../../assets/styles/login/FindPasswordModal.module.css';
-import { showErrorAlert, showErrorConfirmAlert, showSuccessAlert } from '../../utils/sweetAlert';
+import { showErrorAlert, showErrorConfirmAlert, showSuccessAlert, showSuccessConfirmAlert } from '../../utils/sweetAlert';
 import { formatters } from '../../utils/formatters';
 import axiosInstance from '../../api/axiosinstance';
 
@@ -88,12 +88,12 @@ const FindPasswordModal = ({ open, onClose }) => {
       const res = await axiosInstance.post('/auth/find-password/validate', { userId, phone });
       // 성공 시 인증번호 발송
       await axiosInstance.post('/auth/find-password/sms/send', { userId, phone });
-      showSuccessAlert('인증번호가 발송되었습니다.');
+      showSuccessAlert('인증번호가 발송되었습니다.', '5분 이내에 인증번호를 입력해주세요.');
       setStep(2);
       setTimer(TIMER_SEC);
       setTimerActive(true);
     } catch (err) {
-      showErrorConfirmAlert('아이디와 휴대폰번호가 일치하지 않습니다.', '입력하신 정보를 확인해주세요.');
+      showErrorConfirmAlert('인증번호 발송 실패', '아이디와 휴대폰번호가 일치하지 않습니다.');
     }
   };
 
@@ -105,7 +105,7 @@ const FindPasswordModal = ({ open, onClose }) => {
     }
     try {
       await axiosInstance.post('/signup/sms/verify', { phone, code, purpose: 'PASSWORD_RESET' });
-      showSuccessAlert('인증에 성공했습니다.');
+      showSuccessAlert('인증에 성공했습니다!');
       setStep(3); // 비밀번호 재설정 단계로 이동
       setTimerActive(false);
     } catch (err) {
@@ -141,7 +141,7 @@ const FindPasswordModal = ({ open, onClose }) => {
     }
     try {
       await axiosInstance.post('/auth/find-password/reset', { userId, phone, newPassword: pw });
-      showSuccessAlert('비밀번호가 변경되었습니다.');
+      showSuccessConfirmAlert('변경 완료!','비밀번호가 변경되었습니다.');
       setStep(4);
     } catch (err) {
       showErrorAlert('비밀번호 변경 실패');

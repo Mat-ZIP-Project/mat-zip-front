@@ -8,7 +8,7 @@
   background-color: #e0e0e0;
   border-radius: 4px;
   overflow: hidden;
-  margin-bottom: 12px;
+  margin: 30px 0;
 }
 
 .progressFill {
@@ -18,7 +18,7 @@
   border-radius: 4px;
 }
 
-/* .stepInfo {
+.stepInfo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -29,7 +29,7 @@
   font-weight: 500;
   color: #333;
   text-align: center;
-} */
+}
 
 @media (max-width: 480px) {
   .stepText {

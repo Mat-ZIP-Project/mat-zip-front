@@ -4,6 +4,7 @@ import axiosInstance from "../../api/axiosinstance";
 import { useNavigate } from "react-router-dom";
 import CourseCard from '../../components/customCourse/CourseCard';
 import '../../assets/styles/pages/customCourse/myCourseListPage.css';
+import { showQuestionAlert, showSuccessConfirmAlert } from "../../utils/sweetAlert";
 
 
 const MyCourseListPage = () => {
@@ -18,16 +19,29 @@ const MyCourseListPage = () => {
       .catch(err => console.error(err));
   }, []);
 
-  const handleDelete=(courseId)=>{
-    if (!window.confirm("정말 삭제하시겠습니까?")) return;
-    axiosInstance({
-      method : "delete",
-      url:`/course/custom/${courseId}`,
+  // const handleDelete=(courseId)=>{
+  //   if (!window.confirm("정말 삭제하시겠습니까?")) return;
+  //   axiosInstance({
+  //     method : "delete",
+  //     url:`/course/custom/${courseId}`,
 
-    }).then(()=>{
-      alert("코스가 삭제되었습니다.");
-      setCourses(courses.filter(course=>course.courseId!==courseId))
-    }).catch(err=>console.log(err))
+  //   }).then(()=>{
+  //     alert("코스가 삭제되었습니다.");
+  //     setCourses(courses.filter(course=>course.courseId!==courseId))
+  //   }).catch(err=>console.log(err))
+  // }
+
+  const handleDelete=(courseId)=>{
+    showQuestionAlert("정말 삭제하시겠습니까?", "").then(result => {
+      if (!result.isConfirmed) return;
+      axiosInstance({
+        method : "delete",
+        url:`/course/custom/${courseId}`,
+      }).then(()=>{
+        showSuccessConfirmAlert("코스가 삭제되었습니다.", "");
+        setCourses(courses.filter(course=>course.courseId!==courseId))
+      }).catch(err=>console.log(err))
+    });
   }
 
   return (

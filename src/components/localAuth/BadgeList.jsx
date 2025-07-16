@@ -1,15 +1,20 @@
 import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/localAuth/badgeList.css";
 import badgeImage from "../../assets/images/로컬뱃지.png";
+import { showErrorAlert, showQuestionAlert } from "../../utils/sweetAlert"; // sweetAlert import 추가
 
 export default function BadgeList({ badges, badgeCount, fetchAll }) {
-  const handleDelete = (badgeId) => {
-    if (!window.confirm("정말 삭제하시겠습니까?\n삭제 시 해당 지역 인증 기록도 함께 삭제됩니다.")) return;
+  const handleDelete = async (badgeId) => {
+    const result = await showQuestionAlert(
+      "정말 삭제하시겠습니까?",
+      "삭제 시 해당 지역 인증 기록도 함께 삭제됩니다."
+    );
+    if (!result.isConfirmed) return;
     axiosInstance
       .delete(`/local/badges/${badgeId}`)
       .then(() => fetchAll())
       .catch((e) => {
-        alert("삭제 실패: " + e.message);
+        showErrorAlert("삭제 실패", e.message);
       });
   };
 

@@ -3,10 +3,10 @@ import styles from "../../assets/styles/common/Carousel.module.css";
 import useHorizontalDrag from "../../hooks/useHorizontalDrag";
 
 /**
- * Carousel Component
+ * 재사용 가능한 Carousel
  * - width: 가로 크기 (px)
  * - height: 세로 크기 (px)
- * - threshold: 드래그 임계치 (50% 이동 시 페이지 전환)
+ * - threshold: 드래그 임계치 (40% 이동 시 페이지 전환)
  */
 const Carousel = ({
   items,
@@ -33,7 +33,7 @@ const Carousel = ({
   }, [autoSlide, hovered, isDragging, itemCount, interval]);
 
   const updateIndex = useCallback(diff => {
-    const threshold = width / 2;
+    const threshold = width * 0.4;
     if (diff > threshold) {
       setCurrent(prev => (prev - 1 + itemCount) % itemCount);
     } else if (diff < -threshold) {
@@ -100,7 +100,7 @@ const Carousel = ({
           width: `${width * 3}px`,
           transform: `translateX(${-width + dragX}px)`,
           // 애니메이션 속도 조정
-          transition: isDragging ? 'none' : 'transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1)',
+          transition: isDragging ? 'none' : 'transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1)',
         }}
       >
         {[prevIdx, current, nextIdx].map(idx => {

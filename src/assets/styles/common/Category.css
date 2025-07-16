@@ -26,7 +26,7 @@
 .category-img {
   width: 72px;
   height: 72px;
-  background: #eee;
+  background: #f5f5f5;
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -47,4 +47,34 @@
   color: #222;
   text-align: center;
   margin-top: 2px;
+}
+
+/* 반응형: 모바일 환경 대응 */
+@media (max-width: 600px) {
+  .category-list {
+    width: 100vw;
+    margin: 10px auto;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-bottom: 8px;
+  }
+  .category-list > .category-item {
+    max-width: 70px;
+    margin: 0 4px;
+    gap: 4px;
+  }
+  .category-img {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 1px;
+  }
+  .category-img img {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+  }
+  .category-name {
+    font-size: 13px;
+    margin-top: 1px;
+  }
 }

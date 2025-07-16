@@ -1,11 +1,12 @@
 import React from "react";
 import styles from "../../assets/styles/owner/ReservationListSection.module.css";
+import { formatTime } from "../../utils/time";
 
-const formatTime = (timeStr) => {
-  if (!timeStr) return "";
-  const [hh, mm] = timeStr.split(":");
-  return `${hh}:${mm}`;
-};
+// const formatTime = (timeStr) => {
+//   if (!timeStr) return "";
+//   const [hh, mm] = timeStr.split(":");
+//   return `${hh}:${mm}`;
+// };
 
 const AllReservationList = ({ items }) => (
   <>

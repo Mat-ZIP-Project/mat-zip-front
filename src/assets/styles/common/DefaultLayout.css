@@ -33,6 +33,7 @@ html, body, #root {
   overflow-y: auto;
   padding: 10px;
   box-sizing: border-box;
+  height: 100%;
 }
 
 /* 모바일 반응형 */

@@ -15,8 +15,8 @@ const ProgressBar = ({ currentStep, totalSteps, stepTitles }) => {
                     style={{ width: `${progressPercentage}%` }}
                 />
             </div>
-            {/* 순서 단계 표시 텍스트
-            <div className={styles.stepInfo}>
+            {/* 순서 단계 표시 텍스트 */}
+            {/* <div className={styles.stepInfo}>
                 <span className={styles.stepText}>
                     {stepTitles[currentStep - 1]} ({currentStep}/{totalSteps})
                 </span>

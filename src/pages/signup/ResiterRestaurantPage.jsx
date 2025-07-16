@@ -338,7 +338,7 @@ const RestaurantInfo = ({ onNext, onBack, signupData }) => {
                         이전
                     </FormButton>
                     <FormButton type="submit" variant="primary" loading={isLoading} disabled={!isBusinessVerified}>
-                        회원가입 완료
+                        회원가입
                     </FormButton>
                 </div>
             </form>

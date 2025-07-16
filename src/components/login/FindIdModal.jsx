@@ -60,12 +60,12 @@ const FindIdModal = ({ open, onClose }) => {
     }
     try {
       await axiosInstance.post('/auth/find-id/sms/send', { phone });
-      showSuccessAlert('인증번호가 발송되었습니다.');
+      showSuccessAlert('인증번호가 발송되었습니다.', '5분 이내에 인증번호를 입력해주세요.');
       setStep(2);
       setTimer(TIMER_SEC);
       setTimerActive(true);
     } catch (err) {
-      showErrorConfirmAlert('인증번호 발송 실패', '입력하신 휴대폰번호를 확인해주세요.');
+      showErrorConfirmAlert('인증번호 발송 실패', '입력하신 휴대폰번호로 가입된 기록이 없습니다.');
     }
   };
 

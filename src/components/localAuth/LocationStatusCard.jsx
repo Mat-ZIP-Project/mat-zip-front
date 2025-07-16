@@ -1,23 +1,18 @@
 import { useState } from "react";
 import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/localAuth/locationStatusCard.css";
-
-
-
+import { showSuccessAlert, showErrorAlert } from "../../utils/sweetAlert";
 
 export default function LocationStatusCard({ regionName, badgeCount, fetchAll }) {
-  
-
-
   const handleAuth = () => {
     axiosInstance
       .post("/local", { regionName })
       .then((res) => {
-        alert(res.data + " 인증되었습니다.");
+        showSuccessAlert(res.data + " 인증되었습니다.", "");
         fetchAll();
       })
       .catch((e) => {
-        alert("인증 실패: " + (e.response?.data?.detail || e.message));
+        showErrorAlert("인증 실패", e.response?.data?.detail || e.message);
       });
   };
   

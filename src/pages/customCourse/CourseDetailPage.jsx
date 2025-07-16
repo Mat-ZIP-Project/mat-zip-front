@@ -4,9 +4,9 @@ import axiosInstance from "../../api/axiosinstance";
 import CourseHeader from '../../components/customCourse/CourseHeader';
 import CourseMap from '../../components/customCourse/CourseMap';
 import ActionButtons from '../../components/common/ActionButtons';
-
 import CustomCourseSpotList from "../../components/customCourse/CustomCourseSpotList";
 import '../../assets/styles/pages/customCourse/courseDetailPage.css';
+import { showErrorAlert, showSuccessConfirmAlert } from "../../utils/sweetAlert";
 
 const CourseDetailPage = () => {
   const { courseId } = useParams();
@@ -30,8 +30,9 @@ const CourseDetailPage = () => {
 
   const handleSave = () => {
     if(spots.length===0) {
-      alert("코스에 식당이 1개 이상이어야 저장 가능합니다.");
+      showErrorAlert("코스에 식당이 1개 이상이어야 저장 가능합니다.", "");
       navigate("/my-courses");
+      return;
     }
     axiosInstance({
       method : "put",
@@ -41,13 +42,10 @@ const CourseDetailPage = () => {
       title
     }))
     }).then(() => {
-      
-    alert("코스가 수정 되었습니다.");
+      showSuccessConfirmAlert("코스가 수정 되었습니다.", "");
       setEditable(false);}
     ).
     catch(err=>console.log(err))
-    
-
   };
 
   return (

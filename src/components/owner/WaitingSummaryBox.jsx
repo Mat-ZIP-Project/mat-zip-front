@@ -18,7 +18,7 @@ const WaitingSummaryBox = ({ teamCount, expectedTime, onCallNext, loading }) => 
         disabled={loading}
         title="다음 대기자 호출"
       >
-        🔔 호출벨
+        🔔 <br/> 호출벨
       </button>
     </div>
   </div>

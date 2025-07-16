@@ -13,6 +13,9 @@ const WaitingList = ({
   showNoShowBtn = false,
 }) => (
   <div className={styles.waitingListSection}>
+    {/* 명단 타이틀을 먼저 표시 */}
+    <div style={{ fontWeight: 700, margin: '8px 0 4px 8px', color: '#FF6B35' }}>{title}</div>
+    {/* 표 헤더를 그 아래에 표시 */}
     <div className={styles.waitingListHeader}>
       <span className={styles.fieldName}>성함(아이디)</span>
       <span className={styles.fieldPeople}>인원</span>
@@ -20,7 +23,6 @@ const WaitingList = ({
       {showPhone && <span className={styles.fieldPhone}>전화번호</span>}
       <span className={styles.fieldBtn}></span>
     </div>
-    <div style={{ fontWeight: 700, margin: '8px 0 4px 8px', color: '#FF6B35' }}>{title}</div>
     {loading ? (
       <div className={styles.emptyMessage}>웨이팅 정보를 불러오는 중...</div>
     ) : waitingList.length === 0 ? (
