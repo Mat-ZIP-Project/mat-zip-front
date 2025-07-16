@@ -2,7 +2,12 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosinstance";
 import React, { useEffect, useState } from "react";
 import "../../assets/styles/pages/myPage/ReservationList.css";
-import { showErrorAlert, showSuccessAlert, showQuestionAlert, showErrorConfirmAlert } from "../../utils/sweetAlert";
+import {
+  showErrorAlert,
+  showSuccessAlert,
+  showQuestionAlert,
+  showErrorConfirmAlert,
+} from "../../utils/sweetAlert";
 
 const ReservationList = () => {
   const [reservations, setReservations] = useState([]);
@@ -22,26 +27,44 @@ const ReservationList = () => {
   }, []);
 
   // 날짜와 시간을 포맷하는 헬퍼 함수
-  const formatDate = (isoDateTime) => {
-    if (!isoDateTime) return "날짜 미정";
-    const date = new Date(isoDateTime);
-    return date.toLocaleDateString("ko-KR", {
+  const formatDate = (dateTimeArray) => {
+    if (!dateTimeArray) return "날짜 미정";
+
+    const year = dateTimeArray[0];
+    const month = dateTimeArray[1] - 1; // 월은 0부터 시작 (0=1월, 11=12월)
+    const day = dateTimeArray[2];
+
+    const date = new Date(year, month, day);
+
+    const formatData = date.toLocaleDateString("ko-KR", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
+    return `${formatData}`;
   };
 
   const formatTime = (timeString) => {
     if (!timeString) return "시간 미정";
-    const parts = timeString.split(":");
-    return `${parts[0]}:${parts[1]}`;
+
+    const hours = timeString[0] || 0;
+    const minutes = timeString[1];
+
+    const date = new Date(2025, 1,1,hours, minutes);
+
+    const formatTime = date.toLocaleTimeString("ko-KR", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+    return `${formatTime}`;
+
   };
 
   // 리뷰 작성 버튼 클릭 핸들러
   const handleWriterReview = (restaurantId, restaurantName, visitDate) => {
     console.log(restaurantId, restaurantName, visitDate);
-    navigate("/review", { state: {restaurantName,visitDate , restaurantId} });
+    navigate("/review", { state: { restaurantName, visitDate, restaurantId } });
   };
 
   // 예약 취소 버튼 클릭 핸들러
@@ -51,11 +74,18 @@ const ReservationList = () => {
     reservationTime
   ) => {
     const now = new Date();
-    const reservationDateTime = new Date(
-      `${reservationDate}T${reservationTime}:00`
-    );
+    
+    const [year, month, day] = reservationDate;
+    const [hour, minute] = reservationTime;
 
-    const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
+    const reservationDateTime = new Date(year, month - 1, day, hour, minute);
+
+
+    // const reservationDateTime = new Date(
+    //   `${reservationDate}T${reservationTime}:00`
+    // );
+
+    const ONE_DAY_IN_MS = 3 * 60 * 60 * 1000;
     const timeUntilReservation = reservationDateTime.getTime() - now.getTime();
 
     if (reservationDateTime < now) {
@@ -100,7 +130,7 @@ const ReservationList = () => {
             const reservationDateTime = new Date(`${r.date}`);
             const now = new Date();
             const isPastReservation = reservationDateTime < now;
-            console.log(r.date,reservationDateTime,isPastReservation);
+            console.log(r.date, reservationDateTime, isPastReservation);
 
             // const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
             // const canCancel =
@@ -152,19 +182,23 @@ const ReservationList = () => {
                       handleCancelReservation(r.reservationId, r.date, r.time)
                     }
                     className="cancel-reservation-btn"
-                    >
+                  >
                     예약 취소
                   </button>
-                  {isPastReservation &&
-                  <button
+                  {isPastReservation && (
+                    <button
                       onClick={() =>
-                      handleWriterReview(r.restaurantId,r.restaurantName,r.date)
-                    }
-                    className="write-review-btn"
-                  >
-                    리뷰 작성
+                        handleWriterReview(
+                          r.restaurantId,
+                          r.restaurantName,
+                          r.date
+                        )
+                      }
+                      className="write-review-btn"
+                    >
+                      리뷰 작성
                     </button>
-                  }
+                  )}
                 </div>
               </div>
             );

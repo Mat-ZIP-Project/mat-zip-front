@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import RestaurantCard from "../../components/restaurant/RestaurantCard";
 import RestaurantFilterPanel from "../../components/restaurant/RestaurantFilterPanel";
 import axiosInstance from "../../api/axiosinstance";
@@ -14,6 +14,8 @@ const RestaurantListPage = () => {
   const [sort, setSort] = useState("");
   const [restaurantList, setRestaurantList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const location = useLocation();
 
    const fetchRestaurants = async () => {
     setLoading(true);
@@ -33,6 +35,11 @@ const RestaurantListPage = () => {
       setLoading(false);
     }
   };
+
+  // location이 바뀔 때마다 검색어 초기화
+  useEffect(() => {
+    setKeyword("");
+  }, [location.pathname]);
 
   useEffect(() => {
     fetchRestaurants();

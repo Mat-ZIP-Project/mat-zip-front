@@ -6,9 +6,9 @@
   min-height: 0;
 }
 .small-badge-icon {
-  margin-top: 0.3rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  margin-top: -0.7rem;
+  width: 4.5rem;
+  height: 4.5rem;
 }
 
 .my-page-header {
@@ -25,7 +25,7 @@
 
 .header-icons span {
   margin-right: 1rem;
-  font-size: 1.5rem;
+  font-size: 2rem;
   cursor: pointer;
 }
 
@@ -140,7 +140,7 @@
 .user-profile-image {
   width: 8.25rem; /* 100px */
   height: 8.25rem; /* 100px */
-  border-radius: 50%;
+  border-radius: 38%;
   object-fit: cover;
   margin-right: 1.5625rem; /* 25px */
   border: 0.125rem solid #ccc; /* 2px */
