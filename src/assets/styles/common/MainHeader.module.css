@@ -1,23 +1,15 @@
-/* .header {
-    height: 56px;
-    width: 100%;
-    width: 600px;
-    background: white;
-    border-bottom: 1px solid #e0e0e0;
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-} */
- .header {
+.header {
     position: relative;
     width: 100%;
     background: white;
     border-bottom: 1px solid #e0e0e0;
     z-index: 1000;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logotest {
+    object-fit: cover;
+    width: 100%;
 }
 
 /* 모바일에서는 전체 너비 사용 */
@@ -45,7 +37,7 @@
     align-items: center;
     justify-content: space-between;
     margin: 0 auto;
-    padding: 8px 20px;
+    padding: 8px 20px 8px 8px;
     gap: 12px;
     height: 100%;
 }
@@ -56,9 +48,9 @@
 }
 
 .logo {
-    width: 43px;
-    height: 43px;
-    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
     background-color: #e0e0e0;
     display: flex;
     align-items: center;
@@ -93,14 +85,14 @@
     background-color: #f5f5f5;
     border-radius: 7px;
     padding: 0 12px;
-    height: 36px;
+    height: 45px;
     margin: 0 12px;
     max-width: 380px;
 }
 
 .searchIcon {
-    width: 23px;
-    height: 23px;
+    width: 25px;
+    height: 25px;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E");
     background-size: contain;
     background-repeat: no-repeat;
@@ -113,7 +105,7 @@
     border: none;
     outline: none;
     background: transparent;
-    font-size: 14px;
+    font-size: 16px;
     color: #333;
     width: 100%;
 }
@@ -125,14 +117,14 @@
 .actionIcons {
     display: flex;
     flex-shrink: 0;
-    gap: 2px;
+    gap: 5px;
     align-items: center;
     margin-left: auto;
 }
 
 .iconButton {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -149,8 +141,8 @@
 }
 
 .iconHeart, .iconNotification {
-    width: 26px;
-    height: 26px;
+    width: 33px;
+    height: 33px;
     background-size: contain;
     background-repeat: no-repeat;
 }

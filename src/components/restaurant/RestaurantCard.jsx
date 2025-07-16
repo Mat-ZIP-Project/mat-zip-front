@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import "../../assets/styles/restaurant/RestaurantCard.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { addTempCourse } from "../../hooks/addTempCourse";
+import { showErrorAlert, showSuccessAlert, showConfirmAlert, showErrorConfirmAlert } from '../../utils/sweetAlert';
 
 const RestaurantCard = ({ data }) => {
   const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
@@ -42,7 +43,7 @@ const RestaurantCard = ({ data }) => {
     e.stopPropagation();
 
     if (!isLoggedIn) {
-      alert("로그인이 필요합니다.");
+      showErrorAlert("로그인이 필요합니다.", "");
       return;
     }
 
@@ -56,11 +57,13 @@ const RestaurantCard = ({ data }) => {
 
       if (nextLiked) {
         await axiosInstance.post(`/api/restaurants/like/${restaurantId}`);
+        showSuccessAlert("찜 완료!", "");
       } else {
         await axiosInstance.delete(`/api/restaurants/like/${restaurantId}`);
+        showSuccessAlert("찜 취소!", "");
       }
     } catch (error) {
-      alert("다시 시도해주세요.");
+      showErrorConfirmAlert("다시 시도해주세요.", "");
       setIsLiked(prevLiked);
       setLikes(prevLikes);
     }

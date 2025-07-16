@@ -44,6 +44,19 @@ export const showConfirmAlert = (title, text) => {
   });
 };
 
+export const showSuccessConfirmAlert = (title, text) => {
+  return Swal.fire({
+    icon: 'success',
+    title,
+    text,
+    showConfirmButton: true,
+    confirmButtonText: '확인',
+    confirmButtonColor: '#ff6b35',
+    allowOutsideClick: false,
+    allowEscapeKey: true
+  });
+};
+
 export const showErrorConfirmAlert = (title, text) => {
   return Swal.fire({
     icon: 'error',
@@ -87,3 +100,4 @@ export const showQuestionAlert = (title, html) => {
     allowEscapeKey: true
   });
 };
+

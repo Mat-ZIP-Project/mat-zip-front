@@ -4,6 +4,7 @@ import FormInput from '../common/FormInput';
 import FormButton from '../common/FormButton';
 import { formatters } from '../../utils/formatters';
 import { signupApi } from '../../api/signupApi';
+import { showSuccessAlert, showErrorAlert } from "../../utils/sweetAlert";
 
 /**
  * 휴대폰 인증 컴포넌트
@@ -54,9 +55,10 @@ const PhoneVerification = forwardRef(({
     /** 휴대폰 중복 확인 처리 */
     const handlePhoneCheck = useCallback(async () => {
         const cleanPhone = phone.replace(/-/g, '');
-        
+
         if (!/^01[0-9]{8,9}$/.test(cleanPhone)) {
             setPhoneMessage({ type: 'error', text: '올바른 휴대폰번호를 입력해주세요' });
+            showErrorAlert("휴대폰번호 오류", "올바른 휴대폰번호를 입력해주세요");
             return;
         }
 
@@ -65,19 +67,19 @@ const PhoneVerification = forwardRef(({
 
         try {
             await signupApi.checkPhone(phone);
-            
+
             setVerificationStatus(prev => ({
                 ...prev,
                 phoneChecked: true,
                 phoneAvailable: true
             }));
-            
+
             setPhoneMessage({ type: 'success', text: '사용 가능한 휴대폰번호입니다' });
+            showSuccessAlert("중복확인 성공", "사용 가능한 휴대폰번호입니다");
             onErrorClear?.('phone');
-            
         } catch (error) {
             let errorMessage = '이미 사용 중인 휴대폰번호입니다';
-            
+
             if (error.response?.status === 409) {
                 errorMessage = error.response.data?.errMsg || '이미 사용 중인 휴대폰번호입니다';
             } else if (error.response?.status === 400) {
@@ -85,8 +87,9 @@ const PhoneVerification = forwardRef(({
             } else {
                 errorMessage = '휴대폰번호 확인 중 오류가 발생했습니다';
             }
-            
+
             setPhoneMessage({ type: 'error', text: errorMessage });
+            showErrorAlert("중복확인 실패", errorMessage);
             setVerificationStatus(prev => ({
                 ...prev,
                 phoneChecked: false,

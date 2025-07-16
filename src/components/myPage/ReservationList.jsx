@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../api/axiosinstance";
 import React, { useEffect, useState } from "react";
 import "../../assets/styles/pages/myPage/ReservationList.css";
+import { showErrorAlert, showSuccessAlert, showQuestionAlert, showErrorConfirmAlert } from "../../utils/sweetAlert";
 
 const ReservationList = () => {
   const [reservations, setReservations] = useState([]);
@@ -58,30 +59,31 @@ const ReservationList = () => {
     const timeUntilReservation = reservationDateTime.getTime() - now.getTime();
 
     if (reservationDateTime < now) {
-      alert("이미 지난 예약은 취소할 수 없습니다.");
+      showErrorConfirmAlert("이미 지난 예약은 취소할 수 없습니다.", "");
       return;
     }
     if (timeUntilReservation < ONE_DAY_IN_MS) {
-      alert("예약 취소는 예약일 하루 전까지만 가능합니다.");
+      showErrorConfirmAlert("예약 취소는 예약일 하루 전까지만 가능합니다.", "");
       return;
     }
 
-    if (window.confirm("정말 예약을 취소하시겠습니까?")) {
+    const result = await showQuestionAlert("정말 예약을 취소하시겠습니까?", "");
+    if (result.isConfirmed) {
       try {
         const response = await axiosInstance.delete(
           `/mypage/reservations/cancel/${reservationId}`
         );
 
         if (response.data === "성공") {
-          alert("예약이 성공적으로 취소되었습니다.");
+          showSuccessAlert("예약이 성공적으로 취소되었습니다.", "");
           setReservations(
             reservations.filter((r) => r.reservationId !== reservationId)
           );
         } else {
-          console.error("예약 취소 실패: ", response.data);
+          showErrorAlert("예약 취소 실패", response.data);
         }
       } catch (error) {
-        console.error("예약 취소 중 오류 발생: ", error);
+        showErrorAlert("예약 취소 중 오류 발생", error.message);
       }
     }
   };

@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import styles from '../../assets/styles/signup/PlaceSearch.module.css';
 import FormInput from '../common/FormInput';
 import FormButton from '../common/FormButton';
+import { showErrorAlert, showInfoAlert } from "../../utils/sweetAlert";
 
 /** 식당명 주소 검색 컴포넌트 
  *  - 카카오맵 API를 사용하여 식당명으로 주소 검색
@@ -61,12 +62,11 @@ const PlaceSearch = ({ onPlaceSelect, error, onErrorClear }) => {
         }
 
         if (!window.kakao || !window.kakao.maps) {
-            alert('카카오맵 API를 로드하는 중입니다. 잠시 후 다시 시도해주세요.');
+            showInfoAlert('카카오맵 API를 로드하는 중입니다. 잠시 후 다시 시도해주세요.', "");
             return;
         }
 
-
-    setIsSearching(true);
+        setIsSearching(true);
         const places = new window.kakao.maps.services.Places();
         let allResults = [];
 
@@ -91,16 +91,16 @@ const PlaceSearch = ({ onPlaceSelect, error, onErrorClear }) => {
                     setIsSearching(false);
                     
                     if (finalResults.length === 0) {
-                        alert('검색된 식당이 없습니다. 다른 키워드로 검색해보세요.');
+                        showErrorAlert('검색된 식당이 없습니다. 다른 키워드로 검색해보세요.', "");
                     }
                 }
             } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
                 setIsSearching(false);
-                alert('검색된 식당이 없습니다. 다른 키워드로 검색해보세요.');
+                showErrorAlert('검색된 식당이 없습니다. 다른 키워드로 검색해보세요.', "");
                 setSearchResults([]);
             } else {
                 setIsSearching(false);
-                alert('검색에 실패했습니다. 다시 시도해주세요.');
+                showErrorAlert('검색에 실패했습니다. 다시 시도해주세요.', "");
                 setSearchResults([]);
             }
         }, {

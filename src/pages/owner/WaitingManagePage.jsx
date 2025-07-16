@@ -6,8 +6,6 @@ import { ownerApi } from '../../api/ownerApi';
 import { showSuccessAlert, showErrorAlert, showQuestionAlert } from '../../utils/sweetAlert';
 
 const WaitingManagePage = ({ restaurantId }) => {
-  console.log('WaitingManagePage restaurantId:', restaurantId);
-  const [summary, setSummary] = useState({ teamCount: 0, expectedTime: '-' });
   const [callList, setCallList] = useState([]);
   const [waitingList, setWaitingList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,14 +15,16 @@ const WaitingManagePage = ({ restaurantId }) => {
     if (!restaurantId) return;
     setLoading(true);
     try {
-      const summaryRes = await ownerApi.getWaitingSummary(restaurantId);
       const callListRes = await ownerApi.getWaitingCallList();
       const waitingListRes = await ownerApi.getWaitingList();
-      setSummary(summaryRes.data);
+
+      console.log('callListRes:', callListRes.data);
+      console.log('waitingListRes:', waitingListRes.data);
+
       setCallList(callListRes.data);
       setWaitingList(waitingListRes.data);
     } catch (err) {
-      setSummary({ teamCount: 0, expectedTime: '-' });
+      console.error('API 에러:', err);
       setCallList([]);
       setWaitingList([]);
     } finally {
@@ -72,12 +72,18 @@ const WaitingManagePage = ({ restaurantId }) => {
     }
   };
 
+  // 대기팀수와 예상입장시간 계산
+  const teamCount = waitingList.length;
+  const expectedTime = teamCount > 0
+    ? `${teamCount * 10}분`
+    : '-';
+
   return (
     <div className={styles.waitingPageContainer}>
       <h2 className={styles.title}>[ 웨이팅 관리 ]</h2>
       <WaitingSummaryBox
-        teamCount={summary.teamCount}
-        expectedTime={summary.expectedTime}
+        teamCount={teamCount}
+        expectedTime={expectedTime}
         onCallNext={handleCallNext}
         loading={loading}
       />
@@ -99,16 +105,12 @@ const WaitingManagePage = ({ restaurantId }) => {
         title="입장대기 명단"
         showPhone={false}
         onEnter={null}
-        onNoShow={handleNoShow}
+        onNoShow={null}
         showEnterBtn={false}
-        showNoShowBtn={true}
+        showNoShowBtn={false}
       />
     </div>
   );
 };
-
-// WaitingManagePage.propTypes = {
-//   restaurantId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-// };
 
 export default WaitingManagePage;

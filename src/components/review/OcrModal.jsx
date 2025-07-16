@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosinstance";
 import { useNavigate } from "react-router-dom";
 import '../../assets/styles/review/ocrModal.css';
-
+import { showErrorAlert } from "../../utils/sweetAlert";
 
 const OcrModal = ({ onClose ,restaurantId}) => {
   console.log(restaurantId)
@@ -36,7 +36,7 @@ const OcrModal = ({ onClose ,restaurantId}) => {
       })
       .catch((err) => {
         console.error("OCR 실패", err);
-        alert(err.response.data.detail);
+        showErrorAlert(err.response.data.detail);
         onClose();
       })
       .finally(() => setLoading(false));

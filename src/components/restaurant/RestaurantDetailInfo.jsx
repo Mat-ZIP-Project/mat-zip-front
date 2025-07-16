@@ -4,6 +4,7 @@ import { addTempCourse } from "../../hooks/addTempCourse";
 import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/restaurant/RestaurantDetailInfo.css";
 import OcrModal from "../review/OcrModal";
+import { showSuccessAlert, showErrorAlert } from "../../utils/sweetAlert";
 
 const RestaurantDetailInfo = ({ data }) => {
   const {
@@ -38,11 +39,11 @@ const RestaurantDetailInfo = ({ data }) => {
       const requestDto = { restaurantId, numPeople };
       console.log("웨이팅 등록 요청 데이터:", requestDto);
       await axiosInstance.post("/api/waiting", requestDto);
-      alert("웨이팅 등록이 완료되었습니다!");
+      showSuccessAlert("웨이팅 등록이 완료되었습니다!", "");
       setShowModal(false);
       window.location.reload();
     } catch (err) {
-      alert("웨이팅 등록에 실패했습니다.");
+      showErrorAlert("웨이팅 등록에 실패했습니다.", "");
       console.error("웨이팅 등록 에러:", err.response?.data);
     }
   };
@@ -62,7 +63,7 @@ const RestaurantDetailInfo = ({ data }) => {
   };
 
   const handleReceiptReview = () => {
-    alert("영수증 리뷰 기능은 준비 중입니다.");
+    showSuccessAlert("영수증 리뷰 기능은 준비 중입니다.", "");
   };
 
   return (

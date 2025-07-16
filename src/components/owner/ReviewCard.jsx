@@ -3,6 +3,17 @@ import styles from '../../assets/styles/pages/owner/ReviewManagePage.module.css'
 
 const formatDate = (dateStr) => {
   if (!dateStr) return '';
+  // 배열([2025, 7, 16, ...]) 또는 객체(Date) 처리
+  if (Array.isArray(dateStr)) {
+    // [YYYY, MM, DD, ...] → 'YYYY.MM.DD'
+    const [yyyy, mm, dd] = dateStr;
+    return `${yyyy}.${String(mm).padStart(2, '0')}.${String(dd).padStart(2, '0')}`;
+  }
+  if (typeof dateStr === 'object' && dateStr !== null && 'year' in dateStr && 'month' in dateStr && 'day' in dateStr) {
+    // {year, month, day} 형태 처리
+    return `${dateStr.year}.${String(dateStr.month).padStart(2, '0')}.${String(dateStr.day).padStart(2, '0')}`;
+  }
+  // 문자열 처리
   return dateStr.slice(0, 10).replace(/-/g, '.');
 };
 

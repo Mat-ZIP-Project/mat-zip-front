@@ -1,12 +1,13 @@
 import React from "react";
 import styles from "../../assets/styles/owner/TodayReservationList.module.css";
+import { formatTime } from "../../utils/time";
 
-const formatTime = (timeStr) => {
-  // "00:00:00" → "00:00"
-  if (!timeStr) return "";
-  const [hh, mm] = timeStr.split(":");
-  return `${hh}:${mm}`;
-};
+// const formatTime = (timeStr) => {
+//   // "00:00:00" → "00:00"
+//   if (!timeStr) return "";
+//   const [hh, mm] = timeStr.split(":");
+//   return `${hh}:${mm}`;
+// };
 
 const TodayReservationList = ({ items }) => (
   <section className={styles.todaySection}>

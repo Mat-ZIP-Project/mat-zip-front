@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosinstance";
-
 import { useNavigate } from "react-router-dom";
 import CourseMap from '../../components/customCourse/CourseMap';
 import CourseSpotList from '../../components/customCourse/CourseSpotList';
 import ActionButtons from '../../components/common/ActionButtons';
-
 import CourseHeader from "../../components/customCourse/CourseHeader";
 import '../../assets/styles/pages/customCourse/tempCoursePage.css';
+import { showErrorAlert, showErrorConfirmAlert, showSuccessConfirmAlert } from "../../utils/sweetAlert";
 
 
 
@@ -35,11 +34,11 @@ const TempCoursePage = () => {
 
   const saveCourse = () => {
     if(title==="") {
-     alert("코스명을 입력해주세요");
+     showErrorConfirmAlert("코스명을 입력해주세요", "");
      return; 
     }
     if(spots.length===0){
-      alert("코스를 1개 이상 담아주세요");
+      showErrorConfirmAlert("코스를 1개 이상 담아주세요", "");
       return;
     }
     const titleWithCourse =  spots.map(spot => ({...spot,title}));

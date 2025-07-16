@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
-
 import axiosInstance from '../../api/axiosinstance';
 import '../../assets/styles/pages/review/reviewForm.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { showErrorAlert, showErrorConfirmAlert, showSuccessConfirmAlert } from '../../utils/sweetAlert';
 
 const ReviewForm = () => {
   
@@ -24,7 +23,6 @@ const ReviewForm = () => {
   };
 
   useEffect(()=>{
-    
     axiosInstance({
         method:"get",
         url:`/reviews/${restaurantId}/${visitDate}`,
@@ -37,7 +35,7 @@ const ReviewForm = () => {
         }
     ).catch(err=>{
         console.error(err.response.data);
-        alert(err.response.data.detail);
+        showErrorAlert("리뷰 작성 불가", err.response.data.detail);
         nav(-1);
     })
   },[]);
@@ -46,7 +44,7 @@ const ReviewForm = () => {
     e.preventDefault();
 
     if (!content  || rating === 0) {
-      alert("모든 필드를 입력해주세요.");
+      showErrorConfirmAlert("모든 필드를 입력해주세요.", "");
       return;
     }
 
@@ -67,7 +65,7 @@ const ReviewForm = () => {
           "Content-Type": "multipart/form-data",
         },
       }).then(()=>{
-        alert("리뷰 등록 완료! 100p 적립되었습니다.");
+        showSuccessConfirmAlert("리뷰 등록 완료!", "포인트가 100p 적립되었습니다.");
         // 초기화
       setContent('');
       setRating(0);
@@ -75,8 +73,7 @@ const ReviewForm = () => {
       nav(-1);
       }).catch((err)=>{
         console.error(err);
-      alert(err.response.data.detail);
-
+        showErrorAlert("리뷰 등록 실패", err.response.data.detail);
       });
 
   };

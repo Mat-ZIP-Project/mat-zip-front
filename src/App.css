@@ -147,7 +147,8 @@
 .swal2-popup {
     width: 400px !important;
     height: auto !important;
-    padding: 1.3em !important;
+    padding: 1.1em !important;
+    padding-bottom: 2.5em !important;
     border-radius: 8px !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
 }

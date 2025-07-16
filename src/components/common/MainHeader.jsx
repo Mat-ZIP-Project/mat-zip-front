@@ -69,7 +69,7 @@ const hideSearchBar = !isSearchPage && (isRestaurantDetail || isLocalAuthPage ||
   </button>
 ) : (
   <div className={styles.logo} onClick={handleLogoClick}>
-    <div className={styles.logoPlaceholder}></div>
+    <img src="https://matzip-kosta295.s3.ap-northeast-2.amazonaws.com/assets/icon/%EB%A1%9C%EA%B3%A0_2.png" className={styles.logotest}/>
   </div>
 )}
         </div>
