@@ -29,7 +29,7 @@ const RestaurantDetailInfo = ({ data }) => {
   };
 
   useEffect(() => {
-    console.log("식당 데이터 확인:", data);
+    console.log("DetailInfo Data :", data);
   }, [data]);
 
   // 웨이팅 등록 핸들러
@@ -70,8 +70,8 @@ const RestaurantDetailInfo = ({ data }) => {
       <h1>{restaurantName}</h1>
       <p>📍 주소: {address}</p>
       <p>
-        ⭐ 평점: {avgRating == null ? "정보 없음" : `${avgRating}점`} / 🏠 로컬
-        평점: {avgRatingLocal == null ? "정보 없음" : `${avgRatingLocal}점`}
+        ⭐ 평점: {avgRating == null ? "정보 없음" : `${avgRating.toFixed(1)}점`} / 🏠 로컬
+  평점: {avgRatingLocal == null ? "정보 없음" : `${avgRatingLocal.toFixed(1)}점`}
       </p>
       <p>🍽️ 카테고리: {category}</p>
       {phone && <p>📞 연락처: {phone}</p>}
@@ -85,7 +85,7 @@ const RestaurantDetailInfo = ({ data }) => {
         )}
       </div>
 
-      <div className="restaurant-detail-buttons">
+      <div className="restaurant-detail-buttons-fixed">
         <button
           onClick={handleNavigateToReservation}
           className="restaurant-reservation-button"
