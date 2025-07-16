@@ -36,7 +36,8 @@ const OcrModal = ({ onClose ,restaurantId}) => {
       })
       .catch((err) => {
         console.error("OCR 실패", err);
-        showErrorAlert("OCR 실패", "다시 시도해주세요.");
+        showErrorAlert(err.response.data.detail);
+        onClose();
       })
       .finally(() => setLoading(false));
   };

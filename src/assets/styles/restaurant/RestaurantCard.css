@@ -1,6 +1,12 @@
 .restaurant-card {
-  background: #fafafa; /* 기존 #fff 대신 더 부드러운 색 */
+  background: #fafafa;
   transition: box-shadow 0.2s;
+  display: flex;           /* 추가 */
+  gap: 20px;               /* 추가: 이미지와 텍스트 사이 간격 */
+  align-items: flex-start;  /* 추가: 위쪽 정렬 */
+  padding: 16px;           /* 추가: 카드 내부 여백 */
+  border-radius: 10px;     /* 선택: 카드 둥글게 */
+  margin-bottom: 16px;     /* 선택: 카드 간 간격 */
 }
 
 .restaurant-card:hover {

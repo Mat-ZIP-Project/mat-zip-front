@@ -1,7 +1,6 @@
 .restaurant-review-list {
   margin-top: 24px;
-  text-align: left; /* 명시적으로 왼쪽 정렬 */
-  /* display: flex; flex-direction: column; align-items: flex-start; 필요 없으면 주석처리 또는 삭제 */
+  text-align: left;
 }
 
 .restaurant-review-list_items {
@@ -18,13 +17,27 @@
   gap: 8px;
 }
 
+/* 리뷰 카드 2열 레이아웃 */
+.review-main-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.review-main-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .review-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 15px;
-  font-weight: 500;
-  color: #222;
+  gap: 20px;
+  font-size: 18px;
 }
 
 .review-writer {
@@ -54,51 +67,29 @@
   font-size: 13px;
 }
 
-.review-content-area {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-
 .review-content {
-  flex: 1;
   font-size: 15px;
   color: #333;
   line-height: 1.6;
   word-break: break-all;
+  margin-left: 14px;
 }
 
-.review-images-area {
+/* 이미지 오른쪽 세로 중앙 배치 */
+.review-image-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-width: 100px;
   max-width: 120px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 100%;
+  margin-right: 8px;
 }
 
-.review-images {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.review-image {
-  width: 90px;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid #eee;
-}
-
+.review-image,
 .review-image-placeholder {
-  width: 90px;
-  height: 90px;
-  background: #fafafa;
-  color: #bbb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 80px;
+  height: 80px;
   border-radius: 8px;
-  font-size: 13px;
-  border: 1px solid #eee;
+  object-fit: cover;
 }

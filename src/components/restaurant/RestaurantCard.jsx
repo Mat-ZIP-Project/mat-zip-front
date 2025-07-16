@@ -25,6 +25,10 @@ const RestaurantCard = ({ data }) => {
     avgRatingLocal,
   } = data;
 
+  useEffect(() => {
+  console.log("RestaurantCard data:", data);
+}, [data]);
+
   const [isLiked, setIsLiked] = useState(liked);
   const [likes, setLikes] = useState(likeCount);
 
@@ -86,7 +90,7 @@ const RestaurantCard = ({ data }) => {
       }
     >
       <div className="restaurant-card_image">
-        <img src={data.imageUrl || "/default.png"} alt={"이미지"} />
+        <img src={data.thumbnailImageUrl || "/default.png"} alt={"이미지"} />
       </div>
 
       <div className="restaurant-card_info">
@@ -101,7 +105,7 @@ const RestaurantCard = ({ data }) => {
 
         <div className="restaurant-card_meta">
           <span className="icon comment">💬 {data.reviewCount}</span>
-          <span className="icon calendar">📅 {data.reservationCount}</span>
+          {/* <span className="icon calendar">📅 {data.reservationCount}</span> */}
           <div className="restaurant-card_like-group">
             <button
               onClick={handleLikeClick}

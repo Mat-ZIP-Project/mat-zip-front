@@ -18,8 +18,7 @@ const MainHeader = () => {
   const isMyCoursePage = location.pathname === "/my-courses";
   
   const showBackButton = (isRestaurantDetail || isLocalAuthPage || isMyCoursePage) && !isSearchPage;
-  const hideSearchBar = isRestaurantDetail || isLocalAuthPage || isMyCoursePage;
-
+const hideSearchBar = !isSearchPage && (isRestaurantDetail || isLocalAuthPage || isMyCoursePage);
   // 종(알림) 아이콘 클릭 시
   const handleNotificationClick = async () => {
   setIsWaitingModalOpen(true);
@@ -33,16 +32,16 @@ const MainHeader = () => {
 
   // 뒤로가기 버튼 클릭
   const handleBackClick = () => {
-    if (location.state?.from) {
-      navigate(location.state.from);
-    } else if (isLocalAuthPage) {
-      navigate("/mypage");
-    } else if (isRestaurantDetail) {
-      navigate("/restaurants");
-    } else{
-      navigate("/courses")
-    }
-  };
+  if (location.state?.from) {
+    navigate(location.state.from);
+  } else if (isLocalAuthPage) {
+    navigate("/mypage");
+  } else if (isRestaurantDetail) {
+    navigate("/"); // 리스트가 아닌 홈으로 이동
+  } else {
+    navigate("/courses");
+  }
+};
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -53,6 +52,7 @@ const MainHeader = () => {
   };
 
   const handleLogoClick = () => {
+    setKeyword("");
     navigate("/");
   };
 
@@ -88,7 +88,10 @@ const MainHeader = () => {
         )}
 
         <div className={styles.actionIcons}>
-          <button className={styles.iconButton}>
+          <button
+            className={styles.iconButton}
+            onClick={() => navigate("/mypage")}
+          >
             <div className={styles.iconHeart}></div>
           </button>
           <button className={styles.iconButton} onClick={handleNotificationClick}>
