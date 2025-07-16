@@ -1,9 +1,19 @@
 
+
 import axiosInstance from "../api/axiosinstance"
 
 
 
 export const addTempCourse = ({ restaurantId, restaurantName }) => {
+   
+    const auth = JSON.parse(localStorage.getItem("persist:auth"));
+   
+    if (!JSON.parse(auth.isAuthenticated)) {
+        
+        alert("로그인 후 이용가능합니다.");
+        return;
+    }
+     
     const saved = JSON.parse(localStorage.getItem("myCourseSpots")) || []; //localstorage 에 이미 저장된 리스트 가져오기
     
     if(saved.length===3) {

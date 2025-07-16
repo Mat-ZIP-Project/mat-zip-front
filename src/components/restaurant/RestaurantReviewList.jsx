@@ -3,6 +3,7 @@ import "../../assets/styles/restaurant/RestaurantReviewList.css";
 import badgeImage from "../../assets/images/로컬뱃지.png";
 
 const RestaurantReviewList = ({ reviews = [], onDelete }) => {
+  console.log(reviews);
   return (
     <div className="restaurant-review-list">
       {reviews.length === 0 ? (
