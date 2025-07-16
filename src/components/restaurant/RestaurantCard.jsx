@@ -90,7 +90,7 @@ const RestaurantCard = ({ data }) => {
       }
     >
       <div className="restaurant-card_image">
-        <img src={data.thumbnailImageUrl || "/default.png"} alt={"이미지"} />
+        <img src={data.imageUrl || "/default.png"} alt={"이미지"} />
       </div>
 
       <div className="restaurant-card_info">
