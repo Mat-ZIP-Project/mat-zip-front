@@ -245,7 +245,8 @@ export const useReservationLogic = (
 
     window.IMP.request_pay(
       {
-        pg: "kakaopay.TC0ONETIME",
+        // pg: "kakaopay.TC0ONETIME",
+        pg: "html5_inicis",
         pay_method: "card",
         merchant_uid: currentMerchantUid,
         name: `${restaurantName} 예약 (${finalPaymentAmount}원)`,
