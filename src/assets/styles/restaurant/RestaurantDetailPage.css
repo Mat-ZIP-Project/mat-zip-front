@@ -139,58 +139,87 @@
 }
 
 /* 버튼 컨테이너 및 통일된 버튼 스타일 */
-.restaurant-detail-buttons {
+.restaurant-detail-buttons-fixed {
   display: flex;
-  flex-wrap: wrap;
   gap: 12px;
-  margin-top: 18px;
-}
-.restaurant-detail-buttons a,
-.restaurant-detail-buttons button {
-  display: inline-flex;
+  margin: 16px 0 16px 0;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
-  min-width: 110px;
-  padding: 11px 20px;
+}
+.restaurant-detail-buttons-fixed > button {
+  padding: 8px 18px;
+  border: 2px solid #ff6b35;
+  background: #fff;
+  color: #ff6b35;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
-  background: #fff7e6;
-  color: #FF6B35;
-  border: 1.5px solid #FF6B35;
   cursor: pointer;
-  transition: background 0.18s, color 0.18s, box-shadow 0.18s, border 0.18s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  text-decoration: none;
-}
-.restaurant-detail-buttons a:hover,
-.restaurant-detail-buttons button:hover {
-  background: #ffedd2;
-  color: #FF6B35;
-  border-color: #FF6B35;
-}
-.restaurant-detail-buttons-fixed {
-  display: flex;
-  gap: 16px;
-  margin: 24px 0 12px 0;
-  flex-wrap: nowrap;         /* 한 줄로만 표시 */
-  overflow-x: auto;          /* 넘치면 가로 스크롤 */
-  width: 100%;               /* 부모 영역 꽉 채우기 */
-  box-sizing: border-box;
+  transition: background 0.15s, color 0.15s;
+  outline: none;
+  line-height: 1.2;
+  white-space: nowrap;      /* 한 줄로 표시 */
+  min-width: 110px;         /* 버튼 최소 너비(원하는 값으로 조정) */
 }
 
-.restaurant-detail-buttons-fixed {
-  display: flex;
-  gap: 16px;
-  margin: 24px 0 12px 0;
-  flex-wrap: nowrap;         /* 한 줄로만 표시 */
-  overflow-x: auto;          /* 넘치면 가로 스크롤 */
-  width: 100%;               /* 부모 영역 꽉 채우기 */
-  box-sizing: border-box;
-  background: #fff;          /* 배경색 고정(선택) */
-  z-index: 10;               /* 겹침 방지(선택) */
+.restaurant-detail-buttons-fixed > button:hover {
+  background: #ff6b35;
+  color: #fff;
 }
-.restaurant-detail-buttons-fixed > * {
-  min-width: 120px;
-  flex-shrink: 0;
+
+.restaurant-detail-buttons-fixed > .restaurant-course-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.restaurant-detail-buttons-fixed > .restaurant-receipt-review-button {
+  color: #ff6b35;
+  border: 2px solid #ff6b35;
+  background: #fff;
+}
+
+.restaurant-detail-buttons-fixed > .restaurant-receipt-review-button:hover {
+  background: #ff6b35;
+  color: #fff;
+}
+
+.restaurant-descript-box {
+  margin-top: 32px;           /* 웨이팅 현황과 간격 */
+  padding: 24px 20px;
+  background: #f8f8fc;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e6e6ef;
+  color: #222;
+}
+
+.restaurant-descript-box h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.13rem;
+  font-weight: 700;
+  /* color: #ff6b35; */
+}
+
+.restaurant-descript-box p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.7;
+}
+
+.local-review-block-message {
+  margin: 32px 0 0 0;
+  padding: 22px 18px;
+  background: #fff3e0;
+  border: 2px solid #ff9800;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #ff6b35;
+  box-shadow: 0 2px 12px rgba(255, 152, 0, 0.08);
+  letter-spacing: 0.01em;
 }
