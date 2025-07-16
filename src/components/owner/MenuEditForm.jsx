@@ -48,7 +48,7 @@ const MenuEditForm = ({ mode, menu, onComplete, onCancel }) => {
       }
       if (onComplete) onComplete();
     } catch (err) {
-      showErrorAlert('실패', `메뉴 ${mode === 'create' ? '등록' : '수정'}에 실패했습니다. 다시 시도해주세요.`);
+      showErrorAlert(`메뉴 ${mode === 'create' ? '등록' : '수정'}에 실패했습니다.`, '입력한 값을 확인해주세요.');
     }
   };
 
@@ -75,7 +75,7 @@ const MenuEditForm = ({ mode, menu, onComplete, onCancel }) => {
           type="number"
           value={form.price}
           onChange={handleChange}
-          min={0}
+          min={100}
           step={100}
           required
           placeholder="가격을 입력하세요 (원 단위)"

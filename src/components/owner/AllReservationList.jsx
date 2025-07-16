@@ -1,12 +1,6 @@
 import React from "react";
 import styles from "../../assets/styles/owner/ReservationListSection.module.css";
-import { formatTime } from "../../utils/time";
-
-// const formatTime = (timeStr) => {
-//   if (!timeStr) return "";
-//   const [hh, mm] = timeStr.split(":");
-//   return `${hh}:${mm}`;
-// };
+import { formatTime, formatDate } from "../../utils/time";
 
 const AllReservationList = ({ items }) => (
   <>
@@ -28,7 +22,7 @@ const AllReservationList = ({ items }) => (
             </span>
             <span className={styles.fieldPeople}>{item.numPeople}명</span>
             <span className={styles.fieldDate}>
-              {item.date} {formatTime(item.time)}
+              {formatDate(item.date)} {formatTime(item.time)}
             </span>
             <span className={styles.fieldStatus}>{item.status}</span>
           </div>

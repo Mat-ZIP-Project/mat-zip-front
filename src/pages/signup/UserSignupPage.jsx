@@ -111,13 +111,26 @@ const UserSignupPage = ({ onBack }) => {
         setIsLoading(false);
       }}, [formData, validateForm, setIsLoading, setErrors, navigate]);
 
-  const [form, setForm] = useState({ password: '', confirmPassword: '' });
+  // 비밀번호 유효성 검사 함수
+  const passwordValid = (pw) => {
+    const lengthValid = pw.length >= 10;
+    const types = [
+      /[A-Z]/.test(pw),
+      /[a-z]/.test(pw),
+      /[0-9]/.test(pw),
+      /[^A-Za-z0-9]/.test(pw),
+    ];
+    const typeCount = types.filter(Boolean).length;
+    return lengthValid && typeCount >= 2;
+  };
+
+  // 비밀번호 입력 상태 및 유효성
   const [pwValid, setPwValid] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-    if (name === 'password') setPwValid(passwordValid(value));
+  // 비밀번호 입력시마다 유효성 체크
+  const handleInputChangeWithPw = (e) => {
+    handleInputChange(e);
+    if (e.target.name === "password") setPwValid(passwordValid(e.target.value));
   };
 
   return (
@@ -161,36 +174,36 @@ const UserSignupPage = ({ onBack }) => {
         </div>
 
         <div className={styles.formGroup}>
-            <label className={styles.label}>비밀번호 *</label>
-            <FormInput
-                ref={inputRefs.password} 
-                name="password" 
-                type="password" 
-                placeholder="비밀번호를 입력해주세요"
-                value={formData.password} 
-                onChange={handleInputChange} 
-                error={errors.password}
-            />
-            <div
-              className={
-                form.password
-                  ? pwValid
-                    ? styles.pwMessageValid
-                    : styles.pwMessageError
-                  : ''
-              }
-            >
-              {form.password && (
-                pwValid ? (
-                  <>
-                    <span className={styles.checkIcon}>✔</span>
-                    최소 10자리, 영문 대소문자/숫자/특수문자 중 2종류 이상 조합해야 합니다.
-                  </>
-                ) : (
-                  <>최소 10자리, 영문 대소문자/숫자/특수문자 중 2종류 이상 조합해야 합니다.</>
-                )
-              )}
-            </div>
+          <label className={styles.label}>비밀번호 *</label>
+          <FormInput
+            ref={inputRefs.password}
+            name="password"
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+            value={formData.password}
+            onChange={handleInputChangeWithPw}
+            error={errors.password}
+          />
+          <div
+            className={
+              formData.password
+                ? pwValid
+                  ? styles.pwMessageValid
+                  : styles.pwMessageError
+                : ""
+            }
+          >
+            {formData.password && (
+              pwValid ? (
+                <>
+                  <span className={styles.checkIcon}>✔</span>
+                  최소 10자리, 영문 대소문자/숫자/특수문자 중 2종류 이상 조합해야 합니다.
+                </>
+              ) : (
+                <>최소 10자리, 영문 대소문자/숫자/특수문자 중 2종류 이상 조합해야 합니다.</>
+              )
+            )}
+          </div>
         </div>
 
         <div className={styles.formGroup}>

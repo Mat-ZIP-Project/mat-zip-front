@@ -197,7 +197,7 @@ const FindPasswordModal = ({ open, onClose }) => {
         )}
         {step === 2 && (
           <>
-            <div className={styles.infoText}>
+            <div className={`${styles.infoText} ${styles.timerText}`}>
               인증번호가 발송되었습니다. (남은시간: {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')})
             </div>
             <FormInput
@@ -268,7 +268,7 @@ const FindPasswordModal = ({ open, onClose }) => {
           <div className={styles.resultBox}>
             <div className={styles.resultTitle}>비밀번호가 성공적으로 변경되었습니다.</div>
             <FormButton type="button" onClick={handleClose} className={styles.button}>
-              닫기
+              확인
             </FormButton>
           </div>
         )}
