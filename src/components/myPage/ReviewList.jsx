@@ -74,7 +74,7 @@ const ReviewList = () => {
                 <p className="review-content">{review.content}</p>
               </div>
               <div className="card-footer">
-                <span className="review-date">
+                <span className="myPage-review-date">
                   <span className="icon">📝</span> 작성일:{" "}
                   {formatDateDisplay(review.reviewedAt)}
                 </span>
