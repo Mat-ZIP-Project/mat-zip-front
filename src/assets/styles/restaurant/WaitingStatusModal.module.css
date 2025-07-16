@@ -1,40 +1,27 @@
 .modalOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(30, 30, 30, 0.45);
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.2);
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000;
 }
 
 .modalContent {
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   padding: 32px 28px 24px 28px;
-  min-width: 320px;
+  min-width: 340px;
   max-width: 90vw;
-  min-height: 180px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
   position: relative;
-  animation: modalFadeIn 0.25s;
 }
-
-@keyframes modalFadeIn {
-  from { opacity: 0; transform: translateY(-20px);}
-  to { opacity: 1; transform: translateY(0);}
-}
-
 
 .modalTitle {
-  margin-top: 0;
-  margin-bottom: 18px;
   font-size: 1.25rem;
-  font-weight: 700;
-  color: #222;
+  font-weight: bold;
+  margin-bottom: 18px;
   text-align: center;
 }
 
@@ -42,20 +29,16 @@
   position: absolute;
   top: 18px;
   right: 18px;
-  background: #f5f5f5;
+  background: none;
   border: none;
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   cursor: pointer;
-  transition: background 0.2s;
+  color: #888;
+  transition: color 0.2s;
 }
 .closeBtn:hover {
-  background: #ececec;
+  color: #e74c3c;
 }
-
-
 
 .modalList {
   list-style: none;
@@ -64,31 +47,29 @@
 }
 
 .modalItem {
-  padding: 12px 0;
-  border-bottom: 1px solid #f0f0f0;
-  font-size: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.modalItem:last-child {
-  border-bottom: none;
+  font-size: 1.05rem;
+  line-height: 2;
 }
 
 .modalStrong {
-  color: #2d7cff;
-  font-weight: 600;
-}
-
-.modalEmpty {
-  text-align: center;
-  color: #888;
-  margin: 32px 0 0 0;
-  font-size: 1.05rem;
+  color: #1976d2;
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 
 .myOrder {
-  color: #FF6B35;
-  font-weight: 500;
+  color: #e67e22;
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+.status {
+  color: #27ae60;
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+.modalLabel {
+  color: #888;
+  margin-right: 4px;
 }
