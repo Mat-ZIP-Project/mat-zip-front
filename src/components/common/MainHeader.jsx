@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../assets/styles/common/MainHeader.module.css";
 import { useNavigate, useLocation, matchPath } from "react-router-dom";
 import WaitingStatusModal from "../restaurant/WaitingStatusModal";
@@ -10,6 +10,35 @@ const MainHeader = () => {
   const [keyword, setKeyword] = useState("");
   const [isWaitingModalOpen, setIsWaitingModalOpen] = useState(false);
   const [waitingInfo, setWaitingInfo] = useState(null);
+
+useEffect(() => {
+  let accessToken = null;
+  const persistedAuth = localStorage.getItem('persist:auth');
+  if (persistedAuth) {
+    const parsed = JSON.parse(persistedAuth);
+    accessToken = JSON.parse(parsed.accessToken);
+  }
+  if (!accessToken) {
+    console.warn("SSE 연결 불가: accessToken 없음");
+    return;
+  }
+  const sse = new EventSource(`/api/waiting/subscribe?token=${accessToken}`, { withCredentials: true });
+
+  sse.addEventListener("waiting-update", (e) => {
+  try {
+    console.log('SSE waiting-update 이벤트 받음:', e.data);
+    const updated = JSON.parse(e.data);
+    setWaitingInfo(updated);
+  } catch (err) {
+    console.error("SSE 데이터 파싱 오류:", err, e.data);
+  }
+});
+
+  sse.onerror = (e) => {
+    console.error('SSE 오류:', e);
+  };
+  return () => sse.close();
+}, []);
 
   // 어떤 경로인지 확인
   const isRestaurantDetail = !!matchPath("/restaurants/:id", location.pathname);
@@ -47,8 +76,9 @@ const hideSearchBar = !isSearchPage && (isRestaurantDetail || isLocalAuthPage ||
     e.preventDefault();
     const trimmed = keyword.trim();
     if (trimmed.length > 0) {
-      navigate(`/restaurants/search?keyword=${encodeURIComponent(trimmed)}`);
-    }
+    navigate(`/restaurants/search?keyword=${encodeURIComponent(trimmed)}`);
+    setKeyword(""); // 검색 후 검색어 초기화
+  }
   };
 
   const handleLogoClick = () => {

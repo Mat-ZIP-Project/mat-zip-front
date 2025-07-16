@@ -112,3 +112,16 @@
   font-size: 15px;
   border: 1px solid #eee;
 }
+
+.restaurant-list-page_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap; /* 필요시 줄바꿈 허용 */
+}
+
+.restaurant-list-page_count {
+  font-size: 1rem;
+  font-weight: 500;
+}
