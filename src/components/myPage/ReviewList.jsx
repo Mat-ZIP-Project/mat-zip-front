@@ -18,18 +18,29 @@ const ReviewList = () => {
     reviewAll();
   }, []);
 
-  // 날짜 포맷팅 헬퍼 함수 (LocalDateTime/LocalDate 문자열 처리)
-  const formatDateDisplay = (isoDateTimeString) => {
-    if (!isoDateTimeString) return "날짜 미정";
-    const validDateString = isoDateTimeString.replace(" ", "T");
+  const formatDateDisplay = (dateTimeArray) => {
+    if (!dateTimeArray) return "날짜 미정";
 
-    // LocalDateTime (2023-01-01T10:30:00) 또는 LocalDate (2023-01-01) 모두 Date 객체로 파싱 가능
-    const date = new Date(validDateString);
-    return date.toLocaleDateString("ko-KR", {
+    const year = dateTimeArray[0];
+    const month = dateTimeArray[1] - 1; // 월은 0부터 시작 (0=1월, 11=12월)
+    const day = dateTimeArray[2];
+    const hours = dateTimeArray[3] || 0; // 시 정보가 없을 수 있으니 기본값 0
+    const minutes = dateTimeArray[4] || 0; // 분 정보가 없을 수 있으니 기본값 0
+
+    const date = new Date(year, month, day, hours, minutes);
+
+    const formatData = date.toLocaleDateString("ko-KR", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
+
+    const formatTime = date.toLocaleTimeString("ko-KR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    return `${formatData} ${formatTime}`;
   };
 
   // 별점을 시각적으로 표시하는 헬퍼 함수 (예: ⭐⭐⭐⭐⭐)
