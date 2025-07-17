@@ -71,8 +71,11 @@ const RestaurantDetailInfo = ({ data }) => {
       <h1>{restaurantName}</h1>
       <p>📍 주소: {address}</p>
       <p>
-        ⭐ 평점: {avgRating == null ? "정보 없음" : `${avgRating.toFixed(1)}점`} / 🏠 로컬
-  평점: {avgRatingLocal == null ? "정보 없음" : `${avgRatingLocal.toFixed(1)}점`}
+        ⭐ 평점: {avgRating == null ? "정보 없음" : `${avgRating.toFixed(1)}점`}{" "}
+        / 🏠 로컬 평점:{" "}
+        {avgRatingLocal == null
+          ? "정보 없음"
+          : `${avgRatingLocal.toFixed(1)}점`}
       </p>
       <p>🍽️ 카테고리: {category}</p>
       {phone && <p>📞 연락처: {phone}</p>}
@@ -80,6 +83,14 @@ const RestaurantDetailInfo = ({ data }) => {
         {typeof openTime === "string" && typeof closeTime === "string" ? (
           <p>
             🕒 영업시간: {openTime.slice(0, 5)} - {closeTime.slice(0, 5)}
+          </p>
+        ) : Array.isArray(openTime) && Array.isArray(closeTime) ? (
+          <p>
+            🕒 영업시간: {String(openTime[0]).padStart(2, "0")}:
+            {String(openTime[1]).padStart(2, "0")}
+            {" - "}
+            {String(closeTime[0]).padStart(2, "0")}:
+            {String(closeTime[1]).padStart(2, "0")}
           </p>
         ) : (
           <p>🕒 영업시간 정보 없음</p>
@@ -138,9 +149,11 @@ const RestaurantDetailInfo = ({ data }) => {
       )}
       {/* 영수증 ocr 모달 */}
       {showOcrModal && (
-        <OcrModal onClose={() => setShowOcrModal(false)} restaurantId={restaurantId}/>
+        <OcrModal
+          onClose={() => setShowOcrModal(false)}
+          restaurantId={restaurantId}
+        />
       )}
-
     </div>
   );
 };

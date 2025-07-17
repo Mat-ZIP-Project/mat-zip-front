@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDateDisplay } from "../../hooks/formatDateTime";
 import "../../assets/styles/restaurant/RestaurantReviewList.css";
 import badgeImage from "../../assets/images/로컬뱃지.png";
 
@@ -31,7 +32,16 @@ const RestaurantReviewList = ({ reviews = [], onDelete }) => {
                         />
                       )}
                     </span>
-                    <span className="review-date">{review.createdAt}</span>
+                    <span className="review-date">
+                      {(() => {
+                        const arr = review.createdAt;
+                        if (!arr || arr.length < 3) return "";
+                        const year = arr[0];
+                        const month = String(arr[1]).padStart(2, "0");
+                        const day = String(arr[2]).padStart(2, "0");
+                        return `${year}.${month}.${day}`;
+                      })()}
+                    </span>
                     <span className="review-rating">
                       {[1, 2, 3, 4, 5].map((n) =>
                         n <= Math.round(review.rating) ? (
@@ -62,9 +72,9 @@ const RestaurantReviewList = ({ reviews = [], onDelete }) => {
                   <div className="review-content">{review.content}</div>
                 </div>
                 <div className="review-image-col">
-                  {review.imageUrls && review.imageUrls.length > 0 ? (
+                  {review.images && review.images.length > 0 ? (
                     <img
-                      src={review.imageUrls[0]}
+                      src={review.images[0]}
                       alt="리뷰 이미지"
                       className="review-image"
                     />
