@@ -1,0 +1,47 @@
+.course-card {
+  background-color: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+}
+
+.course-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.course-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #222;
+}
+
+.course-info {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* 삭제 버튼 */
+.course-delete-button {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.course-delete-button:hover {
+  color: #ff5c5c;
+}

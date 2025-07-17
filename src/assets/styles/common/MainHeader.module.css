@@ -1,0 +1,237 @@
+.header {
+    position: relative;
+    width: 100%;
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.logotest {
+    object-fit: cover;
+    width: 100%;
+}
+
+/* 모바일에서는 전체 너비 사용 */
+@media (max-width: 600px) {
+    .header {
+        max-width: 100%;
+        left: 0;
+        transform: none;
+    }
+}
+
+/* 태블릿과 데스크톱에서는 600px 고정 */
+@media (min-width: 601px) {
+    .header {
+        max-width: 600px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+/* 검색 섹션 */
+.searchSection {
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 8px 20px 8px 8px;
+    gap: 12px;
+    height: 100%;
+}
+
+.logoArea {
+    flex-shrink: 0;
+    margin-left: 10px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.logoPlaceholder {
+    width: 100%;
+    height: 100%;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #999;
+}
+
+.logoPlaceholder::before {
+    content: "🍽️";
+}
+
+.searchBar {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 7px;
+    padding: 0 12px;
+    height: 45px;
+    margin: 0 12px;
+    max-width: 380px;
+}
+
+.searchIcon {
+    width: 25px;
+    height: 25px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+.searchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    color: #333;
+    width: 100%;
+}
+
+.searchInput::placeholder {
+    color: #999;
+}
+
+.actionIcons {
+    display: flex;
+    flex-shrink: 0;
+    gap: 5px;
+    align-items: center;
+    margin-left: auto;
+}
+
+.iconButton {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s ease;
+    padding: 0;
+}
+
+.iconButton:hover {
+    background-color: #f0f0f0;
+}
+
+.iconHeart, .iconNotification {
+    width: 33px;
+    height: 33px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.iconHeart {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23666' viewBox='0 0 24 24'%3E%3Cpath d='M12,21.35L10.55,20.03C5.4,15.36 2,12.27 2,8.5 2,5.41 4.42,3 7.5,3C9.24,3 10.91,3.81 12,5.08C13.09,3.81 14.76,3 16.5,3C19.58,3 22,5.41 22,8.5C22,12.27 18.6,15.36 13.45,20.03L12,21.35Z'/%3E%3C/svg%3E");
+}
+
+.iconNotification {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23666' viewBox='0 0 24 24'%3E%3Cpath d='M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7A7,7 0 0,1 20,14V16A1,1 0 0,1 19,17H5A1,1 0 0,1 4,16V14A7,7 0 0,1 11,7V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M19,18V19A1,1 0 0,1 18,20H6A1,1 0 0,1 5,19V18H19Z'/%3E%3C/svg%3E");
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+    .searchSection {
+        padding: 6px 12px;
+        gap: 8px;
+    }
+    
+    .logo {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .searchBar {
+        height: 32px;
+        margin: 0 8px;
+        max-width: 200px;
+        padding: 0 10px;
+    }
+    
+    .searchIcon {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .iconButton {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .iconHeart, .iconNotification {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .logoPlaceholder::before {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 400px) {
+    .searchSection {
+        gap: 6px;
+        padding: 4px 10px;
+    }
+    
+    .logo {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .searchBar {
+        height: 30px;
+        max-width: 180px;
+        margin: 0 6px;
+    }
+    
+    .logoPlaceholder::before {
+        font-size: 14px; 
+    }
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.backButton:hover {
+  background: #e0e0e0;
+}
+.backText {
+  margin-left: 6px;
+  font-size: 16px;
+  color: #333;
+  font-weight: 500;
+}

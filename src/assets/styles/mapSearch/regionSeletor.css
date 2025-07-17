@@ -1,0 +1,28 @@
+.region-selector-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px 20px;
+}
+
+.region-selector {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.region-selector select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.region-selector button {
+  padding: 6px 12px;
+  background-color: #FF6B35;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}

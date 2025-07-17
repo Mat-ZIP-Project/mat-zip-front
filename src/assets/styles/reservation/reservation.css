@@ -1,0 +1,281 @@
+/* src/assets/styles/reservation/reservation.css */
+
+.modal-overlay {
+  position: fixed; /* 화면에 고정 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은색 배경 */
+  display: flex;
+  justify-content: center; /* 가로 중앙 정렬 */
+  align-items: center; /* 세로 중앙 정렬 */
+  z-index: 1000; /* 다른 요소 위에 표시 */
+}
+
+.modal-content-reservation {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  width: 90%; /* 반응형 */
+  max-width: 500px; /* 최대 너비 설정 */
+  position: relative; /* 닫기 버튼 위치 지정을 위해 */
+  max-height: 90vh; /* 모달이 화면을 넘지 않도록 최대 높이 설정 */
+  overflow-y: auto; /* 내용이 많아지면 스크롤 가능 */
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+}
+
+/* 모달 등장 애니메이션 */
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 모달 닫기 버튼 */
+.modal-close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 2em; /* 'X' 크기 */
+  color: #888;
+  cursor: pointer;
+  padding: 5px;
+  line-height: 1;
+  transition: color 0.2s ease;
+
+  z-index: 1001;
+}
+
+.modal-close-button:hover {
+  color: #333;
+}
+
+/* 기존 컨테이너 스타일은 모달 내용 컨테이너로 대체되므로 제거하거나 조정 */
+/* .reservation-popup-container {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  color: #333;
+  line-height: 1.6;
+} */
+
+
+.section-title { /* h2 */
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2.2em; /* 더 크게 */
+  border-bottom: 2px solid #e0e0e0; /* 연한 회색으로 변경 */
+  padding-bottom: 15px;
+  font-weight: 700; /* 더 진하게 */
+}
+
+.reservation-popup-container h3, .payment-details-section h3 { /* h3 */
+  color: #34495e;
+  margin-top: 25px;
+  margin-bottom: 15px;
+  font-size: 1.6em; /* 더 크게 */
+  font-weight: 600; /* 더 진하게 */
+  padding-left: 10px; /* 살짝 들여쓰기 */
+  border-left: 4px solid #007bff; /* 포인트 색상으로 왼쪽 테두리 */
+}
+
+.reservation-section,
+.payment-details-section { /* .notification-section, .admin-section 은 현재 컴포넌트에 없으므로 제거 */
+  padding: 25px; /* 패딩 증가 */
+  margin-bottom: 25px;
+  border-radius: 10px; /* 둥근 모서리 */
+  background-color: #fefefe; /* 더 밝은 배경색 */
+  border: 1px solid #f0f0f0; /* 더 연한 테두리 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); /* 은은한 그림자 */
+}
+
+.reservation-form .form-group {
+  margin-bottom: 20px; /* 여백 증가 */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px; /* 여백 증가 */
+  font-weight: bold;
+  color: #444; /* 색상 조정 */
+  font-size: 1.05em;
+}
+
+/* 입력 필드 및 선택 박스 스타일 */
+.form-input,
+.form-select { /* 새로운 클래스명 사용 */
+  width: calc(100% - 24px); /* 패딩 고려 */
+  padding: 12px;
+  border: 1px solid #dcdcdc; /* 연한 테두리 */
+  border-radius: 8px; /* 더 둥근 모서리 */
+  font-size: 1.05em;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-color: #fff;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* 더 부드러운 그림자 */
+}
+
+/* 결제 상세 정보 섹션 */
+.payment-summary p {
+  display: flex;
+  justify-content: space-between; /* 금액 정보 양 끝 정렬 */
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  color: #555;
+}
+
+.payment-summary .amount-value {
+  font-weight: bold;
+  color: #333;
+}
+
+.payment-summary .amount-value.discount {
+  color: #28a745; /* 할인 금액은 초록색 */
+}
+
+.payment-summary .amount-value.final {
+  color: #dc3545; /* 최종 금액은 강조색 (빨간색 계열) */
+  font-size: 1.2em; /* 최종 금액 더 크게 */
+}
+
+.final-amount-row {
+  border-top: 1px dashed #e0e0e0; /* 최종 금액 위에 점선 추가 */
+  padding-top: 15px;
+  margin-top: 15px;
+  font-weight: bold;
+  color: #2c3e50 !important; /* 최종 금액 텍스트 색상 강조 */
+}
+
+
+/* 버튼 기본 스타일 */
+.submit-button,
+.payment-button {
+  display: block; /* 블록 요소로 변경하여 항상 100% 너비 */
+  padding: 14px 25px; /* 패딩 증가 */
+  border: none;
+  border-radius: 8px; /* 더 둥근 모서리 */
+  cursor: pointer;
+  font-size: 1.15em; /* 글자 크기 증가 */
+  font-weight: bold;
+  color: #fff;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  margin-top: 20px; /* 폼 아래 여백 증가 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 버튼 그림자 */
+}
+
+/* 버튼 비활성화 상태 */
+.submit-button:disabled,
+.payment-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* 특정 버튼 색상 */
+.submit-button {
+  background-color: #28a745; /* Green */
+}
+.submit-button:not(:disabled):hover {
+  background-color: #218838;
+  transform: translateY(-3px); /* 더 큰 호버 효과 */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.payment-button {
+  background-color: #007bff; /* Blue */
+}
+.payment-button:not(:disabled):hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .modal-content-reservation {
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .section-title {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .reservation-popup-container h3, .payment-details-section h3 {
+    font-size: 1.4em;
+  }
+
+  .reservation-section,
+  .payment-details-section {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+
+  .form-input,
+  .form-select {
+    padding: 10px;
+    font-size: 0.95em;
+  }
+
+  .submit-button,
+  .payment-button {
+    padding: 12px 20px;
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-content-reservation {
+    width: 95%; /* 더 작은 화면에서 너비 증가 */
+    padding: 15px;
+  }
+
+  .section-title {
+    font-size: 1.6em;
+  }
+
+  .reservation-popup-container h3, .payment-details-section h3 {
+    font-size: 1.3em;
+  }
+
+  .payment-summary p {
+    font-size: 1em;
+  }
+
+  .payment-summary .amount-value.final {
+    font-size: 1.1em;
+  }
+}

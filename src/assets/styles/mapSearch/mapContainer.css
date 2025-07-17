@@ -1,0 +1,93 @@
+.map-container {
+  position: relative;
+  height: 350px;
+  background: #eee;
+  margin-bottom: 0.5rem;
+}
+.map-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  position: relative;
+}
+.marker-list {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+}
+.marker {
+  font-size: 0.9rem;
+  background: #fff;
+  padding: 0.2rem 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.location-search-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #000;
+  color: #fff;
+  border-radius: 20px;
+  cursor: pointer;
+  z-index: 10; /* 중요! 지도 위에 올라오도록 */
+}
+.location-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  z-index: 10; /* 중요! 지도 위에 올라오도록 */
+}
+
+/* info-window-wrapper는 외부 div로 위치 조정용 */
+.info-window-wrapper {
+  padding: 0;
+}
+
+/* 내부 박스 */
+.info-window {
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  min-width: 140px;
+}
+
+/* 식당 이름 */
+.info-window .restaurant-name {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* 버튼 */
+.info-window .add-course-btn {
+  background-color: #FF6B35;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.info-window .add-course-btn:hover {
+  background-color: #FF6B35;
+}

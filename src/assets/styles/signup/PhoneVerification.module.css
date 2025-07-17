@@ -1,0 +1,98 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.inputGroup > div:first-child {
+  flex: 1;
+}
+
+.checkButton,
+.sendButton,
+.verifyButton {
+  flex-shrink: 0;
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+  min-height: 50px;
+  height: 50px;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0;
+  font-size: 12px;
+}
+
+.timerInfo {
+  font-size: 13px;
+  color: #ff6b35;
+  text-align: center;
+  padding: 8px;
+  background-color: #fff9f5;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.successMessage {
+  font-size: 13px;
+  color: #4caf50;
+  text-align: center;
+  padding: 8px;
+  background-color: #f1f8e9;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.errorMessage {
+  font-size: 13px;
+  color: #d32f2f;
+  text-align: center;
+  padding: 8px;
+  background-color: #fff2f2;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+@media (max-width: 480px) {
+  .inputGroup {
+    display: flex;
+    gap: 6px;
+    align-items: stretch;
+  }
+  
+  .checkButton,
+  .sendButton,
+  .verifyButton {
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
+    min-height: 50px;
+    height: 50px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .checkButton,
+  .sendButton,
+  .verifyButton {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    min-height: 50px; 
+    height: 50px;
+    font-size: 10px;
+  }
+  
+  .inputGroup {
+    gap: 4px;
+  }
+}

@@ -1,0 +1,85 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+.splitArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  height: 100%;
+}
+.topSection, .bottomSection {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: #fff;
+  border: 1px solid #dfdfdf;
+
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  padding: 0;
+}
+
+.listTopAlign {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+.emptyMessage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #888;
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+}
+.title {
+  color: #FF6B35;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-align: left;
+}
+.section {
+  margin-bottom: 0;
+}
+.subtitle {
+  font-size: 18px;
+  /* margin-bottom: 12px; */
+  margin-left: 3px;
+}
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+}
+
+.emptyMessageCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #525252;
+  font-size: 16px;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+}
+.listTopAlign {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}

@@ -1,0 +1,170 @@
+.container {
+  padding: 20px 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.inputGroup > div:first-child {
+  flex: 1;
+}
+
+.checkButton {
+  flex-shrink: 0;
+  margin-top: 0;
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.idMessage {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  min-height: 16px;
+  padding: 0; 
+}
+
+.idMessage.success {
+  color: #4caf50;
+}
+
+.idMessage.error {
+  color: #d32f2f;
+}
+
+.checkIcon {
+  font-weight: 500;
+  color: #388e3c;
+}
+
+.passwordMatchMessage {
+  font-size: 13px;
+  padding: 0;
+}
+
+.passwordMatchMessage.valid {
+  color: #4caf50;
+}
+
+.passwordMatchMessage.invalid {
+  color: #d32f2f;
+}
+
+.errorAlert {
+  background-color: #fff2f2;
+  border: 1px solid #ffcdd2;
+  color: #d32f2f;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.buttonContainer button {
+  flex: 1;
+}
+
+.pwMessageValid {
+  color: #388e3c;
+  font-size: 13px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pwMessageError {
+  color: #d32f2f;
+  font-size: 13px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 20px;
+  }
+  
+  .inputGroup {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  .checkButton {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+    font-size: 12px; 
+  }
+
+  .idMessage {
+    font-size: 12px;
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 360px) {
+  .checkButton {
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
+    font-size: 11px;
+    padding: 8px 4px;
+  }
+  
+  .inputGroup {
+    gap: 6px;
+  }
+}

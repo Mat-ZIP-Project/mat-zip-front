@@ -1,0 +1,84 @@
+.restaurant-card {
+  background: #fafafa;
+  transition: box-shadow 0.2s;
+  display: flex;           /* 추가 */
+  gap: 20px;               /* 추가: 이미지와 텍스트 사이 간격 */
+  align-items: flex-start;  /* 추가: 위쪽 정렬 */
+  padding: 16px;           /* 추가: 카드 내부 여백 */
+  border-radius: 10px;     /* 선택: 카드 둥글게 */
+  margin-bottom: 16px;     /* 선택: 카드 간 간격 */
+}
+
+.restaurant-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+}
+
+.restaurant-card_course-button {
+  padding: 4px 8px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  color: #333;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.restaurant-card_course-button:hover {
+  background-color: #f0f0f0;
+}
+
+.restaurant-card_image {
+  width: 100px;
+  height: 100px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.restaurant-card_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.restaurant-card_info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.restaurant-card_name {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.restaurant-card_address {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.restaurant-card_meta {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 14px;
+  color: #333;
+}
+.restaurant-card_meta .icon {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.restaurant-card_meta .heart {
+  color: #ff5722;
+}

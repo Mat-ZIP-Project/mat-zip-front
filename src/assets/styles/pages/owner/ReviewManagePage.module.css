@@ -1,0 +1,98 @@
+.reviewPageContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+}
+.title {
+  color: #FF6B35;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  /* text-align: left; */
+}
+.reviewCountBar {
+  font-size: 16px;
+  margin-bottom: 18px;
+  color: #222;
+}
+.count {
+  font-weight: 700;
+  color: #FF6B35;
+  margin-left: 4px;
+}
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.reviewCard {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+}
+.reviewHeader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.reviewRestaurant {
+  font-weight: 600;
+  color: #333;
+}
+.reviewRating {
+  color: #FF6B35;
+  font-weight: 600;
+}
+.reviewDate, .reviewVisitDate {
+  font-size: 13px;
+  color: #888;
+}
+.reviewContent {
+  font-size: 15px;
+  color: #222;
+  margin-bottom: 8px;
+  white-space: pre-line;
+}
+.reviewImages {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+.reviewImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #eee;
+}
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+}
+.emptyMessage {
+  text-align: center;
+  color: #888;
+  font-size: 16px;
+  padding: 40px 0;
+}
+@media (max-width: 480px) {
+  .reviewPageContainer {
+    padding: 8px 0;
+  }
+  .reviewCard {
+    padding: 12px 8px;
+  }
+  .reviewImages {
+    gap: 4px;
+  }
+  .reviewImage {
+    width: 56px;
+    height: 56px;
+  }
+}

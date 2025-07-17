@@ -1,0 +1,17 @@
+.category-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.category-filter-bar button {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.category-filter-bar button.active {
+  background: #000;
+  color: #fff;
+}

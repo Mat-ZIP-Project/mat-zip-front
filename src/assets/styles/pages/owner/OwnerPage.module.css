@@ -1,0 +1,170 @@
+.ownerPageContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  font-family: inherit;
+}
+
+.ownerGreetingBar {
+  background: #444;
+  color: #fff;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.ownerGreetingBar .restaurantName {
+  color: #FF6B35;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+.ownerGreetingBar .todayReservation {
+  background: #222;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  min-width: 80px;
+  text-align: center;
+  display: inline-block;
+}
+
+.ownerTabs {
+  display: flex;
+  border-bottom: 2px solid #eee;
+  background: #fff;
+}
+
+.ownerTabItem {
+  flex: 1;
+  padding: 16px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 0.2s, border-bottom 0.2s;
+}
+
+.ownerTabItem.active {
+  color: #FF6B35;
+  font-weight: 700;
+  border-bottom: 2px solid #FF6B35;
+}
+
+.ownerTabContent {
+  padding: 18px;
+  background: #fff;
+  min-height: 400px;
+}
+
+/* 이미지 관리 */
+.restaurantImagesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.restaurantImageBox {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fafafa;
+}
+
+.imageDeleteBtn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #fff;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  font-size: 16px;
+}
+
+.imageMainBtn {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: #FF6B35;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.imageUploadBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #FF6B35;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #fff;
+  color: #FF6B35;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* 상세 정보 */
+.restaurantInfoTable {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.restaurantInfoTable th,
+.restaurantInfoTable td {
+  padding: 8px 0;
+  text-align: left;
+}
+
+.restaurantInfoTable th {
+  color: #FF6B35;
+  font-weight: 700;
+  width: 140px;
+}
+
+.restaurantInfoTable td {
+  color: #222;
+}
+
+/* .restaurantDesc, .descText {
+  min-height: 60px;
+  color: #666;
+  font-size: 14px;
+  margin: 12px 0 18px 0;
+  line-height: 1.7;
+  font-weight: 400;
+  word-break: break-all;
+} */
+
+/* 반응형 */
+@media (max-width: 600px) {
+  .ownerPageContainer {
+    max-width: 100%;
+    border-radius: 0;
+  }
+  .ownerTabContent {
+    padding: 10px;
+  }
+  .restaurantImagesGrid {
+    gap: 8px;
+  }
+}

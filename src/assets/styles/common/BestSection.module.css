@@ -1,0 +1,273 @@
+.section {
+  margin-bottom: 36px;
+}
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 20px;
+}
+.sectionTitleStrong {
+  font-size: 1.7rem;
+  font-weight: bold;
+}
+.sectionTitleSub {
+  color: #888;
+  font-size: 1.08rem;
+}
+.sectionLink {
+  color: #FF6B35;
+  font-size: 1.05rem;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* ─ Carousel 래퍼 ─ */
+.carouselContainer {
+  position: relative;
+  overflow: hidden; /* visible → hidden으로 변경 */
+}
+.carouselViewport {
+  overflow: hidden;
+  margin: 0 auto;
+}
+.bestTrack {
+  display: flex;
+  gap: 18px;  /* 카드 간격 */
+  padding: 10px 0;
+}
+
+/* ─ Arrow 버튼 ─ */
+.arrowLeft,
+.arrowRight {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+.carouselContainer:hover .arrowLeft,
+.carouselContainer:hover .arrowRight {
+  opacity: 1;
+}
+.arrowLeft {
+  left: 8px;
+}
+.arrowRight {
+  right: 8px;
+}
+
+/* ─ BestCard ─ */
+.bestItem {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 285px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+.bestItem:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.bestImgWrapper {
+  width: 100%;
+  height: 170px;
+  overflow: hidden;
+  position: relative;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bestImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bestBenefit {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #ff4d4f;
+  color: #fff;
+  font-weight: 600;
+  padding: 6px 0;
+  font-size: 0.95rem;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.bestName {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+  word-break: break-all;
+  line-height: 1.2;
+  margin-bottom: 2px;
+  padding: 5px 3px;
+}
+.bestDivider {
+  margin: 0 4px;
+  color: #ccc;
+}
+.bestCategories {
+  font-size: 1rem;
+  color: #666;
+  word-break: break-all;
+  line-height: 1.2;
+  margin-bottom: 2px;
+  padding: 3px;
+}
+
+.bestInfoRow {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  position: relative;
+  min-height: 32px;
+}
+
+.bestInfoRatingRow {
+  display: flex;
+  align-items: center;
+  padding: 5px 5px 15px 5px;
+  position: relative;
+  min-height: 32px;
+}
+
+.bestStar {
+  color: #FFA500;
+  font-size: 1.3rem;
+}
+.bestRating {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-left: 4px;
+}
+
+.bestBottom {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 12px 12px 16px 12px;
+  gap: 0;
+}
+
+.bestInfoBox {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 1 0;
+  min-width: 0;
+  gap: 6px;
+}
+
+.bestRatingLine {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.05rem;
+}
+
+/* 찜(하트) 버튼 */
+.bestHeart {
+  position: static; /* 기존 absolute 제거 */
+  /* margin-left: auto; */
+  margin-left: 15px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-top: 0;
+  align-self: center;
+}
+.heart,
+.heartActive {
+  font-size: 1.6rem;
+  transition: color 0.2s;
+}
+.heart {
+  color: #ffb6c1;
+}
+.heartActive {
+  color: #ff4d4f;
+}
+
+/* 반응형: 모바일 환경 대응 */
+@media (max-width: 600px) {
+  .section {
+    margin-bottom: 18px;
+    padding: 0 2vw;
+  }
+  .sectionHeader {
+    margin-bottom: 8px;
+    margin-top: 14px;
+  }
+  .sectionTitleStrong {
+    font-size: 1.08rem;
+  }
+  .sectionTitleSub {
+    font-size: 0.92rem;
+  }
+  .sectionLink {
+    font-size: 0.92rem;
+  }
+  .bestItem {
+    width: 46vw;
+    min-width: 120px;
+    max-width: 170px;
+    height: 210px;
+    border-radius: 8px;
+    padding-bottom: 6px;
+  }
+  .bestImgWrapper {
+    height: 70px;
+    border-radius: 8px;
+  }
+  .bestImg {
+    border-radius: 8px;
+  }
+  .bestName {
+    font-size: 0.98rem;
+    padding: 2px 1px;
+  }
+  .bestCategories {
+    font-size: 0.92rem;
+    padding: 2px;
+  }
+  .bestInfoRow,
+  .bestInfoRatingRow {
+    min-height: 24px;
+    padding: 3px 2px 8px 2px;
+  }
+  .bestStar {
+    font-size: 1.1rem;
+  }
+  .bestRating {
+    font-size: 1rem;
+    margin-left: 2px;
+  }
+  .bestHeart {
+    font-size: 1.3rem;
+    margin-left: 8px;
+  }
+}

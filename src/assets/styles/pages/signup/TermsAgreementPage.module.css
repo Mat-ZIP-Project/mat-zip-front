@@ -1,0 +1,139 @@
+.container {
+  padding: 20px 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.agreementSection {
+  margin-bottom: 30px;
+}
+
+.agreementItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.checkbox:checked {
+  background-color: #ff6b35;
+  border-color: #ff6b35;
+}
+
+.checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.checkboxLabel {
+  font-size: 14px;
+  color: #333;
+  line-height: 1.4;
+}
+
+.required {
+  color: #ff6b35;
+  font-weight: 500;
+}
+
+.separator {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 20px 0;
+}
+
+.termsContent {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 12px 0 20px 32px;
+  max-height: 200px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.termsContent h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  margin-top: 16px;
+}
+
+.termsContent h4:first-child {
+  margin-top: 0;
+}
+
+.termsContent p {
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.buttonContainer button {
+  flex: 1;
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 20px;
+  }
+  
+  .termsContent {
+    margin-left: 20px;
+    padding: 16px;
+    font-size: 12px;
+  }
+  
+  .checkboxLabel {
+    font-size: 13px;
+  }
+}

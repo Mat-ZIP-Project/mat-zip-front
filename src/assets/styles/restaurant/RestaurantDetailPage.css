@@ -1,0 +1,225 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+/* 탭 메뉴 */
+.tab-menu {
+  display: flex;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background-color: #fff;
+}
+.tab-menu button {
+  flex: 1;
+  padding: 12px 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  color: #666;
+}
+
+.tab-menu button.active {
+  border-bottom: 2px solid #333;
+  color: #333;
+}
+
+/* 식당 이미지 */
+.restaurant-detail-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.restaurant-detail-image.placeholder {
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  font-size: 16px;
+  font-style: italic;
+}
+
+/* 메뉴 탭 */
+.menu-section {
+  padding:20px 0;
+}
+
+/* 웨이팅 섹션 전체 */
+.waiting-section {
+  margin-top: 32px;
+  margin-bottom: 32px;
+  padding: 0 16px;
+}
+
+/* 웨이팅 헤더 (제목+버튼) */
+.waiting-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  position: static;
+}
+.waiting-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* 웨이팅 카드 */
+.waiting-status-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  padding: 22px 28px;
+  width: 100%;
+  gap: 18px;
+  font-size: 1.1rem;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+.waiting-badge {
+  background: #ffeae3;
+  color: #FF6B35;
+  border-radius: 12px;
+  padding: 5px 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-right: 10px;
+}
+.waiting-title {
+  font-weight: 600;
+  font-size: 1.13rem;
+  margin-right: auto;
+  color: #222;
+}
+.waiting-count {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #222;
+  margin-left: 12px;
+}
+.waiting-empty {
+  color: #aaa;
+  margin: 32px 0 0 8px;
+  font-size: 1rem;
+}
+
+/* 새로고침 버튼 */
+.waiting-refresh-btn {
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+  position: static;
+}
+.waiting-refresh-btn:hover {
+  background: #f5f5f5;
+}
+.refresh-icon {
+  font-size: 1.1em;
+}
+
+/* 버튼 컨테이너 및 통일된 버튼 스타일 */
+.restaurant-detail-buttons-fixed {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0 16px 0;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+.restaurant-detail-buttons-fixed > button {
+  padding: 8px 18px;
+  border: 2px solid #ff6b35;
+  background: #fff;
+  color: #ff6b35;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  outline: none;
+  line-height: 1.2;
+  white-space: nowrap;      /* 한 줄로 표시 */
+  min-width: 110px;         /* 버튼 최소 너비(원하는 값으로 조정) */
+}
+
+.restaurant-detail-buttons-fixed > button:hover {
+  background: #ff6b35;
+  color: #fff;
+}
+
+.restaurant-detail-buttons-fixed > .restaurant-course-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.restaurant-detail-buttons-fixed > .restaurant-receipt-review-button {
+  color: #ff6b35;
+  border: 2px solid #ff6b35;
+  background: #fff;
+}
+
+.restaurant-detail-buttons-fixed > .restaurant-receipt-review-button:hover {
+  background: #ff6b35;
+  color: #fff;
+}
+
+.restaurant-descript-box {
+  margin-top: 32px;           /* 웨이팅 현황과 간격 */
+  padding: 24px 20px;
+  background: #f8f8fc;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  border: 1.5px solid #e6e6ef;
+  color: #222;
+}
+
+.restaurant-descript-box h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.13rem;
+  font-weight: 700;
+  /* color: #ff6b35; */
+}
+
+.restaurant-descript-box p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.7;
+}
+
+.local-review-block-message {
+  margin: 32px 0 0 0;
+  padding: 22px 18px;
+  background: #fff3e0;
+  border: 2px solid #ff9800;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: #ff6b35;
+  box-shadow: 0 2px 12px rgba(255, 152, 0, 0.08);
+  letter-spacing: 0.01em;
+}

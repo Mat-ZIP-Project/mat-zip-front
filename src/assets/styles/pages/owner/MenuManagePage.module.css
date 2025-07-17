@@ -1,0 +1,172 @@
+.menuManageContainer {
+  max-width: 700px;
+  margin: 0 auto;
+  /* padding: 24px 0; */
+  background: #fff;
+  min-height: 100vh;
+}
+
+.pageTitle {
+  color: #FF6B35;
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.menuListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.menuListTitle {
+  font-weight: 700;
+  font-size: 18px;
+  margin-right: 10px
+}
+
+.menuListContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 32px;
+}
+
+.menuEmpty {
+  color: #888;
+  font-size: 15px;
+  padding: 24px 0;
+  text-align: center;
+}
+
+ /* 메뉴 아이템 전체 박스 */
+.menuItemBox {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* 이미지 박스 (왼쪽 고정) */
+.menuImageBox {
+  flex-shrink: 0;
+  width: 90px;
+  height: 90px;
+  border-radius: 6px;
+  background: #cecece;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.menuImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.menuImagePlaceholder {
+  font-size: 11px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* 텍스트 정보 박스 */
+.menuInfoBox {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; 
+  text-align: left;
+  gap: 4px;
+}
+
+.menuName {
+  font-weight: 700;
+  font-size: 17px;
+  color: #222;
+}
+
+.menuDesc {
+  font-size: 14px;
+  color: #666;
+}
+
+.menuPrice {
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  color: #222;
+}
+
+.menuBtnGroup {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.menuEditForm {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 24px;
+  background: #fafafa;
+  margin-top: 16px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.menuEditHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.menuEditRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.menuEditInput {
+  width: 100%;
+  height: 38px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 15px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.menuEditTextarea {
+  width: 100%;
+  min-height: 60px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 15px;
+  padding: 8px 12px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.menuEditBtnRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 18px;
+  flex-direction: row;
+}

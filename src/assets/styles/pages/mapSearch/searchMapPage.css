@@ -1,0 +1,50 @@
+/* SearchMapPage.css */
+
+.search-map-page {
+  display: flex;
+  flex-direction: column;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.page-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+}
+
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  gap: 0.5rem;
+}
+
+.category-filter-bar button,
+.radius-selector button {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 0.4rem 0.8rem;
+  background-color: #fff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.category-filter-bar button.active,
+.radius-selector button.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.category-filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.radius-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}

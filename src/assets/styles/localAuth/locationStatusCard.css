@@ -1,0 +1,57 @@
+.location-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+.location-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+.location-title {
+  font-weight: 600;
+  color: #333;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.location-region {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.auth-button {
+  width: auto; /* ✅ 전체 너비 제거 */
+  min-width: 140px;
+  background-color: orange;
+  color: white;
+  padding: 0.5rem 1rem; /* ✅ 상하 여백 줄이기 */
+  border: none;
+  border-radius: 6px; /* ✅ 둥글기 살짝 줄임 */
+  font-weight: 500;
+  font-size: 0.9rem; /* ✅ 폰트 약간 작게 */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* ✅ 살짝 음영 */
+}
+
+.auth-button:hover {
+  background-color: #43a047;
+}
+
+.auth-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.notice-text {
+  font-size: 0.85rem;
+  color: #ff6f00;
+  margin-top: 0.8rem;
+}

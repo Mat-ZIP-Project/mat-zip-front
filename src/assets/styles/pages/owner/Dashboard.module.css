@@ -1,0 +1,56 @@
+.ownerDashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px;
+  background: #fefefe;
+}
+
+
+.chartContainer {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.chartTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* 토글 버튼 스타일 */
+.toggleButtons {
+  /* flex: 1; */
+  display: flex;
+  gap: 8px;
+  margin: 10px 0;
+  align-items: center;
+}
+.toggleButtons button {
+  width: 100px;
+  padding: 8px 0;
+  background: #ffffff;
+  border: 1px solid #9c9c9c;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1b1b1b;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+
+.toggleButtons button:hover {
+  background: #131313;
+  color: #ffffff;
+}
+
+.activeButton {
+  background: #131313 !important;
+  color: #fff !important;
+}

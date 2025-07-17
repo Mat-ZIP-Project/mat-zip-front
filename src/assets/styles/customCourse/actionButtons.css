@@ -1,0 +1,29 @@
+.action-buttons {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-around;
+  padding: 1rem 0;
+  background: #fff;
+  border-top: 1px solid #ddd;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+
+  /* ✅ 중요 */
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  position: static; /* 또는 제거 */
+}
+  
+  .action-buttons button {
+    flex: 1;
+    margin: 0 0.5rem;
+    padding: 1.1rem;
+    background-color: #FF6B35;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+  }

@@ -1,0 +1,399 @@
+/* src/components/myPage/MyPageTest.css */
+
+.my-page-container {
+  padding: 1rem;
+  box-sizing: border-box;
+  min-height: 0;
+}
+.small-badge-icon {
+  margin-top: -0.7rem;
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
+.my-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  margin-bottom: 1.5rem;
+}
+
+.my-page-header h1 {
+  margin: 0;
+}
+
+.header-icons span {
+  margin-right: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.header-icons span:last-child {
+  margin-right: 0;
+}
+
+.user-info-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  border: 1px solid #ddd;
+  padding: 1.5rem;
+  border-radius: 8px;
+
+  height: 300px;
+}
+
+.user-id-display {
+  padding: 10px 30px;
+  border: 2px solid #8a2be2; /* 이미지의 보라색 테두리 */
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.profile-edit-button {
+  padding: 0.5rem 1.5rem;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-tabs {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  margin-top: 5%;
+}
+
+.tab-item {
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #555;
+  white-space: nowrap; /* 탭 이름이 줄바꿈되지 않도록 */
+}
+
+.tab-item.active {
+  border-bottom: 2px solid #FF6B35;
+  color: #FF6B35;
+}
+
+.tab-content {
+  margin-top: 10px;
+}
+
+/* 모임 탭 내의 하위 탭 */
+.sub-tabs {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: 0.9rem; /* 하위 탭 글씨 크기 조절 */
+}
+
+.sub-tab-item {
+  cursor: pointer;
+  padding: 5px 10px;
+  color: #555;
+  white-space: nowrap; /* 탭 이름이 줄바꿈되지 않도록 */
+}
+
+.sub-tab-item.active {
+  border-bottom: 2px solid #8a2be2;
+  color: #8a2be2;
+}
+
+/* user-profile-section: 큰 박스 역할 */
+.user-profile-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem; /* 20px */
+  margin: 1.25rem auto; /* 20px */
+  max-width: 56.25rem; /* 900px */
+  background-color: #f9f9f9;
+  border: 0.0625rem solid #e0e0e0; /* 1px */
+  border-radius: 0.625rem; /* 10px */
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.08);
+}
+
+.user-info-container {
+  display: flex;
+}
+
+/* 사용자 이미지 */
+.user-profile-image {
+  width: 8.25rem; /* 100px */
+  height: 8.25rem; /* 100px */
+  border-radius: 38%;
+  object-fit: cover;
+  margin-right: 1.5625rem; /* 25px */
+  border: 0.125rem solid #ccc; /* 2px */
+}
+
+/* 사용자 정보 텍스트 그룹 (이름, 등급, 포인트) */
+.user-details-group {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* 남은 공간을 최대한 차지하도록 설정 */
+  margin-right: 1.5625rem; /* 25px */
+}
+
+/* 사용자 이름 */
+.user-id-text {
+  display: flex;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.3125rem; /* 5px */
+}
+
+/* 사용자 등급 */
+.user-grade-text {
+  font-size: 1.3rem;
+  color: #555;
+  margin-bottom: 0.5rem; /* 3px */
+}
+
+/* 포인트 잔액 */
+.user-point-balance {
+  font-size: 1.3rem;
+  color: #555;
+}
+
+/* 버튼 그룹 (선호도 수정, 동네 인증) */
+.user-actions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem; /* 10px */
+}
+
+/* 선호도 수정 버튼과 동네 인증 버튼 */
+.profile-edit-btn,
+.local-auth-btn {
+  background-color: #FF6B35;
+  color: white;
+  border: none;
+  margin-top: 0.5rem;
+ 
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-size: 1.0rem;
+  width: 7rem;
+  text-align: center; 
+  box-sizing: border-box; 
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  white-space: nowrap;
+}
+
+/* 반응형 디자인을 위한 미디어 쿼리 */
+@media (max-width: 48rem) {
+  /* 768px */
+  .user-profile-section {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.9375rem; /* 15px */
+  }
+
+  .user-profile-image {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0;
+    margin-bottom: 0.9375rem; /* 15px */
+  }
+
+  .user-details-group {
+    margin-right: 0;
+    margin-bottom: 0.9375rem;
+    width: 100%;
+  }
+
+  .user-actions-group {
+    flex-direction: row; /* 작은 화면에서는 버튼 가로 정렬 유지 */
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .profile-edit-btn,
+  .local-auth-btn {
+    flex: 1; /* 사용 가능한 공간을 동일하게 나눔 */
+    margin: 0 0.3125rem; /* 0 5px */
+    width: auto; /* 작은 화면에서는 flex-grow를 사용하도록 width 자동 */
+    padding: 0.35rem 0.6rem; /* 더 작은 패딩 */
+    font-size: 0.75rem; /* 더 작은 폰트 */
+  }
+}
+
+@media (max-width: 30rem) {
+  /* 480px */
+  .user-profile-image {
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .user-id-text {
+    font-size: 1.7rem;
+  }
+
+  .user-grade-text,
+  .user-point-balance {
+    font-size: 0.95rem;
+  }
+}
+
+/* 등급 설명 툴팁 스타일 */
+.grade-display-info {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 0.2rem;
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+
+.user-grade-tooltip {
+  position: absolute; /* .grade-display-with-info를 기준으로 위치합니다. */
+  bottom: 100%; /* 아이콘 위쪽에 팝업이 나타나도록 (조절 가능) */
+  left: 50%; /* 아이콘 중앙에 팝업이 오도록 */
+  transform: translateX(-50%); /* 팝업을 정확히 중앙으로 이동 */
+  background-color: #333;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.85em;
+  white-space: nowrap; /* 내용이 한 줄에 표시되도록 합니다. */
+  z-index: 10; /* 다른 요소 위에 표시되도록 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px; /* 툴팁과 아이콘 사이 간격 */
+}
+
+.user-grade-tooltip::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -5px; /* 툴팁 아래에 삼각형이 오도록 */
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background-color: #333;
+}
+/* myPage.css */
+
+/* 기존 MyPage 스타일들... */
+
+/* --- 모달 관련 CSS --- */
+
+.modal-overlay {
+    position: fixed; /* 화면 전체를 덮도록 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* 반투명 검은색 배경 */
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;   /* 세로 중앙 정렬 */
+    z-index: 1000; /* 다른 요소들 위에 표시 */
+}
+
+.preference-modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 90%; /* 너비 조정 */
+    max-width: 500px; /* 최대 너비 설정 */
+    animation: fadeInScale 0.3s ease-out forwards; /* 등장 애니메이션 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 요소들 간 간격 */
+    position: relative; /* 자식 요소의 absolute positioning을 위함 */
+}
+
+.preference-modal-content h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center; /* 버튼들을 중앙으로 정렬 */
+    gap: 15px; /* 버튼들 사이 간격 */
+    margin-top: 20px;
+}
+
+.modal-save-btn,
+.modal-cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s ease;
+}
+
+.modal-save-btn {
+    background-color: #FF6B35; /* 파란색 계열 */
+    color: white;
+}
+
+.modal-save-btn:hover {
+    background-color: #FF6B35;
+}
+
+.modal-cancel-btn {
+    background-color: #6c757d; /* 회색 계열 */
+    color: white;
+}
+
+.modal-cancel-btn:hover {
+    background-color: #5a6268;
+}
+
+/* 등장 애니메이션 (선택 사항) */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 툴팁 항목 스타일 (선택 사항) */
+.tooltip-item {
+    margin: 5px 0;
+    line-height: 1.4;
+}
+
+/* PreferenceCategorySelector 내부 버튼 스타일 조정 (선택 사항) */
+/* PreferenceCategorySelector 컴포넌트 내부의 버튼 스타일을
+   MyPage의 모달 컨텍스트에서 오버라이드해야 할 수도 있습니다.
+   이는 PreferenceCategorySelector의 내부 구조와 CSS에 따라 다릅니다.
+   예시:
+   .preference-modal-content .preference-category-button {
+       min-width: 80px;
+       height: 35px;
+       font-size: 0.9em;
+   }
+*/

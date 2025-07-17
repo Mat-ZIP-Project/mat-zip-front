@@ -1,0 +1,50 @@
+name: Deploy React App to EC2 # 이 GitHub Actions 워크플로우의 이름 (Actions 탭에 표시됨)
+
+on:
+  push:
+    branches: [develop] # main 브랜치에 push가 발생할 때 이 워크플로우 실행
+
+jobs:
+  deploy: # 배포 작업의 고유 ID (원하면 다른 이름 사용 가능)
+    name: Deploy to EC2 # GitHub Actions UI에 표시될 작업 이름
+    runs-on: ubuntu-latest # GitHub Actions가 실행될 가상 머신 (Ubuntu 최신 버전)
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # 현재 레포지토리의 코드를 가져옴 (Git clone)
+
+      - name: Setup Node
+        uses: actions/setup-node@v4 # Node.js 환경 설정
+        with:
+          node-version: 20 # Node.js 20버전 설치
+
+      # - name: Create .env file for React App
+      #   run: |
+      #     echo "VITE_API_SERVER_IP=${{ secrets.VITE_API_SERVER_IP }}" > .env  # 환경 변수 설정
+      #     echo "VITE_IMP_UID=${{ secrets.VITE_IMP_UID }}" >> .env  # 추가 환경 변수 설정
+
+      - name: Install dependencies
+        run: npm install # React 프로젝트의 의존성 설치
+
+      - name: Build React App
+        run: npm run build # 정적 파일로 빌드 (보통 ./dist 또는 ./build 폴더 생성)
+
+      - name: Copy docker-compose and build folder to EC2
+        uses: appleboy/scp-action@v0.1.7 # EC2에 파일을 복사(scps)
+        with:
+          host: ${{secrets.EC2_HOST}} # EC2의 공인 IP 또는 도메인 (Secrets에 등록 필요)
+          username: ${{secrets.EC2_USERNAME}} # EC2 접속용 사용자명 (예: ubuntu)
+          key: ${{ secrets.EC2_SSH_KEY }} # SSH 개인 키 (Secrets에 등록)
+          source: "./docker-compose.yml,./dist,./Dockerfile" # EC2로 복사할 파일/폴더 목록
+          target: "~/react-cicd" # EC2 상의 대상 디렉토리
+
+      - name: SSH into EC2 and deploy
+        uses: appleboy/ssh-action@v1.0.3 # EC2 서버에 SSH로 접속하여 명령어 실행
+        with:
+          host: ${{secrets.EC2_HOST}} # EC2의 IP
+          username: ${{secrets.EC2_USERNAME}} # 로그인 사용자명
+          key: ${{secrets.EC2_SSH_KEY}} # SSH 개인 키
+          script: | # 접속 후 실행할 명령어 목록
+            cd ~/react-cicd                   
+            docker-compose down          
+            docker-compose up -d --build

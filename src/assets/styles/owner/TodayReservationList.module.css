@@ -1,0 +1,81 @@
+.todaySection {
+  margin: 0 auto;
+  padding: 15px 0;
+  background: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 10px;
+}
+.todayTitle {
+  font-size: 19px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 12px;
+  text-align: left;
+  padding-left: 18px;
+  margin-bottom: 20px;
+}
+.todayList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 18px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+.todayItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  gap: 0;
+}
+.nameArea {
+  flex: 2 1 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1976d2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.peopleArea {
+  flex: 1 1 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+.timeArea {
+  flex: 1 1 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #555;
+  text-align: center;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+.people {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+.status {
+  font-size: 13px;
+  color: #888;
+}
+.empty {
+  text-align: center;
+  color: #aaa;
+  font-size: 15px;
+  padding: 24px 0;
+}

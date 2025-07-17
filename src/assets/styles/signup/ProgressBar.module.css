@@ -1,0 +1,38 @@
+.container {
+  margin-bottom: 30px;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 30px 0;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff6b35 0%, #ff8f65 100%);
+  transition: width 0.3s ease;
+  border-radius: 4px;
+}
+
+.stepInfo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stepText {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .stepText {
+    font-size: 12px;
+  }
+}
