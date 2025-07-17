@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/pages/myPage/ReviewList.css";
 import { deleteReview } from "../../hooks/deleteReview";
+import { formatDateDisplay } from "../../hooks/formatDateTime";
 
 const ReviewList = () => {
   const [reviews, setReviews] = useState([]);
@@ -17,20 +18,6 @@ const ReviewList = () => {
     };
     reviewAll();
   }, []);
-
-  // 날짜 포맷팅 헬퍼 함수 (LocalDateTime/LocalDate 문자열 처리)
-  const formatDateDisplay = (isoDateTimeString) => {
-    if (!isoDateTimeString) return "날짜 미정";
-    const validDateString = isoDateTimeString.replace(" ", "T");
-
-    // LocalDateTime (2023-01-01T10:30:00) 또는 LocalDate (2023-01-01) 모두 Date 객체로 파싱 가능
-    const date = new Date(validDateString);
-    return date.toLocaleDateString("ko-KR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
 
   // 별점을 시각적으로 표시하는 헬퍼 함수 (예: ⭐⭐⭐⭐⭐)
   const renderStars = (rating) => {
@@ -63,7 +50,7 @@ const ReviewList = () => {
                 <p className="review-content">{review.content}</p>
               </div>
               <div className="card-footer">
-                <span className="review-date">
+                <span className="myPage-review-date">
                   <span className="icon">📝</span> 작성일:{" "}
                   {formatDateDisplay(review.reviewedAt)}
                 </span>

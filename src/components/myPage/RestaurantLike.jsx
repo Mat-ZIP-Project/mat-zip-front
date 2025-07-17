@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/pages/myPage/RestaurantLike.css";
+import { formatDateDisplay } from "../../hooks/formatDateTime";
 
 const RestaurantLike = () => {
   const [restaurantLikes, setRestaurantLikes] = useState([]);
@@ -10,30 +11,18 @@ const RestaurantLike = () => {
       try {
         const response = await axiosInstance.get("/mypage/restaurant/likes");
         setRestaurantLikes(response.data);
+        console.log(response.data);
+        console.log(response.data.likedAt);
       } catch (error) {
         console.error("리뷰 내역 가져오기 실패: ", error);
       }
     };
     restaurantLikeAll();
   }, []);
-
-  // 날짜 포맷팅 헬퍼 함수 (LocalDateTime/LocalDate 문자열 처리)
-  const formatDateDisplay = (isoDateTimeString) => {
-    if (!isoDateTimeString) return "날짜 미정";
-    const validDateString = isoDateTimeString.replace(" ", "T");
-    // LocalDateTime (2023-01-01T10:30:00) 또는 LocalDate (2023-01-01) 모두 Date 객체로 파싱 가능
-    const date = new Date(validDateString);
-    return date.toLocaleDateString("ko-KR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
+  
   return (
     <div className="restaurant-like-container">
       {/* <h3 className="restaurant-like-title">찜한 식당 내역</h3> */}
-
       {restaurantLikes.length === 0 ? (
         <p className="no-likes-message">아직 찜한 식당이 없습니다.</p>
       ) : (

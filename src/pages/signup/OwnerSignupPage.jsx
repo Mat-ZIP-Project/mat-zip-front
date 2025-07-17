@@ -5,7 +5,6 @@ import FormButton from '../../components/common/FormButton';
 import PhoneVerification from '../../components/signup/PhoneVerification';
 import { useSignupForm } from '../../hooks/useSignupForm';
 import { signupApi } from '../../api/signupApi';
-import ProgressBar from '../../components/signup/ProgressBar';
 
 /**
  * 식당 업주 기본정보 입력 페이지

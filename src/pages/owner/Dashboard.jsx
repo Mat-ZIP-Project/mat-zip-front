@@ -53,6 +53,15 @@ const Dashboard = ({ restaurantId }) => {
   // 매출 차트 모드: 'daily' 또는 'monthly'
   const [revenueMode, setRevenueMode] = useState("daily");
 
+  // 날짜 포맷 함수 (YYYY-MM-DD → YYYY.MM.DD)
+  const formatDate = (dateObj) => {
+    if (!dateObj) return "";
+    const yyyy = dateObj.getFullYear();
+    const mm = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const dd = String(dateObj.getDate()).padStart(2, "0");
+    return `${yyyy}.${mm}.${dd}`;
+  };
+
   // --- 3) 일별 예약/매출/리뷰 가져오기 ---
   const fetchDailyAndReview = async () => {
     console.log("🔍 fetchDailyAndReview 호출", {
@@ -83,7 +92,7 @@ const Dashboard = ({ restaurantId }) => {
   const fetchMonthlyRevenue = async () => {
     console.log("🔍 fetchMonthlyRevenue 호출", { restaurantId, revenueMode });
     try {
-      // 최근 6개월: 오늘 기준 5개월 전 1일 부터 오늘까지
+      // 최근 6개월의 월별 매출 데이터
       const now = new Date();
       const start = new Date(now.getFullYear(), now.getMonth() - 5, 1);
       const from = start.toISOString().split("T")[0];
@@ -141,7 +150,6 @@ const Dashboard = ({ restaurantId }) => {
     if (restaurantId) {
       fetchDailyAndReview();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restaurantId, fromDate, toDate]);
 
   // 매출 모드가 monthly 로 바뀔 때만 월별 매출 호출
@@ -155,7 +163,7 @@ const Dashboard = ({ restaurantId }) => {
   // 예약 건수 모드가 monthly 로 바뀔 때만 월별 예약도 호출
   useEffect(() => {
     if (restaurantId && reservationMode === "monthly") {
-      fetchMonthlyRevenue(); // → 월별 데이터 세팅 함수 재활용
+      fetchMonthlyRevenue();
     }
   }, [restaurantId, reservationMode]);
 
@@ -178,9 +186,22 @@ const Dashboard = ({ restaurantId }) => {
     <div className={styles.ownerDashboard}>
       {/* 날짜 선택 영역 */}
       <div className={styles.datePickers}>
-        <DatePicker selected={fromDate} onChange={setFromDate} />
-        <span>~</span>
-        <DatePicker selected={toDate} onChange={setToDate} />
+        <div className={styles.datePickerBox}>
+          <DatePicker
+            selected={toDate}
+            onChange={setToDate}
+            dateFormat="yyyy.MM.dd"
+            className={styles.dateInput}
+            popperPlacement="bottom"
+          />
+          <span className={styles.dateLabel}>~</span>
+          <DatePicker
+            selected={fromDate}
+            onChange={setFromDate}
+            dateFormat="yyyy.MM.dd"
+            className={styles.dateInput}
+          />
+        </div>
       </div>
 
       {/* 1) 예약 건수 - 일별/월별 토글 */}
@@ -227,12 +248,12 @@ const Dashboard = ({ restaurantId }) => {
                     {
                       ...monthlyReservationData.datasets[0],
                       backgroundColor: [
-                        "#FFF3DD", // 거의 흰색
-                        "#FFEBBB", // 밝은 베이지
-                        "#FFD494", // 베이지
-                        "#FFA76A", // 연한 오렌지
-                        "#FF8A50", // 밝은 오렌지
-                        "#FF6B35", // 오렌지
+                        "#FFF3DD",
+                        "#FFEBBB",
+                        "#FFD494",
+                        "#FFA76A",
+                        "#FF8A50",
+                        "#FF6B35",
                       ],},],}}
               options={{
                 responsive: true,

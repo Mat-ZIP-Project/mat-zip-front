@@ -67,7 +67,7 @@ const WaitingManagePage = ({ restaurantId }) => {
         showSuccessAlert('노쇼 처리 완료', '해당 대기자가 노쇼 처리되었습니다.');
         fetchWaitingData();
       } catch {
-        showErrorAlert('노쇼 처리 실패', '노쇼 처리에 실패했습니다.');
+        showErrorAlert('노쇼 처리 실패', '호출 후 15분이 지나야 노쇼 처리 가능합니다.');
       }
     }
   };
