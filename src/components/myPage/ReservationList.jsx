@@ -45,10 +45,21 @@ const ReservationList = () => {
     return String(timeString).substring(0, 5);
   };
 
+  const formattDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
   // 리뷰 작성 버튼 클릭 핸들러
   const handleWriterReview = (restaurantId, restaurantName, visitDate) => {
-    console.log(restaurantId, restaurantName, visitDate);
-    navigate("/review", { state: { restaurantName, visitDate, restaurantId } });
+    const formattedDate = formattDate(visitDate);
+    console.log(restaurantId, restaurantName, formattedDate);
+    navigate("/review", {
+      state: { restaurantName, visitDate: formattedDate, restaurantId },
+    });
   };
 
   // 예약 취소 버튼 클릭 핸들러
