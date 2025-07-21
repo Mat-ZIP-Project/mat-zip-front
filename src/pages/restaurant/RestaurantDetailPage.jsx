@@ -60,6 +60,7 @@ const RestaurantDetailPage = () => {
       });
   };
 
+
   // ✅ 이건 그냥 처음 마운트될 때 자동으로 호출
   useEffect(() => {
     fetchWaitingInfo();
