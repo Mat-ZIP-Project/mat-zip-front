@@ -5,6 +5,7 @@ import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/restaurant/RestaurantDetailInfo.css";
 import OcrModal from "../review/OcrModal";
 import { showSuccessAlert, showErrorAlert } from "../../utils/sweetAlert";
+import { useSelector } from "react-redux";
 
 const RestaurantDetailInfo = ({ data }) => {
   const {
@@ -23,11 +24,20 @@ const RestaurantDetailInfo = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
   const [showOcrModal, setShowOcrModal] = useState(false);
 
+  // Redux에서 로그인 상태 가져오기
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
   const navigate = useNavigate();
 
   const handleNavigateToReservation = () => {
+    // 로그인 여부 체크
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
     navigate(`/restaurants/${restaurantId}/reservation`);
   };
+
 
   useEffect(() => {
     console.log("DetailInfo Data :", data);
@@ -41,7 +51,7 @@ const RestaurantDetailInfo = ({ data }) => {
       await axiosInstance.post("/api/waiting", requestDto);
       showSuccessAlert("웨이팅 등록이 완료되었습니다!", "");
       setShowModal(false);
-      window.location.reload();
+     // window.location.reload();
     } catch (err) {
       showErrorAlert("웨이팅 등록에 실패했습니다.", "");
       console.error("웨이팅 등록 에러:", err.response?.data);
