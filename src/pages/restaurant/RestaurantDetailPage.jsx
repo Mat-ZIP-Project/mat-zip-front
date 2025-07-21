@@ -39,26 +39,18 @@ const RestaurantDetailPage = () => {
 
   // 웨이팅 정보 fetch 함수 분리
    const fetchWaitingInfo = () => {
-    fetch(`/api/waiting/status/${id}`, {
-      credentials : "include" // 쿠키 포함
-    })
-      .then((res) => {
-        console.log("서버 응답:", res);
-        if (!res.ok) throw new Error(`웨이팅 정보 조회 실패: ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        console.log("웨이팅 데이터:", data);
-        setWaitingInfo({
-          count: data.waitingCount,
-          estimatedTime: data.expectedEntryTime,
-        });
-      })
-      .catch((error) => {
-        console.warn("웨이팅 정보 에러", error.message);
-        setWaitingInfo(null);
+  axiosInstance.get(`/api/waiting/status/${id}`, { withCredentials: true })
+    .then(res => {
+      setWaitingInfo({
+        count: res.data.waitingCount,
+        estimatedTime: res.data.expectedEntryTime,
       });
-  };
+    })
+    .catch(error => {
+      console.warn("웨이팅 정보 에러", error.message);
+      setWaitingInfo(null);
+    });
+};
 
 
   // ✅ 이건 그냥 처음 마운트될 때 자동으로 호출
@@ -67,27 +59,19 @@ const RestaurantDetailPage = () => {
   }, [id]);
 
   useEffect(() => {
-    fetchWaitingInfo();
-  }, [id]);
-
-
-  useEffect(() => {
-    // 로그인 여부 확인
-    axiosInstance.get('/auth/user-info')
-      .then(res => {
-        setIsLoggedIn(true);
-        // 뱃지 정보 요청
-        return axiosInstance.get('/local/badges');
-      })
-      .then(res => {
-        // 뱃지 1개 이상 있으면 true
-        setHasLocalBadge(res.data && res.data.length > 0);
-      })
-      .catch(() => {
-        setIsLoggedIn(false);
-        setHasLocalBadge(false);
-      });
-  }, []);
+  axiosInstance.get('/auth/user-info')
+    .then(res => {
+      setIsLoggedIn(true);
+      return axiosInstance.get('/local/badges');
+    })
+    .then(res => {
+      setHasLocalBadge(res.data && res.data.length > 0);
+    })
+    .catch(() => {
+      setIsLoggedIn(false);
+      setHasLocalBadge(false);
+    });
+}, []);
 
   const handleOcrModalClose = () => setShowOcrModal(false);
   const handleOcrToReview = (ocrResult) => {

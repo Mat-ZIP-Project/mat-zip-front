@@ -4,6 +4,7 @@ import axiosInstance from "../api/axiosinstance"
 import { showInfoAlert, showErrorAlert, showSuccessAlert } from "../utils/sweetAlert";
 
 
+
 export const addTempCourse = ({ restaurantId, restaurantName }) => {
    
     const auth = JSON.parse(localStorage.getItem("persist:auth"));
