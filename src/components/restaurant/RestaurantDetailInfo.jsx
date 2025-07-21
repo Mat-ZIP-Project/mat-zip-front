@@ -26,11 +26,10 @@ const RestaurantDetailInfo = ({ data }) => {
 
   // Redux에서 로그인 상태 가져오기
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-
   const navigate = useNavigate();
 
   const handleNavigateToReservation = () => {
-    // 로그인 여부 체크
+  // 로그인 여부 체크
     if (!isAuthenticated) {
       navigate("/login");
       return;
