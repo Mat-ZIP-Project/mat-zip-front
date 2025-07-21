@@ -12,5 +12,6 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, '/api'), // 필요 없으면 생략 가능
       },
     },
+    historyApiFallback: true,
   },
 });
