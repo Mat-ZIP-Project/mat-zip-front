@@ -26,16 +26,14 @@ const RestaurantDetailInfo = ({ data }) => {
   const navigate = useNavigate();
 
   const handleNavigateToReservation = () => {
-  // 1. 로컬 스토리지나 쿠키에서 토큰 확인
-  const accessToken = localStorage.getItem("accessToken");
-  if (!accessToken) {
-    // 2. 로그인 안 됐으면 /login으로 이동
-    navigate("/login");
-    return;
-  }
-  // 3. 로그인 되어 있으면 예약 페이지로 이동
-  navigate(`/restaurants/${restaurantId}/reservation`);
-};
+    // 로그인 여부 체크
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+    // 로그인 되어 있으면 예약 페이지로 이동
+    navigate(`/restaurants/${restaurantId}/reservation`);
+  };
 
 
   useEffect(() => {
