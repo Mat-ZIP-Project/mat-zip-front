@@ -5,6 +5,7 @@ import axiosInstance from "../../api/axiosinstance";
 import "../../assets/styles/restaurant/RestaurantDetailInfo.css";
 import OcrModal from "../review/OcrModal";
 import { showSuccessAlert, showErrorAlert } from "../../utils/sweetAlert";
+import { useSelector } from "react-redux";
 
 const RestaurantDetailInfo = ({ data }) => {
   const {
@@ -23,6 +24,9 @@ const RestaurantDetailInfo = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
   const [showOcrModal, setShowOcrModal] = useState(false);
 
+  // Redux에서 로그인 상태 가져오기
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
   const navigate = useNavigate();
 
   const handleNavigateToReservation = () => {
@@ -31,7 +35,6 @@ const RestaurantDetailInfo = ({ data }) => {
       navigate("/login");
       return;
     }
-    // 로그인 되어 있으면 예약 페이지로 이동
     navigate(`/restaurants/${restaurantId}/reservation`);
   };
 
