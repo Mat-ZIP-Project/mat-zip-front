@@ -40,15 +40,25 @@ const RestaurantDetailPage = () => {
   // 웨이팅 정보 fetch 함수 분리
   const fetchWaitingInfo = () => {
     fetch(`/api/waiting/status/${id}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`웨이팅 정보 조회 실패: ${res.status}`);
+        return res.json();
+      })
       .then((data) => {
         setWaitingInfo({
           count: data.waitingCount,
           estimatedTime: data.expectedEntryTime,
         });
       })
-      .catch(() => setWaitingInfo(null));
+      .catch((error) => {
+        console.warn("웨이팅 정보 에러", error.message);
+        setWaitingInfo(null);
+      });
   };
+
+useEffect(() => {
+    fetchWaitingInfo();
+  }, [id]);
 
   useEffect(() => {
     fetchWaitingInfo();
