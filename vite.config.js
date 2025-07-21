@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080', // ✅ 백엔드 서버 주소로 변경
+        target: 'http://54.180.86.163:8080', // ✅ 백엔드 서버 주소로 변경
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'), // 필요 없으면 생략 가능
       },

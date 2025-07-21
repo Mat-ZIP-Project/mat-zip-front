@@ -26,8 +26,17 @@ const RestaurantDetailInfo = ({ data }) => {
   const navigate = useNavigate();
 
   const handleNavigateToReservation = () => {
-    navigate(`/restaurants/${restaurantId}/reservation`);
-  };
+  // 1. 로컬 스토리지나 쿠키에서 토큰 확인
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    // 2. 로그인 안 됐으면 /login으로 이동
+    navigate("/login");
+    return;
+  }
+  // 3. 로그인 되어 있으면 예약 페이지로 이동
+  navigate(`/restaurants/${restaurantId}/reservation`);
+};
+
 
   useEffect(() => {
     console.log("DetailInfo Data :", data);
@@ -41,7 +50,7 @@ const RestaurantDetailInfo = ({ data }) => {
       await axiosInstance.post("/api/waiting", requestDto);
       showSuccessAlert("웨이팅 등록이 완료되었습니다!", "");
       setShowModal(false);
-      window.location.reload();
+     // window.location.reload();
     } catch (err) {
       showErrorAlert("웨이팅 등록에 실패했습니다.", "");
       console.error("웨이팅 등록 에러:", err.response?.data);
